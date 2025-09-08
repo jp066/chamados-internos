@@ -120,7 +120,6 @@ export function Dashboard() {
           <thead>
             <tr className="border-b bg-yellow-50">
               <th className="py-2 px-3">Categoria</th>
-              <th className="py-2 px-3">Descrição</th>
               <th className="py-2 px-3">Status</th>
               <th className="py-2 px-3"></th>
               <th className="py-2 px-3">Email</th>
@@ -128,6 +127,7 @@ export function Dashboard() {
               <th className="py-2 px-3">Data/Hora</th>
               <th className="py-2 px-3">Qual a outra categoria?</th>
               <th className="py-2 px-3">Imagem descritiva</th>
+              <th className="py-2 px-3">Descrição</th>
             </tr>
           </thead>
           <tbody>
@@ -144,7 +144,6 @@ export function Dashboard() {
                   className="border-b hover:bg-yellow-50 transition-colors"
                 >
                   <td className="py-2 px-3 font-mono">{c["Categoria"]}</td>
-                  <td className="py-2 px-3">{c["Descrição"]}</td>
                   <td className="py-2 px-3">
                     <span
                       className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold ${
@@ -166,7 +165,6 @@ export function Dashboard() {
                     <button
                       onClick={async () => {
                         await updateStatus({ id: c.id, status: "concluído" });
-                        // Recarrega os chamados após atualizar o status
                         setLoading(true);
                         setError(null);
                         try {
@@ -189,7 +187,12 @@ export function Dashboard() {
                   <td className="py-2 px-3">{c["Sala"]}</td>
                   <td className="py-2 px-3">{c["Carimbo de data/hora"]}</td>
                   <td className="py-2 px-3">{c["Qual a outra categoria?"]}</td>
-                  <td className="py-2 px-3">{c["Imagem descritiva"]}</td>
+                  <td className="py-2 px-3">
+                    <a href={`http://${c["Imagem descritiva"]}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                      {c["Imagem descritiva"]}
+                    </a>
+                  </td>
+                  <td className="py-2 px-3">{c["Descrição"]}</td>
                 </tr>
               ))
             )}
