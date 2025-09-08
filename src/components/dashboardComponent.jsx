@@ -58,7 +58,12 @@ export function Dashboard() {
   );
 
   const [busca, setBusca] = useState("");
-
+  const atendentes = [
+    "Rafael",
+    "Vitoria",
+    "Alexandre",
+    "João Pedro",
+  ];
   const chamadosFiltrados = useMemo(() => {
     if (!busca) return chamados;
     const termo = busca.toLowerCase();
@@ -114,11 +119,12 @@ export function Dashboard() {
           onChange={(e) => setBusca(e.target.value)}
           className="mb-6 px-3 py-2 border border-yellow-200 rounded w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
         />
-        <table className="min-w-full text-left text-sm">
+  <table className="min-w-full text-left text-sm border border-yellow-300 rounded-lg">
           {loading && <p>Carregando...</p>}
           {error && <p className="text-red-500">{error}</p>}
           <thead>
             <tr className="border-b bg-yellow-50">
+              <th className="py-2 px-3">Atendente</th>
               <th className="py-2 px-3">Categoria</th>
               <th className="py-2 px-3">Status</th>
               <th className="py-2 px-3"></th>
@@ -130,7 +136,7 @@ export function Dashboard() {
               <th className="py-2 px-3">Descrição</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-yellow-200">
             {chamadosFiltrados.length === 0 ? (
               <tr>
                 <td colSpan={4} className="py-4 text-center text-gray-400">
@@ -143,8 +149,17 @@ export function Dashboard() {
                   key={c.id}
                   className="border-b hover:bg-yellow-50 transition-colors"
                 >
-                  <td className="py-2 px-3 font-mono">{c["Categoria"]}</td>
-                  <td className="py-2 px-3">
+                  <td className="py-2 px-3 font-mono border border-yellow-200">
+                    <select name="atendente" id="" className="bg-yellow-100 border-yellow-200 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow rounded-lg">
+                      {atendentes.map((atendente) => (
+                        <option key={atendente} value={atendente}>
+                          {atendente}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td className="py-2 px-3 font-mono border border-yellow-200">{c["Categoria"]}</td>
+                  <td className="py-2 px-3 border border-yellow-200">
                     <span
                       className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold ${
                         c.status === "em aberto"
@@ -161,7 +176,7 @@ export function Dashboard() {
                       {c.status}
                     </span>
                   </td>
-                  <td className="py-2 px-3">
+                  <td className="py-2 px-3 border border-yellow-200">
                     <button
                       onClick={async () => {
                         await updateStatus({ id: c.id, status: "concluído" });
@@ -183,16 +198,16 @@ export function Dashboard() {
                       Atendido
                     </button>
                   </td>
-                  <td className="py-2 px-3">{c["Endereço de e-mail"]}</td>
-                  <td className="py-2 px-3">{c["Sala"]}</td>
-                  <td className="py-2 px-3">{c["Carimbo de data/hora"]}</td>
-                  <td className="py-2 px-3">{c["Qual a outra categoria?"]}</td>
-                  <td className="py-2 px-3">
+                  <td className="py-2 px-3 border border-yellow-200">{c["Endereço de e-mail"]}</td>
+                  <td className="py-2 px-3 border border-yellow-200">{c["Sala"]}</td>
+                  <td className="py-2 px-3 border border-yellow-200">{c["Carimbo de data/hora"]}</td>
+                  <td className="py-2 px-3 border border-yellow-200">{c["Qual a outra categoria?"]}</td>
+                  <td className="py-2 px-3 border border-yellow-200">
                     <a href={`http://${c["Imagem descritiva"]}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                       {c["Imagem descritiva"]}
                     </a>
                   </td>
-                  <td className="py-2 px-3">{c["Descrição"]}</td>
+                  <td className="py-2 px-3 border border-yellow-200">{c["Descrição"]}</td>
                 </tr>
               ))
             )}
@@ -200,6 +215,9 @@ export function Dashboard() {
         </table>
       </div>
       <style>{`
+        table, th, td {
+          border-collapse: collapse;
+        }
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: none; }
