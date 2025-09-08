@@ -18,7 +18,7 @@ export function Header() {
         <h1 className="text-lg sm:text-2xl font-extrabold text-center sm:text-left flex-1 text-gray-900 tracking-wide drop-shadow-sm">
           Bright Bee School
         </h1>
-        <nav className="flex flex-wrap justify-center sm:justify-end gap-2 sm:gap-4 mt-2 sm:mt-0">
+{/*        <nav className="flex flex-wrap justify-center sm:justify-end gap-2 sm:gap-4 mt-2 sm:mt-0">
           {[
             ["Todos", "/dashboard"],
             ["Abertos", "/abertos"],
@@ -33,7 +33,7 @@ export function Header() {
               {title}
             </a>
           ))}
-        </nav>
+        </nav>*/}
       </div>
     </header>
   );
