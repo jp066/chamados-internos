@@ -10,12 +10,12 @@ export function Dashboard() {
   ]; // Dados estáticos para demonstração, os dados ideias serão do firestore.
 
   const chamados = [
-    { id: 1, titulo: "Erro no login", status: "Aberto", data: "05/09/2025" },
-    { id: 3, titulo: "Solicitação de acesso", status: "Concluído", data: "03/09/2025" },
-    { id: 4, titulo: "Bug no relatório", status: "Aberto", data: "02/09/2025" },
+    { id: 1, titulo: "Teste", status: "Aberto", data: "05/09/2025" },
+    { id: 3, titulo: "Teste", status: "Concluído", data: "03/09/2025" },
+    { id: 4, titulo: "Teste", status: "Aberto", data: "02/09/2025" },
   ]; // Dados estáticos para demonstração, os dados ideias serão do firestore.
 
-  const [busca, setBusca] = useState(""); // o UseState é 
+  const [busca, setBusca] = useState("");  
   const chamadosFiltrados = useMemo(() => {
     if (!busca) return chamados;
     return chamados.filter(
