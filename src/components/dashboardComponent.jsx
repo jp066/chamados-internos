@@ -157,6 +157,7 @@ export function Dashboard() {
                         </option>
                       ))}
                     </select>
+                    {/* adicionar inserção de atendente no firestore e atualização do estado */}
                   </td>
                   <td className="py-2 px-3 font-mono border border-yellow-200">{c["Categoria"]}</td>
                   <td className="py-2 px-3 border border-yellow-200">
@@ -193,7 +194,8 @@ export function Dashboard() {
                           setLoading(false);
                         }
                       }}
-                      className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+                      className="bg-green-100 border-green-200 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-400 transition-shadow rounded-lg text-green-800 font-semibold disabled:opacity-50"
+                      disabled={c.status === "concluído"}
                     >
                       Atendido
                     </button>
