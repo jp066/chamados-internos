@@ -8,8 +8,8 @@ import { CardComponent } from "./cardComponent.jsx";
 export function Dashboard() {
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
-  const [setLoading] = useState(true);
-  const [setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
