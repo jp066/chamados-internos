@@ -5,7 +5,7 @@ import {
   setTotalChamadosF,
   updateStatus,
 } from "../services/firestoreService.js";
-
+import { formatDate } from "../services/firestoreService.js";
 export function Dashboard() {
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
@@ -199,10 +199,32 @@ export function Dashboard() {
                     >
                       Atendido
                     </button>
+                    {/* botão "Reabrir" */}
+                    <button
+                      onClick={async () => {
+                        await updateStatus({ id: c.id, status: "em aberto" });
+                        setLoading(true);
+                        setError(null);
+                        try {
+                          const data = await getChamados();
+                          setchamados(data || []);
+                          const total = await setTotalChamadosF();
+                          setTotalChamados(total);
+                        } catch (err) {
+                          setError("Erro ao buscar chamados: " + err.message);
+                        } finally {
+                          setLoading(false);
+                        }
+                      }}
+                      className="bg-yellow-100 border-yellow-200 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow rounded-lg text-yellow-800 font-semibold disabled:opacity-50 mt-2"
+                      disabled={c.status === "em aberto"}
+                    >
+                      Reabrir
+                    </button>
                   </td>
                   <td className="py-2 px-3 border border-yellow-200">{c["Endereço de e-mail"]}</td>
                   <td className="py-2 px-3 border border-yellow-200">{c["Sala"]}</td>
-                  <td className="py-2 px-3 border border-yellow-200">{c["Carimbo de data/hora"]}</td>
+                  <td className="py-2 px-3 border border-yellow-200">{formatDate(c["Carimbo de data/hora"])}</td>
                   <td className="py-2 px-3 border border-yellow-200">{c["Qual a outra categoria?"]}</td>
                   <td className="py-2 px-3 border border-yellow-200">
                     <a href={`http://${c["Imagem descritiva"]}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
