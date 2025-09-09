@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
-import {
+import { RxDashboard } from "react-icons/rx";import {
   getChamados,
   setTotalChamadosF,
   updateStatus,
@@ -58,12 +58,7 @@ export function Dashboard() {
   );
 
   const [busca, setBusca] = useState("");
-  const atendentes = [
-    "Rafael",
-    "Vitoria",
-    "Alexandre",
-    "João Pedro",
-  ];
+  const atendentes = ["Rafael", "Vitoria", "Alexandre", "João Pedro"];
   const chamadosFiltrados = useMemo(() => {
     if (!busca) return chamados;
     const termo = busca.toLowerCase();
@@ -91,7 +86,7 @@ export function Dashboard() {
   }, [busca, chamados]);
 
   return (
-    <section className="text-gray-800 p-4 sm:p-8 bg-gradient-to-r from-yellow-100 via-yellow-50 to-yellow-100 shadow-inner w-full animate-fade-in">
+    <section className="font-sans text-gray-800 p-4 sm:p-8 bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-brightbee-50 shadow-inner w-full animate-fade-in">
       <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
         {stats.map((stat) => (
           <div
@@ -102,15 +97,15 @@ export function Dashboard() {
             <span className="text-3xl font-extrabold drop-shadow-sm">
               {stat.value}
             </span>
-            <span className="text-sm font-medium mt-1 text-center">
+            <p className="text-md sm:text-lg text-center sm:text-right font-sans">
               {stat.label}
-            </span>
+            </p>
           </div>
         ))}
       </div>
       <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 overflow-x-auto">
         <h3 className="text-lg font-semibold mb-4 text-gray-900 flex items-center gap-2">
-          <FaExclamationCircle className="text-yellow-500" /> Chamados
+          <RxDashboard className="text-yellow-500" size={25}/> Chamados
         </h3>
         <input
           type="text"
@@ -119,24 +114,22 @@ export function Dashboard() {
           onChange={(e) => setBusca(e.target.value)}
           className="mb-6 px-3 py-2 border border-yellow-200 rounded w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
         />
-  <table className="min-w-full text-left text-sm border border-yellow-300 rounded-lg">
+        <table className="min-w-full text-left text-sm border border-brigtbee-200 rounded-lg">
           {loading && <p>Carregando...</p>}
           {error && <p className="text-red-500">{error}</p>}
           <thead>
-            <tr className="border-b bg-yellow-50">
+            <tr className="bg-yellow-100 text-yellow-800 border-b border-yellow-200">
               <th className="py-2 px-3">Atendente</th>
               <th className="py-2 px-3">Categoria</th>
               <th className="py-2 px-3">Status</th>
               <th className="py-2 px-3"></th>
               <th className="py-2 px-3">Email</th>
-              <th className="py-2 px-3">Sala</th>
               <th className="py-2 px-3">Data/Hora</th>
-              <th className="py-2 px-3">Qual a outra categoria?</th>
-              <th className="py-2 px-3">Imagem descritiva</th>
+              <th className="py-2 px-3">Problema</th>
               <th className="py-2 px-3">Descrição</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-yellow-200">
+          <tbody className="divide-y divide-brightbee-200">
             {chamadosFiltrados.length === 0 ? (
               <tr>
                 <td colSpan={4} className="py-4 text-center text-gray-400">
@@ -150,7 +143,11 @@ export function Dashboard() {
                   className="border-b hover:bg-yellow-50 transition-colors"
                 >
                   <td className="py-2 px-3 font-mono border border-yellow-200">
-                    <select name="atendente" id="" className="bg-yellow-100 border-yellow-200 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow rounded-lg">
+                    <select
+                      name="atendente"
+                      id=""
+                      className="bg-yellow-100 border-yellow-200 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow rounded-lg"
+                    >
                       {atendentes.map((atendente) => (
                         <option key={atendente} value={atendente}>
                           {atendente}
@@ -159,7 +156,9 @@ export function Dashboard() {
                     </select>
                     {/* adicionar inserção de atendente no firestore e atualização do estado */}
                   </td>
-                  <td className="py-2 px-3 font-mono border border-yellow-200">{c["Categoria"]}</td>
+                  <td className="py-2 px-3 font-mono border border-yellow-200">
+                    {c["Categoria"]}
+                  </td>
                   <td className="py-2 px-3 border border-yellow-200">
                     <span
                       className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold ${
@@ -199,7 +198,6 @@ export function Dashboard() {
                     >
                       Atendido
                     </button>
-                    {/* botão "Reabrir" */}
                     <button
                       onClick={async () => {
                         await updateStatus({ id: c.id, status: "em aberto" });
@@ -222,16 +220,40 @@ export function Dashboard() {
                       Reabrir
                     </button>
                   </td>
-                  <td className="py-2 px-3 border border-yellow-200">{c["Endereço de e-mail"]}</td>
-                  <td className="py-2 px-3 border border-yellow-200">{c["Sala"]}</td>
-                  <td className="py-2 px-3 border border-yellow-200">{formatDate(c["Carimbo de data/hora"])}</td>
-                  <td className="py-2 px-3 border border-yellow-200">{c["Qual a outra categoria?"]}</td>
                   <td className="py-2 px-3 border border-yellow-200">
-                    <a href={`http://${c["Imagem descritiva"]}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    {c["Endereço de e-mail"]}
+                  </td>
+                  <td className="py-2 px-3 border border-yellow-200">
+                    {formatDate(c["Carimbo de data/hora"])}
+                  </td>
+                  <td className="py-2 px-3 border border-yellow-200">
+                    {c["O que ocorreu com o RM?"] ? (
+                      <span>{c["O que ocorreu com o RM?"]}</span>
+                    ) : c["O que ocorreu com o Remark?"] ? (
+                      <span>{c["O que ocorreu com o Remark?"]}</span>
+                    ) : c["O que ocorreu com o Workchat?"] ? (
+                      <span>{c["O que ocorreu com o Workchat?"]}</span>
+                    ) : c["O que ocorreu com o ZapSign?"] ? (
+                      <span>{c["O que ocorreu com o ZapSign?"]}</span>
+                    ) : c["O que ocorreu com os Portais?"] ? (
+                      <span>{c["O que ocorreu com os Portais?"]}</span>
+                    ) : (
+                      <span>{c["Qual a outra categoria?"]}</span>
+                    )}
+                  </td>
+                  {/*<td className="py-2 px-3 border border-yellow-200">
+                    <a
+                      href={`${c["Imagem descritiva"]}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline"
+                    >
                       {c["Imagem descritiva"]}
                     </a>
+                  </td>*/}
+                  <td className="py-2 px-3 border border-yellow-200">
+                    {c["Descrição"]}
                   </td>
-                  <td className="py-2 px-3 border border-yellow-200">{c["Descrição"]}</td>
                 </tr>
               ))
             )}
