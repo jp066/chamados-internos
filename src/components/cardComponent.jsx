@@ -76,7 +76,7 @@ export function CardComponent() {
         />
       </div>
 
-      {loading && <p>Carregando...</p>}
+      {loading && <p>Carregando...{totalChamados}</p>}
       {error && <p className="text-red-500">{error}</p>}
       {chamadosFiltrados.length === 0 ? (
         <div className="col-span-full py-4 text-center text-gray-400">

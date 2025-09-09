@@ -76,6 +76,8 @@ export function Dashboard() {
         ))}
       </div>
       <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 overflow-x-auto">
+        {loading && <p className="text-gray-500">Carregando chamados...</p>}
+        {error && <p className="text-red-500">{error}</p>}
         <CardComponent />
       </div>
       <style>{`
