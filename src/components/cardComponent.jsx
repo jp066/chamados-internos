@@ -9,7 +9,7 @@ import {
 import { formatDate } from "../services/firestoreService.js";
 
 export function CardComponent() {
-  const [totalChamados, setTotalChamados] = useState(0);
+  const [setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

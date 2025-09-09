@@ -3,15 +3,13 @@ import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import {
   getChamados,
   setTotalChamadosF,
-  updateStatus,
-} from "../services/firestoreService.js";
+  } from "../services/firestoreService.js";
 import { CardComponent } from "./cardComponent.jsx";
-import { formatDate } from "../services/firestoreService.js";
 export function Dashboard() {
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [setLoading] = useState(true);
+  const [setError] = useState(null);
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
