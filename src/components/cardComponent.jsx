@@ -35,7 +35,7 @@ export function CardComponent(props) {
     }
     fetchTotal();
   }, []);
-//  const atendentes = ["Rafael", "Vitoria", "Alexandre", "João Pedro"];
+  //  const atendentes = ["Rafael", "Vitoria", "Alexandre", "João Pedro"];
   const [busca, setBusca] = useState("");
   const chamadosFiltrados = useMemo(() => {
     if (!busca) return chamados;
@@ -81,12 +81,12 @@ export function CardComponent(props) {
 
       {loading && <p>Carregando...{totalChamados}</p>}
       {error && <p className="text-red-500">{error}</p>}
-      {chamadosFiltrados.length === 0 ? (
+      {chamadosFilter.length === 0 ? (
         <div className="col-span-full py-4 text-center text-gray-400">
           Nenhum chamado encontrado.
         </div>
       ) : (
-        chamadosFiltrados.map((c) => (
+        chamadosFilter.map((c) => (
           <div
             key={c.id || c["Categoria"]}
             className="bg-brightbee-50 rounded-3xl shadow-lg p-4 sm:p-6 flex flex-col gap-2 font-sans"
@@ -133,7 +133,7 @@ export function CardComponent(props) {
               <strong>Descrição: </strong>
               {c["Descrição"] ? c["Descrição"] : "Sem descrição"}
             </p>
-{/*
+            {/*
             <select
               name="atendente"
               id=""
