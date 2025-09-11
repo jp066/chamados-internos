@@ -1,15 +1,17 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import { GrRadialSelected } from "react-icons/gr";
 import {
   getChamados,
   setTotalChamadosF,
-  } from "../services/firestoreService.js";
+} from "../services/firestoreService.js";
 import { CardComponent } from "./cardComponent.jsx";
 export function Dashboard() {
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filtro, setFiltro] = useState("Total de Chamados");
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -55,30 +57,49 @@ export function Dashboard() {
     ],
     [totalChamados, chamados]
   );
+  // Função para alterar o filtro ao clicar nos botões
+  const escolha = (stat) => {
+    setFiltro(stat.label);
+  };
 
-
+  // Chamados filtrados conforme o filtro selecionado
+  const chamadosFiltrados = useMemo(() => {
+    if (filtro === "Abertos") {
+      return chamados.filter((c) => c.status === "em aberto");
+    }
+    if (filtro === "Concluídos") {
+      return chamados.filter((c) => c.status === "concluído");
+    }
+    return chamados;
+  }, [chamados, filtro]);
   return (
     <section className="font-sans text-gray-800 p-4 sm:p-8 bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-brightbee-50 shadow-inner w-full animate-fade-in">
       <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
         {stats.map((stat) => (
-          <div
+          <button
+            className={`focus:outline-none w-full`}
             key={stat.label}
-            className={`rounded-3xl shadow-lg p-5 flex flex-col items-center transition-transform duration-200 hover:scale-105 ${stat.color}`}
+            onClick={() => escolha(stat)}
           >
-            {stat.icon}
-            <span className="text-2xl font-extrabold drop-shadow-sm">
-              {stat.value}
-            </span>
-            <p className="text-md sm:text-lg text-center sm:text-right font-sans">
-              {stat.label}
-            </p>
-          </div>
+            <div
+              className={`rounded-3xl shadow-lg p-5 flex flex-col items-center transition-transform duration-200 hover:scale-105 ${stat.color}`}
+            >
+              {stat.icon}
+              <span className="text-2xl font-extrabold drop-shadow-sm">
+                {stat.value}
+              </span>
+              <p className="text-md sm:text-lg text-center sm:text-right font-sans flex items-center gap-2">
+                {stat.label}
+                {filtro === stat.label && <GrRadialSelected className="inline text-blue-600" />}
+              </p>
+            </div>
+          </button>
         ))}
       </div>
       <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 overflow-x-auto">
         {loading && <p className="text-gray-500">Carregando chamados...</p>}
         {error && <p className="text-red-500">{error}</p>}
-        <CardComponent />
+        <CardComponent chamadosFilter={chamadosFiltrados} />
       </div>
       <style>{`
         table, th, td {

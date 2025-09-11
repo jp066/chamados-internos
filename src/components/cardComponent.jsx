@@ -8,7 +8,8 @@ import {
 } from "../services/firestoreService.js";
 import { formatDate } from "../services/firestoreService.js";
 
-export function CardComponent() {
+export function CardComponent(props) {
+  const { chamadosFilter } = props;
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
   const [loading, setLoading] = useState(true);
