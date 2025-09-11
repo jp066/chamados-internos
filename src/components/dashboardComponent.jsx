@@ -72,6 +72,20 @@ export function Dashboard() {
     }
     return chamados;
   }, [chamados, filtro]);
+
+  async function fetchChamados() {
+  setLoading(true);
+  setError(null);
+  try {
+    const data = await getChamados();
+    setchamados(data || []);
+  } catch (err) {
+    setError("Erro ao buscar chamados: " + err.message);
+  } finally {
+    setLoading(false);
+  }
+}
+
   return (
     <section className="font-sans text-gray-800 p-4 sm:p-8 bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-brightbee-50 shadow-inner w-full animate-fade-in">
       <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
@@ -90,7 +104,9 @@ export function Dashboard() {
               </span>
               <p className="text-md sm:text-lg text-center sm:text-right font-sans flex items-center gap-2">
                 {stat.label}
-                {filtro === stat.label && <GrRadialSelected className="inline text-blue-600" />}
+                {filtro === stat.label && (
+                  <GrRadialSelected className="inline text-blue-600" />
+                )}
               </p>
             </div>
           </button>
@@ -99,7 +115,10 @@ export function Dashboard() {
       <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 overflow-x-auto">
         {loading && <p className="text-gray-500">Carregando chamados...</p>}
         {error && <p className="text-red-500">{error}</p>}
-        <CardComponent chamadosFilter={chamadosFiltrados} />
+        <CardComponent
+          chamadosFilter={chamadosFiltrados}
+          onStatusChange={fetchChamados}
+        />
       </div>
       <style>{`
         table, th, td {
