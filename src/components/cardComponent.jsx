@@ -37,33 +37,33 @@ export function CardComponent(props) {
   }, []);
   //  const atendentes = ["Rafael", "Vitoria", "Alexandre", "João Pedro"];
   const [busca, setBusca] = useState("");
-  const chamadosFiltrados = useMemo(() => {
-    if (!busca) return chamados;
-    const termo = busca.toLowerCase();
-    return chamados.filter((valor) => {
-      const descricao = valor["Descrição"]
-        ? valor["Descrição"].toLowerCase()
-        : "";
-      const problema = valor["Problema"] ? valor["Problema"].toLowerCase : "";
-      const categoria = valor["Categoria"]
-        ? valor["Categoria"].toLowerCase()
-        : "";
-      const sala = valor["Sala"] ? valor["Sala"].toLowerCase() : "";
-      const status = valor["status"] ? valor["status"].toLowerCase() : "";
-      const email = valor["Endereço de e-mail"]
-        ? valor["Endereço de e-mail"].toLowerCase()
-        : "";
-      return (
-        descricao.includes(termo) ||
-        categoria.includes(termo) ||
-        status.includes(termo) ||
-        email.includes(termo) ||
-        sala.includes(termo) ||
-        problema.includes(termo) ||
-        (valor.id && valor.id.toString().includes(busca))
-      );
-    });
-  }, [busca, chamados]);
+//  const chamadosFiltrados = useMemo(() => {
+//    if (!busca) return chamados;
+//    const termo = busca.toLowerCase();
+//    return chamados.filter((valor) => {
+//      const descricao = valor["Descrição"]
+//        ? valor["Descrição"].toLowerCase()
+//        : "";
+//      const problema = valor["Problema"] ? valor["Problema"].toLowerCase : "";
+//      const categoria = valor["Categoria"]
+//        ? valor["Categoria"].toLowerCase()
+//        : "";
+//      const sala = valor["Sala"] ? valor["Sala"].toLowerCase() : "";
+//      const status = valor["status"] ? valor["status"].toLowerCase() : "";
+//      const email = valor["Endereço de e-mail"]
+//        ? valor["Endereço de e-mail"].toLowerCase()
+//        : "";
+//      return (
+//        descricao.includes(termo) ||
+//        categoria.includes(termo) ||
+//        status.includes(termo) ||
+//        email.includes(termo) ||
+//        sala.includes(termo) ||
+//        problema.includes(termo) ||
+//        (valor.id && valor.id.toString().includes(busca))
+//      );
+//    });
+//  }, [busca, chamados]);
   return (
     <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
       <h3 className="text-lg font-semibold mb-4 text-gray-900 flex items-center gap-2">
