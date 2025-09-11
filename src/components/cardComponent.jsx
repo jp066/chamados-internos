@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react"; // useMemo
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import {
@@ -14,6 +14,7 @@ export function CardComponent(props) {
   const [chamados, setchamados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  console.log("Chamados no Card:", chamados);
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
