@@ -1,5 +1,13 @@
 // services/firestoreService.js
-import { doc, updateDoc, Timestamp, collection, getDocs } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  Timestamp,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+} from "firebase/firestore";
 import { db } from "../firebase.js";
 
 export async function getChamados() {
@@ -10,8 +18,21 @@ export async function getChamados() {
       id: doc.id,
       ...doc.data(),
     }));
-    console.log("Chamados fetched:", chamados);
-    return chamados;
+    const chamadosOrdenados = chamados.sort((a, b) => {
+      const dateA = new Date(
+        a["Carimbo de data/hora"] instanceof Timestamp ? 
+          a["Carimbo de data/hora"].toDate() :
+          new Date(a["Carimbo de data/hora"].seconds * 1000)
+      );
+      const dateB = new Date(
+        b["Carimbo de data/hora"] instanceof Timestamp ?
+          b["Carimbo de data/hora"].toDate() :
+          new Date(b["Carimbo de data/hora"].seconds * 1000)
+      );
+      return dateB - dateA;
+    });
+    console.log(chamadosOrdenados);
+    return chamadosOrdenados;
   } catch (err) {
     console.error("Error fetching chamados:", err);
   }
@@ -25,7 +46,7 @@ export async function setTotalChamadosF() {
       return snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-      })); 
+      }));
     };
     return (await chamados()).length;
   } catch (err) {
@@ -33,23 +54,26 @@ export async function setTotalChamadosF() {
   }
 }
 
-
 export async function updateStatus({ id, status }) {
-    try {
-      const chamadosCollection = collection(db, "chamados");
-      const docRef = doc(chamadosCollection, id);
-      await updateDoc(docRef, { status });
-      console.log(`Status atualizado para ${status}!`);
-    } catch (error) {
-      console.error("Erro ao atualizar status:", error);
-    }
+  try {
+    const chamadosCollection = collection(db, "chamados");
+    const docRef = doc(chamadosCollection, id);
+    await updateDoc(docRef, { status });
+    console.log(`Status atualizado para ${status}!`);
+  } catch (error) {
+    console.error("Erro ao atualizar status:", error);
+  }
   return;
 }
 
 export function formatDate(timestamp) {
   if (!timestamp) return "";
-  const date = timestamp instanceof Timestamp
-    ? timestamp.toDate()
-    : new Date(timestamp.seconds * 1000);
-  return date.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  const date =
+    timestamp instanceof Timestamp
+      ? timestamp.toDate()
+      : new Date(timestamp.seconds * 1000);
+  const dateSplit = date
+    .toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+    .split(",");
+  return dateSplit[0] + " - " + dateSplit[1].trim();
 }
