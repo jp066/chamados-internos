@@ -34,7 +34,7 @@ export function CardComponent() {
     }
     fetchTotal();
   }, []);
-  const atendentes = ["Rafael", "Vitoria", "Alexandre", "João Pedro"];
+//  const atendentes = ["Rafael", "Vitoria", "Alexandre", "João Pedro"];
   const [busca, setBusca] = useState("");
   const chamadosFiltrados = useMemo(() => {
     if (!busca) return chamados;
@@ -103,13 +103,16 @@ export function CardComponent() {
             </p>
             {c["A solicitação é referente a qual modulo?"] ? (
               <p className="text-md sm:text-lg text-center sm:text-left font-sans">
-                <strong>Modulo: </strong>{c["A solicitação é referente a qual modulo?"]}
+                <strong>Modulo: </strong>
+                {c["A solicitação é referente a qual modulo?"]}
               </p>
             ) : null}
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
               <strong>Problema: </strong>
-              {(c["O que ocorreu com o TOTVS RM?"] || c["O que ocorreu com o RM?"])
-                ? (c["O que ocorreu com o TOTVS RM?"] || c["O que ocorreu com o RM?"])
+              {c["O que ocorreu com o TOTVS RM?"] ||
+              c["O que ocorreu com o RM?"]
+                ? c["O que ocorreu com o TOTVS RM?"] ||
+                  c["O que ocorreu com o RM?"]
                 : c["O que ocorreu com o Remark?"]
                 ? c["O que ocorreu com o Remark?"]
                 : c["O que ocorreu com o Workchat?"]
@@ -129,6 +132,7 @@ export function CardComponent() {
               <strong>Descrição: </strong>
               {c["Descrição"] ? c["Descrição"] : "Sem descrição"}
             </p>
+{/*
             <select
               name="atendente"
               id=""
@@ -140,6 +144,7 @@ export function CardComponent() {
                 </option>
               ))}
             </select>
+*/}
             <span
               className={`inline-flex items-center gap-1 px-2 py-2 rounded-full text-xs font-semibold font-sans ${
                 c.status === "em aberto"
