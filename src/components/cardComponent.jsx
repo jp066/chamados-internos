@@ -43,6 +43,7 @@ export function CardComponent() {
       const descricao = valor["Descrição"]
         ? valor["Descrição"].toLowerCase()
         : "";
+      const problema = valor["Problema"] ? valor["Problema"].toLowerCase : "";
       const categoria = valor["Categoria"]
         ? valor["Categoria"].toLowerCase()
         : "";
@@ -57,6 +58,7 @@ export function CardComponent() {
         status.includes(termo) ||
         email.includes(termo) ||
         sala.includes(termo) ||
+        problema.includes(termo) ||
         (valor.id && valor.id.toString().includes(busca))
       );
     });
@@ -92,17 +94,22 @@ export function CardComponent() {
               {c["Categoria"]}
             </span>
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
-              <strong>Email:{" "}</strong>
+              <strong>Email: </strong>
               {c["Endereço de e-mail"]}
             </p>
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
-              <strong>Data:{" "}</strong>
+              <strong>Data: </strong>
               {formatDate(c["Carimbo de data/hora"])}
             </p>
+            {c["A solicitação é referente a qual modulo?"] ? (
+              <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+                <strong>Modulo: </strong>{c["A solicitação é referente a qual modulo?"]}
+              </p>
+            ) : null}
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
-              <strong>Problema:{" "}</strong>
-              {c["O que ocorreu com o RM?"]
-                ? c["O que ocorreu com o RM?"]
+              <strong>Problema: </strong>
+              {(c["O que ocorreu com o TOTVS RM?"] || c["O que ocorreu com o RM?"])
+                ? (c["O que ocorreu com o TOTVS RM?"] || c["O que ocorreu com o RM?"])
                 : c["O que ocorreu com o Remark?"]
                 ? c["O que ocorreu com o Remark?"]
                 : c["O que ocorreu com o Workchat?"]
@@ -113,8 +120,13 @@ export function CardComponent() {
                 ? c["O que ocorreu com os Portais?"]
                 : c["Qual a outra categoria?"]}
             </p>
+            {c["O que ocorreu com o TOTVS RM?"] ? (
+              <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+                <strong>Usuario:</strong> {c["Informe o nome do usuario:"]}
+              </p>
+            ) : null}
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
-              <strong>Descrição:{" "}</strong>
+              <strong>Descrição: </strong>
               {c["Descrição"] ? c["Descrição"] : "Sem descrição"}
             </p>
             <select
