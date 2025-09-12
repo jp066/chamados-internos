@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const loginGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -22,6 +23,7 @@ export default function App() {
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setLoading(false);
       if (currentUser) {
         console.log("Usuário logado:", currentUser);
         const uid = currentUser.uid;

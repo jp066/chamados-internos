@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"; // useMemo
-import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import { FaCheckCircle, FaExclamationCircle, FaClock } from "react-icons/fa";
 import { RxDashboard, RxLockOpen2, RxLockClosed } from "react-icons/rx";
 import { handlerEnviarResposta } from "../services/firestoreService.js";
 import {
@@ -43,7 +43,6 @@ export function CardComponent(props) {
     }
     fetchTotal();
   }, []);
-  //  const atendentes = ["Rafael", "Vitoria", "Alexandre", "João Pedro"];
   const [busca, setBusca] = useState("");
   /*  const chamadosFiltrados = useMemo(() => {
     if (!busca) return chamados;
@@ -102,9 +101,14 @@ export function CardComponent(props) {
             <span className="text-md sm:text-lg text-center sm:text-left font-semibold font-sans">
               {c["Categoria"]}
             </span>
+            <button
+            color="gray"
+            >
+              <FaClock />
+            </button>
             {/*
               Usuario logado que fechou o chamado
-              */}
+            */}
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
               <strong>Email: </strong>
               {c["Endereço de e-mail"]}
@@ -185,27 +189,6 @@ export function CardComponent(props) {
             <br />
             <button
               onClick={async () => {
-                await updateStatus({ id: c.id, status: "concluído" });
-                setError(null);
-                try {
-                  const data = await getChamados();
-                  setchamados(data || []);
-                  const total = await setTotalChamadosF();
-                  setTotalChamados(total);
-                  onStatusChange();
-                } catch (err) {
-                  setError("Erro ao buscar chamados: " + err.message);
-                } finally {
-                  setLoading(false);
-                }
-              }}
-              className="bg-green-400 border-green-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition-shadow text-green-800 font-semibold disabled:opacity-50 font-sans"
-              disabled={c.status === "concluído"}
-            >
-              Atendido
-            </button>
-            <button
-              onClick={async () => {
                 await updateStatus({ id: c.id, status: "em aberto" });
                 setLoading(true);
                 setError(null);
@@ -226,14 +209,41 @@ export function CardComponent(props) {
             >
               Reabrir
             </button>
-            {c.status === "concluído" && (
+            <button
+              onClick={async () => {
+                await updateStatus({ id: c.id, status: "concluído" });
+                await handlerEnviarResposta(
+                  c["Endereço de e-mail"],
+                  c.id,
+                  respostas[c.id]
+                );
+                setError(null);
+                try {
+                  const data = await getChamados();
+                  setchamados(data || []);
+                  const total = await setTotalChamadosF();
+                  setTotalChamados(total);
+                  onStatusChange();
+                } catch (err) {
+                  setError("Erro ao buscar chamados: " + err.message);
+                } finally {
+                  setLoading(false);
+                }
+              }}
+              className="bg-green-400 border-green-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition-shadow text-green-800 font-semibold disabled:opacity-50 font-sans"
+              disabled={c.status === "concluído"}
+            >
+              Atendido
+            </button>
+            {c.status === "em aberto" ? c.status === "em aberto" && (
               <>
                 <input
                   type="text"
-                  required
                   placeholder="Resposta do atendimento"
                   value={respostas[c.id] || ""}
-                  onChange={(e) => setRespostas({ ...respostas, [c.id]: e.target.value })}
+                  onChange={(e) =>
+                    setRespostas({ ...respostas, [c.id]: e.target.value })
+                  }
                   className="font-sans min-w-full text-left text-sm border border-brightbee-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
                 />
                 <button
@@ -263,7 +273,7 @@ export function CardComponent(props) {
                   </span>
                 </button>
               </>
-            )}
+            ) : ''}
           </div>
         ))
       )}
