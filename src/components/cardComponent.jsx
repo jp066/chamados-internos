@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react"; // useMemo
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { RxDashboard, RxLockOpen2, RxLockClosed } from "react-icons/rx";
-
+import { handlerEnviarResposta } from "../services/firestoreService.js";
 import {
   getChamados,
   setTotalChamadosF,
   updateStatus,
 } from "../services/firestoreService.js";
-import { formatDate } from "../services/firestoreService.js";// , handlerEnviarResposta
+import { formatDate } from "../services/firestoreService.js"; // , handlerEnviarResposta
+import Swal from "sweetalert2";
 
 export function CardComponent(props) {
   const [respostas, setRespostas] = useState({});
@@ -44,7 +45,7 @@ export function CardComponent(props) {
   }, []);
   //  const atendentes = ["Rafael", "Vitoria", "Alexandre", "João Pedro"];
   const [busca, setBusca] = useState("");
-/*  const chamadosFiltrados = useMemo(() => {
+  /*  const chamadosFiltrados = useMemo(() => {
     if (!busca) return chamados;
     const termo = busca.toLowerCase();
     return chamados.filter((valor) => {
@@ -142,11 +143,11 @@ export function CardComponent(props) {
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
               <strong>Descrição: </strong>
               {c["Descrição"]
-                ? (descricaoExpandida[c.id]
-                    ? c["Descrição"]
-                    : c["Descrição"].length > 100
-                      ? c["Descrição"].slice(0, 100) + '...'
-                      : c["Descrição"])
+                ? descricaoExpandida[c.id]
+                  ? c["Descrição"]
+                  : c["Descrição"].length > 100
+                  ? c["Descrição"].slice(0, 100) + "..."
+                  : c["Descrição"]
                 : "Sem descrição"}
             </p>
             {c["Descrição"] && c["Descrição"].length > 100 && (
@@ -159,10 +160,11 @@ export function CardComponent(props) {
                   }))
                 }
               >
-                {descricaoExpandida[c.id] ? <RxLockClosed
-                  size={24}
-                  color="gray"
-                /> : <RxLockOpen2 size={24} color="gray" />}
+                {descricaoExpandida[c.id] ? (
+                  <RxLockClosed size={24} color="gray" />
+                ) : (
+                  <RxLockOpen2 size={24} color="gray" />
+                )}
               </button>
             )}
             <span
@@ -228,16 +230,33 @@ export function CardComponent(props) {
               <>
                 <input
                   type="text"
+                  required
                   placeholder="Resposta do atendimento"
-                  value={respostas[c.id] || ""} // vincula o valor do input.
-//                  onChange={(e) => setRespostas({ ...respostas, [c.id]: e.target.value })}
+                  value={respostas[c.id] || ""}
+                  onChange={(e) => setRespostas({ ...respostas, [c.id]: e.target.value })}
                   className="font-sans min-w-full text-left text-sm border border-brightbee-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
                 />
                 <button
                   className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-brightbee-50"
-                  //onClick={() => {
-                  //  handlerEnviarResposta(c.email, c.id, respostas[c.id]);
-                  //}}
+                  onClick={() => {
+                    if (!respostas[c.id] || respostas[c.id].trim() === "") {
+                      Swal.fire({
+                        title: "A resposta é obrigatória",
+                        text: "Por favor, insira uma resposta antes de enviar.",
+                        icon: "warning",
+                        confirmButtonText: "OK",
+                        backdrop: true,
+                        confirmButtonColor: "#fbbf24",
+                        timer: 3000,
+                      });
+                      return;
+                    }
+                    handlerEnviarResposta(
+                      c["Endereço de e-mail"],
+                      c.id,
+                      respostas[c.id]
+                    );
+                  }}
                 >
                   <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-yellow-400 rounded-full group-hover:bg-transparent group-hover:dark:bg-transparent font-semibold font-sans">
                     Enviar resposta
