@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react"; // useMemo
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
-import { RxDashboard } from "react-icons/rx";
+import { RxDashboard, RxLockOpen2, RxLockClosed } from "react-icons/rx";
+
 import {
   getChamados,
   setTotalChamadosF,
   updateStatus,
 } from "../services/firestoreService.js";
-import { formatDate } from "../services/firestoreService.js";
+import { formatDate } from "../services/firestoreService.js";// , handlerEnviarResposta
 
 export function CardComponent(props) {
+  const [respostas, setRespostas] = useState({});
+  console.log("Respostas:", setRespostas);
   const { chamadosFilter } = props;
   const { onStatusChange } = props;
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // Estado para controlar descrição expandida/reduzida por card
+  const [descricaoExpandida, setDescricaoExpandida] = useState({});
   console.log("Chamados no Card:", chamados);
   useEffect(() => {
     async function fetchData() {
@@ -39,33 +44,33 @@ export function CardComponent(props) {
   }, []);
   //  const atendentes = ["Rafael", "Vitoria", "Alexandre", "João Pedro"];
   const [busca, setBusca] = useState("");
-  //  const chamadosFiltrados = useMemo(() => {
-  //    if (!busca) return chamados;
-  //    const termo = busca.toLowerCase();
-  //    return chamados.filter((valor) => {
-  //      const descricao = valor["Descrição"]
-  //        ? valor["Descrição"].toLowerCase()
-  //        : "";
-  //      const problema = valor["Problema"] ? valor["Problema"].toLowerCase : "";
-  //      const categoria = valor["Categoria"]
-  //        ? valor["Categoria"].toLowerCase()
-  //        : "";
-  //      const sala = valor["Sala"] ? valor["Sala"].toLowerCase() : "";
-  //      const status = valor["status"] ? valor["status"].toLowerCase() : "";
-  //      const email = valor["Endereço de e-mail"]
-  //        ? valor["Endereço de e-mail"].toLowerCase()
-  //        : "";
-  //      return (
-  //        descricao.includes(termo) ||
-  //        categoria.includes(termo) ||
-  //        status.includes(termo) ||
-  //        email.includes(termo) ||
-  //        sala.includes(termo) ||
-  //        problema.includes(termo) ||
-  //        (valor.id && valor.id.toString().includes(busca))
-  //      );
-  //    });
-  //  }, [busca, chamados]);
+/*  const chamadosFiltrados = useMemo(() => {
+    if (!busca) return chamados;
+    const termo = busca.toLowerCase();
+    return chamados.filter((valor) => {
+      const descricao = valor["Descrição"]
+        ? valor["Descrição"].toLowerCase()
+        : "";
+      const problema = valor["Problema"] ? valor["Problema"].toLowerCase : "";
+      const categoria = valor["Categoria"]
+        ? valor["Categoria"].toLowerCase()
+        : "";
+      const sala = valor["Sala"] ? valor["Sala"].toLowerCase() : "";
+      const status = valor["status"] ? valor["status"].toLowerCase() : "";
+      const email = valor["Endereço de e-mail"]
+        ? valor["Endereço de e-mail"].toLowerCase()
+        : "";
+      return (
+        descricao.includes(termo) ||
+        categoria.includes(termo) ||
+        status.includes(termo) ||
+        email.includes(termo) ||
+        sala.includes(termo) ||
+        problema.includes(termo) ||
+        (valor.id && valor.id.toString().includes(busca))
+      );
+    });
+  }, [busca, chamados]);*/
   return (
     <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
       <h3 className="text-lg font-semibold mb-4 text-gray-900 flex items-center gap-2">
@@ -96,6 +101,9 @@ export function CardComponent(props) {
             <span className="text-md sm:text-lg text-center sm:text-left font-semibold font-sans">
               {c["Categoria"]}
             </span>
+            {/*
+              Usuario logado que fechou o chamado
+              */}
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
               <strong>Email: </strong>
               {c["Endereço de e-mail"]}
@@ -126,28 +134,37 @@ export function CardComponent(props) {
                 ? c["O que ocorreu com os Portais?"]
                 : c["Qual a outra categoria?"]}
             </p>
-            {c["O que ocorreu com o TOTVS RM?"] ? (
+            {c["Informe o nome do usuario:"] ? (
               <p className="text-md sm:text-lg text-center sm:text-left font-sans">
                 <strong>Usuario:</strong> {c["Informe o nome do usuario:"]}
               </p>
             ) : null}
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
               <strong>Descrição: </strong>
-              {c["Descrição"] ? c["Descrição"] : "Sem descrição"}
+              {c["Descrição"]
+                ? (descricaoExpandida[c.id]
+                    ? c["Descrição"]
+                    : c["Descrição"].length > 100
+                      ? c["Descrição"].slice(0, 100) + '...'
+                      : c["Descrição"])
+                : "Sem descrição"}
             </p>
-            {/*
-            <select
-              name="atendente"
-              id=""
-              className="bg-brightbee-25 border-brightbee-200 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow rounded-lg font-sans"
-            >
-              {atendentes.map((atendente) => (
-                <option key={atendente} value={atendente}>
-                  {atendente}
-                </option>
-              ))}
-            </select>
-*/}
+            {c["Descrição"] && c["Descrição"].length > 100 && (
+              <button
+                className="text-xs text-blue-600 underline focus:outline-none mb-2"
+                onClick={() =>
+                  setDescricaoExpandida((prev) => ({
+                    ...prev,
+                    [c.id]: !prev[c.id],
+                  }))
+                }
+              >
+                {descricaoExpandida[c.id] ? <RxLockClosed
+                  size={24}
+                  color="gray"
+                /> : <RxLockOpen2 size={24} color="gray" />}
+              </button>
+            )}
             <span
               className={`inline-flex items-center gap-1 px-2 py-2 rounded-full text-xs font-semibold font-sans ${
                 c.status === "em aberto"
@@ -207,6 +224,27 @@ export function CardComponent(props) {
             >
               Reabrir
             </button>
+            {c.status === "concluído" && (
+              <>
+                <input
+                  type="text"
+                  placeholder="Resposta do atendimento"
+                  value={respostas[c.id] || ""} // vincula o valor do input.
+//                  onChange={(e) => setRespostas({ ...respostas, [c.id]: e.target.value })}
+                  className="font-sans min-w-full text-left text-sm border border-brightbee-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
+                />
+                <button
+                  className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-brightbee-50"
+                  //onClick={() => {
+                  //  handlerEnviarResposta(c.email, c.id, respostas[c.id]);
+                  //}}
+                >
+                  <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-yellow-400 rounded-full group-hover:bg-transparent group-hover:dark:bg-transparent font-semibold font-sans">
+                    Enviar resposta
+                  </span>
+                </button>
+              </>
+            )}
           </div>
         ))
       )}

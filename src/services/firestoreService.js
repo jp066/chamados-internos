@@ -75,3 +75,10 @@ export function formatDate(timestamp) {
     .split(",");
   return dateSplit[0] + " - " + dateSplit[1].trim();
 }
+
+export async function handlerEnviarResposta(email, id, resposta) { 
+  // os parametros necessários são o email do usuário que abriu o chamado, o id do chamado e a resposta do atendente
+  try {
+  } catch (error) {
+  }
+}
