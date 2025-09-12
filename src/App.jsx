@@ -27,6 +27,7 @@ export default function App() {
       if (currentUser) {
         console.log("Usuário logado:", currentUser);
         const uid = currentUser.uid;
+        console.log("UID do usuário:", uid);
       } else {
         console.log("Nenhum usuário logado");
       }
