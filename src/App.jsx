@@ -15,13 +15,11 @@ export default function App() {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      if (result.user)
-      setUser(result.user);
+      if (result.user) setUser(result.user);
     } catch (error) {
       console.error("Erro ao fazer login com Google:", error);
     }
   };
-  // Use useEffect to avoid multiple subscriptions
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
@@ -36,17 +34,29 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  // Verifica se o usuário logado tem email @brightbee.com.br
-  const isBrightbeeUser = user && user.email && user.email.endsWith('@brightbee.com.br');
+  // VERIFICAÇÃO DE E-MAILS PERMITIDOS
+  const isTeamMember =
+    user &&
+    user.email &&
+    (user.email === "vitorianascimento@brightbee.com.br" ||
+      user.email === "rafaeloliveira@brightbee.com.br" ||
+      user.email === "alexandretinoco@brightbee.com.br" ||
+      user.email === "joaomatos@brightbee.com.br");
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50">
       <Header usuario={user} loginGoogle={loginGoogle} logoutGoogle={signOut} />
       {!user ? (
-        <h1 className="text-center font-sans text-2xl mt-20">Por favor, faça login para continuar.</h1>
-      ) : !isBrightbeeUser ? (
-        <h1 className="text-center font-sans text-2xl mt-20 text-red-600">Apenas usuários @brightbee.com.br podem acessar.</h1>
-      ) : (
+        <h1 className="text-center font-sans text-2xl mt-20">
+          Por favor, faça login para continuar.
+        </h1>
+      ) : !isTeamMember ? (
+        <h1 className="text-center font-sans text-2xl mt-20 text-red-600">
+          <strong>Você não tem permissão para acessar este link.</strong> <br />
+          Acesso restrito a membros da equipe de Sistemas.
+        </h1>
+      )
+      :(
         <>
           <Hero />
           <Dashboard />
