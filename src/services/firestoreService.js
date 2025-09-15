@@ -8,7 +8,6 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { db } from "../firebase.js";
-import { data } from "react-router-dom";
 
 export async function getChamados() {
   try {
