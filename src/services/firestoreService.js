@@ -8,6 +8,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { db } from "../firebase.js";
+import { data } from "react-router-dom";
 
 export async function getChamados() {
   try {
@@ -77,8 +78,7 @@ export function formatDate(timestamp) {
   return dateSplit[0] + " - " + dateSplit[1].trim();
 }
 
-export async function handlerEnviarResposta(email, id, resposta) {
-  // os parametros necessários são o email do usuário que abriu o chamado, o id do chamado e a resposta do atendente
+export async function handlerEnviarResposta(email, dataHora, modulo, problema, usuario, descricao, id, resposta) {
   if (!email) {
     return "Erro: email do usuário não fornecido.";
   }
@@ -91,10 +91,16 @@ export async function handlerEnviarResposta(email, id, resposta) {
   try {
     const chamadosCollection = collection(db, "respostas");
     const data = {
+      enviado: false,
       resposta: resposta,
       email: email,
+      dataHora: dataHora,
+      modulo: modulo,
+      usuario: usuario,
+      descricao: descricao,
       chamadoId: id,
-      timestamp: Timestamp.now(),
+      problema: problema,
+      timestamp: Timestamp.now()
     };
     const res = await addDoc(chamadosCollection, data);
     console.log("Resposta enviada com sucesso:", data);
@@ -103,11 +109,4 @@ export async function handlerEnviarResposta(email, id, resposta) {
     console.error("Erro ao enviar resposta:", error);
     return "Erro ao enviar resposta.";
   }
-}
-
-export async function enviarEmail(email, id, resposta) {
-  // Lógica para enviar o email
-  console.log(`Enviando email para ${email} sobre o chamado ${id} com a resposta: ${resposta}`);
-  // Aqui você pode integrar com um serviço de envio de email
-  return "Email enviado com sucesso.";
 }

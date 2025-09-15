@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import { FaCheckCircle, FaClock, FaExclamationCircle } from "react-icons/fa";
 import { GrRadialSelected } from "react-icons/gr";
 import {
   getChamados,
@@ -54,10 +54,15 @@ export function Dashboard() {
         color: "bg-green-100 text-green-800",
         icon: <FaCheckCircle className="text-green-500 text-xl mb-1" />,
       },
+      {
+        label: "Em Andamento",
+        value: chamados.filter((c) => c.status === "em andamento").length,
+        color: "bg-brightbee-100 text-brightbee-400",
+        icon: <FaClock className="text-brightbee-400 text-xl mb-1" />,
+      },
     ],
     [totalChamados, chamados]
   );
-  // Função para alterar o filtro ao clicar nos botões
   const escolha = (stat) => {
     setFiltro(stat.label);
   };
@@ -70,25 +75,28 @@ export function Dashboard() {
     if (filtro === "Concluídos") {
       return chamados.filter((c) => c.status === "concluído");
     }
+    if (filtro === "Em Andamento") {
+      return chamados.filter((c) => c.status === "em andamento");
+    }
     return chamados;
   }, [chamados, filtro]);
 
   async function fetchChamados() {
-  setLoading(true);
-  setError(null);
-  try {
-    const data = await getChamados();
-    setchamados(data || []);
-  } catch (err) {
-    setError("Erro ao buscar chamados: " + err.message);
-  } finally {
-    setLoading(false);
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getChamados();
+      setchamados(data || []);
+    } catch (err) {
+      setError("Erro ao buscar chamados: " + err.message);
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
   return (
     <section className="font-sans text-gray-800 p-4 sm:p-8 bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-brightbee-50 shadow-inner w-full animate-fade-in">
-      <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+      <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         {stats.map((stat) => (
           <button
             className={`focus:outline-none w-full`}

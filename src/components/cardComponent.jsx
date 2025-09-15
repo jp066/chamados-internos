@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react"; // useMemo
 import { FaCheckCircle, FaExclamationCircle, FaClock } from "react-icons/fa";
 import { RxDashboard, RxLockOpen2, RxLockClosed } from "react-icons/rx";
-import { handlerEnviarResposta } from "../services/firestoreService.js";
 import {
   getChamados,
   setTotalChamadosF,
   updateStatus,
 } from "../services/firestoreService.js";
-import { formatDate } from "../services/firestoreService.js"; // , handlerEnviarResposta
+import {
+  formatDate,
+  handlerEnviarResposta
+} from "../services/firestoreService.js";
 import Swal from "sweetalert2";
 
 export function CardComponent(props) {
@@ -85,7 +87,6 @@ export function CardComponent(props) {
           className="font-sans min-w-full text-left text-sm border border-brightbee-100 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
         />
       </div>
-
       {loading && <p>Carregando...{totalChamados}</p>}
       {error && <p className="text-red-500">{error}</p>}
       {chamadosFilter.length === 0 ? (
@@ -101,11 +102,38 @@ export function CardComponent(props) {
             <span className="text-md sm:text-lg text-center sm:text-left font-semibold font-sans">
               {c["Categoria"]}
             </span>
-            <button
-            color="gray"
-            >
-              <FaClock />
-            </button>
+            <div>
+              <button // Botão para alterar status para "em andamento"
+                color="gray"
+                className="p-2 rounded-full hover:bg-brightbee-100" //transition-200 é uma transição suave
+                style={{ transitionDuration: "400ms" }} // Define a duração da transição para 400ms
+                onClick={async () => {
+                  await updateStatus({ id: c.id, status: "em andamento" });
+                  setLoading(true);
+                  setError(null);
+                  try {
+                    const data = await getChamados();
+                    setchamados(data || []);
+                    const total = await setTotalChamadosF();
+                    setTotalChamados(total);
+                    onStatusChange();
+                  } catch (err) {
+                    setError("Erro ao buscar chamados: " + err.message);
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+              >
+                <FaClock
+                  className={
+                    c["status"] === "em andamento"
+                      ? "text-brightbee-400"
+                      : "text-gray-400"
+                  }
+                />
+              </button>
+            </div>
+
             {/*
               Usuario logado que fechou o chamado
             */}
@@ -176,6 +204,8 @@ export function CardComponent(props) {
                 c.status === "em aberto"
                   ? "bg-yellow-200 text-yellow-800"
                   : "bg-green-200 text-green-800"
+                  ? "bg-brightbee-100 text-brightbee-400"
+                  : ""
               }`}
             >
               {c.status === "em aberto" && (
@@ -183,6 +213,9 @@ export function CardComponent(props) {
               )}
               {c.status === "concluído" && (
                 <FaCheckCircle className="text-green-500" />
+              )}
+              {c.status === "em andamento" && (
+                <FaClock className="text-brightbee-400" />
               )}
               {c.status}
             </span>
@@ -205,7 +238,7 @@ export function CardComponent(props) {
                 }
               }}
               className="bg-yellow-400 border-yellow-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow text-yellow-800 font-semibold disabled:opacity-50 mt-2 font-sans"
-              disabled={c.status === "em aberto"}
+              disabled={c.status === "em aberto" || c.status === "em andamento"}
             >
               Reabrir
             </button>
@@ -235,45 +268,61 @@ export function CardComponent(props) {
             >
               Atendido
             </button>
-            {c.status === "em aberto" ? c.status === "em aberto" && (
-              <>
-                <input
-                  type="text"
-                  placeholder="Resposta do atendimento"
-                  value={respostas[c.id] || ""}
-                  onChange={(e) =>
-                    setRespostas({ ...respostas, [c.id]: e.target.value })
-                  }
-                  className="font-sans min-w-full text-left text-sm border border-brightbee-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
-                />
-                <button
-                  className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-brightbee-50"
-                  onClick={() => {
-                    if (!respostas[c.id] || respostas[c.id].trim() === "") {
-                      Swal.fire({
-                        title: "A resposta é obrigatória",
-                        text: "Por favor, insira uma resposta antes de enviar.",
-                        icon: "warning",
-                        confirmButtonText: "OK",
-                        backdrop: true,
-                        confirmButtonColor: "#fbbf24",
-                        timer: 3000,
-                      });
-                      return;
-                    }
-                    handlerEnviarResposta(
-                      c["Endereço de e-mail"],
-                      c.id,
-                      respostas[c.id]
-                    );
-                  }}
-                >
-                  <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-yellow-400 rounded-full group-hover:bg-transparent group-hover:dark:bg-transparent font-semibold font-sans">
-                    Enviar resposta
-                  </span>
-                </button>
-              </>
-            ) : ''}
+            {c.status === "em aberto" || c.status === "em andamento" // Verifica se o status é "em aberto" ou "em andamento"
+              ? c.status === "em aberto" ||
+                (c.status === "em andamento" && ( //
+                  <>
+                    <input
+                      type="text"
+                      placeholder="Resposta do atendimento"
+                      value={respostas[c.id] || ""}
+                      onChange={(e) =>
+                        setRespostas({ ...respostas, [c.id]: e.target.value })
+                      }
+                      className="font-sans min-w-full text-left text-sm border border-brightbee-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
+                    />
+                    <button
+                      className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-brightbee-50"
+                      onClick={() => {
+                        if (!respostas[c.id] || respostas[c.id].trim() === "") {
+                          Swal.fire({
+                            title: "A resposta é obrigatória",
+                            text: "Por favor, insira uma resposta antes de enviar.",
+                            icon: "warning",
+                            confirmButtonText: "OK",
+                            backdrop: true,
+                            confirmButtonColor: "#fbbf24",
+                            timer: 3000,
+                          });
+                          return;
+                        }
+                        handlerEnviarResposta(
+                          c["Endereço de e-mail"],
+                          formatDate(c["Carimbo de data/hora"]),
+                          c["A solicitação é referente a qual modulo?"],
+                          c["O que ocorreu com o TOTVS RM?"] ||
+                            c["O que ocorreu com o RM?"] ||
+                            c["O que ocorreu com o Remark?"] ||
+                            c["O que ocorreu com o Workchat?"] ||
+                            c["O que ocorreu com o ZapSign?"] ||
+                            c["O que ocorreu com os Portais?"] ||
+                            c["Qual a outra categoria?"] ||
+                            "Sem problema",
+                          c["Informe o nome do usuario:"] || "Sem usuário",
+                          c["Descrição"] || "Sem descrição",
+                          c.id,
+                          respostas[c.id]
+                        );
+                        setRespostas((prev) => ({ ...prev, [c.id]: "" }));
+                      }}
+                    >
+                      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-yellow-400 rounded-full group-hover:bg-transparent group-hover:dark:bg-transparent font-semibold font-sans">
+                        Enviar resposta
+                      </span>
+                    </button>
+                  </>
+                ))
+              : ""}
           </div>
         ))
       )}
