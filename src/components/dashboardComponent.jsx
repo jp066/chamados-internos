@@ -37,10 +37,10 @@ export function Dashboard() {
   const stats = useMemo(
     () => [
       {
-        label: "Total de Chamados",
-        value: totalChamados,
-        color: "bg-blue-100 text-blue-800",
-        icon: <FaExclamationCircle className="text-blue-500 text-xl mb-1" />,
+        label: "Em Andamento",
+        value: chamados.filter((c) => c.status === "em andamento").length,
+        color: "bg-brightbee-100 text-brightbee-400",
+        icon: <FaClock className="text-brightbee-400 text-xl mb-1" />,
       },
       {
         label: "Abertos",
@@ -55,10 +55,10 @@ export function Dashboard() {
         icon: <FaCheckCircle className="text-green-500 text-xl mb-1" />,
       },
       {
-        label: "Em Andamento",
-        value: chamados.filter((c) => c.status === "em andamento").length,
-        color: "bg-brightbee-100 text-brightbee-400",
-        icon: <FaClock className="text-brightbee-400 text-xl mb-1" />,
+        label: "Total de Chamados",
+        value: totalChamados,
+        color: "bg-blue-100 text-blue-800",
+        icon: <FaExclamationCircle className="text-blue-500 text-xl mb-1" />,
       },
     ],
     [totalChamados, chamados]

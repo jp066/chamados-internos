@@ -8,7 +8,7 @@ import {
 } from "../services/firestoreService.js";
 import {
   formatDate,
-  handlerEnviarResposta
+  handlerEnviarResposta,
 } from "../services/firestoreService.js";
 import Swal from "sweetalert2";
 
@@ -103,35 +103,40 @@ export function CardComponent(props) {
               {c["Categoria"]}
             </span>
             <div>
-              <button // Botão para alterar status para "em andamento"
-                color="gray"
-                className="p-2 rounded-full hover:bg-brightbee-100" //transition-200 é uma transição suave
-                style={{ transitionDuration: "400ms" }} // Define a duração da transição para 400ms
-                onClick={async () => {
-                  await updateStatus({ id: c.id, status: "em andamento" });
-                  setLoading(true);
-                  setError(null);
-                  try {
-                    const data = await getChamados();
-                    setchamados(data || []);
-                    const total = await setTotalChamadosF();
-                    setTotalChamados(total);
-                    onStatusChange();
-                  } catch (err) {
-                    setError("Erro ao buscar chamados: " + err.message);
-                  } finally {
-                    setLoading(false);
-                  }
-                }}
-              >
-                <FaClock
-                  className={
-                    c["status"] === "em andamento"
-                      ? "text-brightbee-400"
-                      : "text-gray-400"
-                  }
-                />
-              </button>
+              {c["status"] === "concluído" ? (
+                c["status"] === "concluído"
+              ) : (
+                <button // Botão para alterar status para "em andamento"
+                  color="gray"
+                  className="p-2 rounded-full hover:bg-brightbee-100" //transition-200 é uma transição suave
+                  style={{ transitionDuration: "400ms" }} // Define a duração da transição para 400ms
+                  onClick={async () => {
+                    await updateStatus({ id: c.id, status: "em andamento" });
+                    setLoading(true);
+                    setError(null);
+                    try {
+                      const data = await getChamados();
+                      setchamados(data || []);
+                      const total = await setTotalChamadosF();
+                      setTotalChamados(total);
+                      onStatusChange();
+                    } catch (err) {
+                      setError("Erro ao buscar chamados: " + err.message);
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                  disabled={c["status"] === "em andamento"}
+                >
+                  <FaClock
+                    className={
+                      c["status"] === "em andamento"
+                        ? "text-brightbee-400"
+                        : "text-gray-400"
+                    }
+                  />
+                </button>
+              )}
             </div>
 
             {/*
