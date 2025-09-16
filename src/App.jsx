@@ -8,10 +8,10 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useState, useEffect } from "react";
-import { ThemeProvider } from "styled-components";
-import { lightTheme, darkTheme } from "./theme";
-import GlobalTheme from "./globals";
-import styled from "styled-components";
+//import { ThemeProvider } from "styled-components";
+//import { lightTheme, darkTheme } from "./theme";
+//import GlobalTheme from "./globals";
+//import styled from "styled-components";
 
 export default function App() {
   const [user, setUser] = useState(null);

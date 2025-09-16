@@ -1,9 +1,8 @@
 import { VscAccount } from "react-icons/vsc";
 import { IoMdLogOut } from "react-icons/io";
+//import {darkModeHandler, dark} from "../darkModeHandler.js";
 
 export function Header({ usuario, loginGoogle, logoutGoogle }) {
-
-
   return (
     <header className="text-gray-800 p-4 bg-gradient-to-r from-brightbee-400 via-brightbee-300 to-brightbee-200 shadow-md w-full">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -26,13 +25,16 @@ export function Header({ usuario, loginGoogle, logoutGoogle }) {
             onClick={loginGoogle}
           >
             <VscAccount size={30} color="white" />
-            &nbsp;
-            Login
+            &nbsp; Login
           </button>
         ) : (
           <span className="text-white text-sm sm:text-base font-semibold text-center sm:text-left tracking-wide drop-shadow-sm flex items-center gap-2">
             {usuario.photoURL && (
-              <img src={usuario.photoURL} alt="usuario" className="h-8 w-8 rounded-full" />
+              <img
+                src={usuario.photoURL}
+                alt="usuario"
+                className="h-8 w-8 rounded-full"
+              />
             )}
             {usuario.displayName || usuario.email || "Usuário logado"}
             &nbsp;
@@ -44,6 +46,16 @@ export function Header({ usuario, loginGoogle, logoutGoogle }) {
             />
           </span>
         )}
+        {/*
+        <button onClick={() => darkModeHandler()}>
+          {
+            dark && <IoSunny /> // render sunny when dark is true
+          }
+          {
+            !dark && <IoMoon /> // render moon when dark is false
+          }
+        </button>
+        */}
       </div>
     </header>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { FaCheckCircle, FaClock, FaExclamationCircle } from "react-icons/fa";
+import { MdApps } from "react-icons/md";
 import { GrRadialSelected } from "react-icons/gr";
 import {
   getChamados,
@@ -58,7 +59,7 @@ export function Dashboard() {
         label: "Total de Chamados",
         value: totalChamados,
         color: "bg-blue-100 text-blue-800",
-        icon: <FaExclamationCircle className="text-blue-500 text-xl mb-1" />,
+        icon: <MdApps className="text-blue-500 text-xl mb-1" />,
       },
     ],
     [totalChamados, chamados]
