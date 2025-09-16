@@ -53,7 +53,8 @@ export default function App() {
       user.email === "rafaeloliveira@brightbee.com.br" ||
       user.email === "alexandretinoco@brightbee.com.br" ||
       user.email === "joaomatos@brightbee.com.br" ||
-      user.email === "sistemas@brightbee.com.br");
+      user.email === "sistemas@brightbee.com.br" ||
+      user.email === "flaviaalves@brightbee.com.br");
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1.2 dark:via-brightbeeDark-13 dark:to-brightbeeDark-1.2 transition-colors duration-500">
