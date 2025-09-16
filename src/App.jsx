@@ -12,14 +12,33 @@ import {
 import { useState, useEffect } from "react";
 
 export default function App() {
-  const [dark, setDark] = React.useState(false);
+  const [dark, setDark] = React.useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved === "true";
+  });
 
   const darkModeHandler = () => {
-    setDark(!dark);
-    document.body.classList.toggle("dark");
-    document.body.style.transition =
-      "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)"; // Adiciona transição suave, para usar:
+    setDark((prev) => {
+      const newDark = !prev;
+      localStorage.setItem("darkMode", newDark);
+      if (newDark) {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
+      document.body.style.transition =
+        "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)";
+      return newDark;
+    });
   };
+  // Aplica classe dark ao carregar, se necessário
+  React.useEffect(() => {
+    if (dark) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [dark]);
 
   const [user, setUser] = useState(null);
   const loginGoogle = async () => {
