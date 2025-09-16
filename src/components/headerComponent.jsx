@@ -1,10 +1,29 @@
 import { VscAccount } from "react-icons/vsc";
 import { IoMdLogOut } from "react-icons/io";
-//import {darkModeHandler, dark} from "../darkModeHandler.js";
+import { FaRegLightbulb } from "react-icons/fa6";
+import { FaLightbulb } from "react-icons/fa6";
 
-export function Header({ usuario, loginGoogle, logoutGoogle }) {
+export function Header({
+  usuario,
+  loginGoogle,
+  logoutGoogle,
+  dark,
+  setDark,
+  darkModeHandler,
+}) {
+  const headerStyle = {
+    color: "#fff",
+    background: dark
+      ? "linear-gradient(to right, #121212, #060910ff, #0c101aff)"
+      : "linear-gradient(to right, #e9692c, #f08a54, #c94e0cc6)",
+    boxShadow: "0 4px 6px -1px rgba(0,0,0,0.1)",
+    width: "100%",
+    padding: "1rem",
+    transition: "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)",
+  };
+  console.log("Renderizando Header, modo dark:", setDark);
   return (
-    <header className="text-gray-800 p-4 bg-gradient-to-r from-brightbee-400 via-brightbee-300 to-brightbee-200 shadow-md w-full">
+    <header style={headerStyle}>
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <a
           href="/"
@@ -46,16 +65,11 @@ export function Header({ usuario, loginGoogle, logoutGoogle }) {
             />
           </span>
         )}
-        {/*
+
         <button onClick={() => darkModeHandler()}>
-          {
-            dark && <IoSunny /> // render sunny when dark is true
-          }
-          {
-            !dark && <IoMoon /> // render moon when dark is false
-          }
+          {dark && <FaLightbulb color="white" />}
+          {!dark && <FaRegLightbulb color="white" />}
         </button>
-        */}
       </div>
     </header>
   );

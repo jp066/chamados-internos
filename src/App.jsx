@@ -1,6 +1,8 @@
+import React from "react";
 import { Header } from "./components/headerComponent";
 import { Hero } from "./components/heroComponent";
 import { Dashboard } from "./components/dashboardComponent";
+import { Footer } from "./components/footerComponent.jsx";
 import { auth, signOut } from "./firebase.js";
 import {
   GoogleAuthProvider,
@@ -8,12 +10,17 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useState, useEffect } from "react";
-//import { ThemeProvider } from "styled-components";
-//import { lightTheme, darkTheme } from "./theme";
-//import GlobalTheme from "./globals";
-//import styled from "styled-components";
 
 export default function App() {
+  const [dark, setDark] = React.useState(false);
+
+  const darkModeHandler = () => {
+    setDark(!dark);
+    document.body.classList.toggle("dark");
+    document.body.style.transition =
+      "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)"; // Adiciona transição suave, para usar:
+  };
+
   const [user, setUser] = useState(null);
   const loginGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -49,22 +56,37 @@ export default function App() {
       user.email === "sistemas@brightbee.com.br");
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50">
-      <Header usuario={user} loginGoogle={loginGoogle} logoutGoogle={signOut} />
+    <div className="min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1.2 dark:via-brightbeeDark-13 dark:to-brightbeeDark-1.2 transition-colors duration-500">
+      <Header
+        usuario={user}
+        loginGoogle={loginGoogle}
+        logoutGoogle={signOut}
+        dark={dark}
+        setDark={setDark}
+        darkModeHandler={darkModeHandler}
+      />
       {!user ? (
-        <h1 className="text-center font-sans text-2xl mt-20">
+        <h1 className="text-center font-sans text-2xl mt-20 dark:text-white text-brightbeeDark-900">
           Por favor, faça login para continuar.
         </h1>
       ) : !isTeamMember ? (
-        <h1 className="text-center font-sans text-2xl mt-20 text-red-600">
+        <h1 className="text-center font-sans text-2xl mt-20 text-red-600 dark:text-white">
           <strong>Você não tem permissão para acessar este link.</strong> <br />
           Acesso restrito a membros da equipe de Sistemas.
         </h1>
-      )
-      :(
+      ) : (
         <>
-          <Hero />
-          <Dashboard />
+          <Hero
+            dark={dark}
+            setDark={setDark}
+            darkModeHandler={darkModeHandler}
+          />
+          <Dashboard
+            dark={dark}
+            setDark={setDark}
+            darkModeHandler={darkModeHandler}
+          />
+          <Footer />
         </>
       )}
     </div>

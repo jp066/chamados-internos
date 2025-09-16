@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // useMemo
+import React, { useState, useEffect } from "react";
 import { FaCheckCircle, FaExclamationCircle, FaClock } from "react-icons/fa";
 import { RxDashboard, RxLockOpen2, RxLockClosed } from "react-icons/rx";
 import {
@@ -10,6 +10,7 @@ import {
   formatDate,
   handlerEnviarResposta,
 } from "../services/firestoreService.js";
+import { InputFile } from "./inputFileComponent.jsx";
 import Swal from "sweetalert2";
 
 export function CardComponent(props) {
@@ -17,6 +18,7 @@ export function CardComponent(props) {
   console.log("Respostas:", setRespostas);
   const { chamadosFilter } = props;
   const { onStatusChange } = props;
+  const { dark, setDark, darkModeHandler } = props;
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,6 +26,7 @@ export function CardComponent(props) {
   // Estado para controlar descrição expandida/reduzida por card
   const [descricaoExpandida, setDescricaoExpandida] = useState({});
   console.log("Chamados no Card:", chamados);
+  console.log(dark, setDark, darkModeHandler); // Verifica se as props estão sendo recebidas corretamente
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -74,9 +77,9 @@ export function CardComponent(props) {
     });
   }, [busca, chamados]);*/
   return (
-    <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-      <h3 className="text-lg font-semibold mb-4 text-gray-900 flex items-center gap-2">
-        <RxDashboard className="text-yellow-500" size={25} /> Chamados
+    <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8 dark:text-white">
+      <h3 className="text-lg font-semibold mb-4 text-gray-900 flex items-center gap-2 dark:text-white">
+        <RxDashboard className="text-yellow-500 dark:text-blue-400" size={25} /> Chamados
       </h3>
       <div className="col-span-full flex justify-end">
         <input
@@ -84,7 +87,7 @@ export function CardComponent(props) {
           placeholder="Buscar chamado..."
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
-          className="font-sans min-w-full text-left text-sm border border-brightbee-100 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
+          className="font-sans min-w-full text-left text-sm border border-brightbee-100 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow dark:bg-brightbeeDark-2 dark:border-blue-400 dark:text-white"
         />
       </div>
       {loading && <p>Carregando...{totalChamados}</p>}
@@ -97,7 +100,7 @@ export function CardComponent(props) {
         chamadosFilter.map((c) => (
           <div
             key={c.id || c["Categoria"]}
-            className="bg-brightbee-50 rounded-3xl shadow-lg p-4 sm:p-6 flex flex-col gap-2 font-sans"
+            className="bg-brightbee-50 rounded-3xl shadow-lg p-4 sm:p-6 flex flex-col gap-2 font-sans dark:bg-brightbeeDark-2"
           >
             <span className="text-md sm:text-lg text-center sm:text-left font-semibold font-sans">
               {c["Categoria"]}
@@ -207,9 +210,9 @@ export function CardComponent(props) {
             <span
               className={`inline-flex items-center gap-1 px-2 py-2 rounded-full text-xs font-semibold font-sans ${
                 c.status === "em aberto"
-                  ? "bg-yellow-200 text-yellow-800"
-                  : "bg-green-200 text-green-800"
-                  ? "bg-brightbee-100 text-brightbee-400"
+                  ? "bg-yellow-200 text-yellow-800 dark:bg-brightbeeDark-10 dark:text-brightbee-25"
+                  : "bg-green-200 text-green-800 dark:bg-brightbeeDark-10 dark:text-brightbee-25"
+                  ? "bg-brightbee-100 text-brightbee-400 dark:bg-brightbeeDark-10 dark:text-brightbee-25"
                   : ""
               }`}
             >
@@ -273,7 +276,7 @@ export function CardComponent(props) {
             >
               Atendido
             </button>
-            {c.status === "em aberto" || c.status === "em andamento" // Verifica se o status é "em aberto" ou "em andamento"
+            {c.status === "em aberto" || c.status === "em andamento"
               ? c.status === "em aberto" ||
                 (c.status === "em andamento" && ( //
                   <>
@@ -284,10 +287,11 @@ export function CardComponent(props) {
                       onChange={(e) =>
                         setRespostas({ ...respostas, [c.id]: e.target.value })
                       }
-                      className="font-sans min-w-full text-left text-sm border border-brightbee-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow"
+                      className="font-sans min-w-full text-left text-sm border border-brightbee-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow dark:bg-brightbeeDark-2 dark:border-brightbeeDark-3 dark:text-white border-gray-300 mb-2 dark:placeholder-brightbee-25"
                     />
+                    <InputFile />
                     <button
-                      className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-brightbee-50"
+                      className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-brightbee-50 dark:bg-brightbeeDark-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow font-sans"
                       onClick={() => {
                         if (!respostas[c.id] || respostas[c.id].trim() === "") {
                           Swal.fire({
