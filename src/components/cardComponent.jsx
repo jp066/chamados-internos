@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 
 export function CardComponent(props) {
   const [respostas, setRespostas] = useState({});
+  const [files, setFiles] = useState({}); // Novo estado para arquivos por card
   console.log("Respostas:", setRespostas);
   const { chamadosFilter } = props;
   const { onStatusChange } = props;
@@ -79,7 +80,8 @@ export function CardComponent(props) {
   return (
     <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8 dark:text-white">
       <h3 className="text-lg font-semibold mb-4 text-gray-900 flex items-center gap-2 dark:text-white">
-        <RxDashboard className="text-yellow-500 dark:text-blue-400" size={25} /> Chamados
+        <RxDashboard className="text-yellow-500 dark:text-blue-400" size={25} />{" "}
+        Chamados
       </h3>
       <div className="col-span-full flex justify-end">
         <input
@@ -99,7 +101,7 @@ export function CardComponent(props) {
       ) : (
         chamadosFilter.map((c) => (
           <div
-            key={c.id || c["Categoria"]}
+            key={c.id ? `card-${c.id}` : `card-${c["Categoria"]}`}
             className="bg-brightbee-50 rounded-3xl shadow-lg p-4 sm:p-6 flex flex-col gap-2 font-sans dark:bg-brightbeeDark-2"
           >
             <span className="text-md sm:text-lg text-center sm:text-left font-semibold font-sans">
@@ -278,7 +280,7 @@ export function CardComponent(props) {
             </button>
             {c.status === "em aberto" || c.status === "em andamento"
               ? c.status === "em aberto" ||
-                (c.status === "em andamento" && ( //
+                (c.status === "em andamento" && (
                   <>
                     <input
                       type="text"
@@ -289,7 +291,12 @@ export function CardComponent(props) {
                       }
                       className="font-sans min-w-full text-left text-sm border border-brightbee-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow dark:bg-brightbeeDark-2 dark:border-brightbeeDark-3 dark:text-white border-gray-300 mb-2 dark:placeholder-brightbee-25"
                     />
-                    <InputFile />
+                    <InputFile
+                      id={c.id}
+                      email={c["Endereço de e-mail"]}
+                      file={files[c.id] || null} // Passa o arquivo selecionado
+                      setFile={(newFile) => setFiles((prev) => ({ ...prev, [c.id]: newFile }))} // Atualiza o arquivo selecionado
+                    />
                     <button
                       className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-brightbee-50 dark:bg-brightbeeDark-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow font-sans"
                       onClick={() => {
@@ -320,9 +327,11 @@ export function CardComponent(props) {
                           c["Informe o nome do usuario:"] || "Sem usuário",
                           c["Descrição"] || "Sem descrição",
                           c.id,
-                          respostas[c.id]
+                          respostas[c.id],
+                          files[c.id] || null // Passa o arquivo ou null se não houver
                         );
                         setRespostas((prev) => ({ ...prev, [c.id]: "" }));
+                        setFiles((prev) => ({ ...prev, [c.id]: null })); // Limpa o arquivo após enviar
                       }}
                     >
                       <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-yellow-400 rounded-full group-hover:bg-transparent group-hover:dark:bg-transparent font-semibold font-sans">

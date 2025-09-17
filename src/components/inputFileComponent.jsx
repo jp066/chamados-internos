@@ -1,17 +1,16 @@
-import { useState } from "react";
+import { PreviewImage } from "./previewImageComponent.jsx";
 
-export function InputFile() {
-    const [file, setFile] = useState(null);
-    console.log("Renderizando InputFile, arquivo selecionado:", setFile);
-    return (
-    <div class="flex items-center justify-center w-full">
+export function InputFile({ id, email, file, setFile }) {
+  // file e setFile agora vêm do CardComponent
+  return (
+    <div className="m-2">
       <label
-        for="dropzone-file"
-        class="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        htmlFor={`dropzone-file-${id}`}
+        className="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
       >
-        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+        <div className="flex flex-col items-center justify-center pt-5 pb-6">
           <svg
-            class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+            className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -19,29 +18,35 @@ export function InputFile() {
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
             />
           </svg>
-          <p class="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-gray-500 dark:text-gray-400">
             SVG, PNG, JPG, PDF até 10MB ou TXT
           </p>
         </div>
         <input
-          id="dropzone-file"
+          id={`dropzone-file-${id}`}
           type="file"
-          class="hidden"
+          className="hidden"
           onChange={(e) => {
-            const file = e.target.files[0];
-            if (file) {
-              console.log("Arquivo selecionado:", file);
+            const selectedFile = e.target.files[0];
+            if (selectedFile) {
+              const url = URL.createObjectURL(selectedFile);
+              setFile(url);
+              console.log("Arquivo selecionado:", selectedFile);
+              console.log("email recebido no InputFile:", email);
+            } else {
+              setFile(null);
+              console.log("Nenhum arquivo selecionado");
             }
           }}
         />
       </label>
-      {file && <p class="text-sm text-gray-500 ml-4">{file.name}</p>} 
+      {file && <PreviewImage file={file} setFile={setFile} id={id} />}
     </div>
   );
 }

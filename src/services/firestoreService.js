@@ -7,9 +7,7 @@ import {
   getDocs,
   addDoc,
 } from "firebase/firestore";
-
 import { db } from "../firebase.js";
-
 export async function getChamados() {
   try {
     const chamadosCollection = collection(db, "chamados");
@@ -78,7 +76,19 @@ export function formatDate(timestamp) {
   return dateSplit[0] + " - " + dateSplit[1].trim();
 }
 
-export async function handlerEnviarResposta(email, dataHora, modulo, problema, usuario, descricao, id, resposta) {
+// enviar imagem para o cloudinary.
+
+export async function handlerEnviarResposta(
+  email,
+  dataHora,
+  modulo,
+  problema,
+  usuario,
+  descricao,
+  id,
+  resposta,
+  arquivo
+) {
   if (!email) {
     return "Erro: email do usuário não fornecido.";
   }
@@ -100,11 +110,12 @@ export async function handlerEnviarResposta(email, dataHora, modulo, problema, u
       descricao: descricao,
       chamadoId: id,
       problema: problema,
-      timestamp: Timestamp.now()
+      timestamp: Timestamp.now(),
+      arquivo: arquivo || null,
     };
     const res = await addDoc(chamadosCollection, data);
     console.log("Resposta enviada com sucesso:", data);
-    return res; // res 
+    return res;
   } catch (error) {
     console.error("Erro ao enviar resposta:", error);
     return "Erro ao enviar resposta.";
