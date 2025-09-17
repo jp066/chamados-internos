@@ -209,6 +209,19 @@ export function CardComponent(props) {
                 )}
               </button>
             )}
+            {c["Imagem descritiva"] && (
+              <span>
+                <strong>Link da imagem: </strong>
+                <a
+                  href={c["Imagem descritiva"]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  {c["Imagem descritiva"]}
+                </a>
+              </span>
+            )}
             <span
               className={`inline-flex items-center gap-1 px-2 py-2 rounded-full text-xs font-semibold font-sans ${
                 c.status === "em aberto"
@@ -295,7 +308,9 @@ export function CardComponent(props) {
                       id={c.id}
                       email={c["Endereço de e-mail"]}
                       file={files[c.id] || null} // Passa o arquivo selecionado
-                      setFile={(newFile) => setFiles((prev) => ({ ...prev, [c.id]: newFile }))} // Atualiza o arquivo selecionado
+                      setFile={(newFile) =>
+                        setFiles((prev) => ({ ...prev, [c.id]: newFile }))
+                      } // Atualiza o arquivo selecionado
                     />
                     <button
                       className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-brightbee-50 dark:bg-brightbeeDark-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow font-sans"
