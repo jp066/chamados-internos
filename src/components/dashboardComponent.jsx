@@ -38,28 +38,40 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
   const stats = useMemo(
     () => [
       {
-        label: "Em Andamento",
-        value: chamados.filter((c) => c.status === "em andamento").length,
-        color: "bg-brightbee-100 text-brightbee-400 dark:bg-brightbeeDark-3 dark:text-brightbee-25",
-        icon: <FaClock className="text-brightbee-400 text-xl mb-1 dark:text-brightbee-25" />,
-      },
-      {
         label: "Abertos",
         value: chamados.filter((c) => c.status === "em aberto").length,
-        color: "bg-yellow-100 text-yellow-800 dark:bg-brightbeeDark-4 dark:text-brightbee-25",
-        icon: <FaExclamationCircle className="text-yellow-500 text-xl mb-1 dark:text-brightbee-25" />,
+        color:
+          "bg-yellow-100 text-yellow-800 dark:bg-brightbeeDark-4 dark:text-brightbee-25",
+        icon: (
+          <FaExclamationCircle />
+        ),
+      },
+      {
+        label: "Em Andamento",
+        value: chamados.filter((c) => c.status === "em andamento").length,
+        color:
+          "bg-brightbee-100 text-brightbee-400 dark:bg-brightbeeDark-3 dark:text-brightbee-25",
+        icon: (
+          <FaClock className="text-brightbee-400 text-xl mb-1 dark:text-brightbee-25" />
+        ),
       },
       {
         label: "Concluídos",
         value: chamados.filter((c) => c.status === "concluído").length,
-        color: "bg-green-100 text-green-800 dark:bg-brightbeeDark-5 dark:text-brightbee-25",
-        icon: <FaCheckCircle className="text-green-500 text-xl mb-1 dark:text-brightbee-25" />,
+        color:
+          "bg-green-100 text-green-800 dark:bg-brightbeeDark-5 dark:text-brightbee-25",
+        icon: (
+          <FaCheckCircle className="text-green-500 text-xl mb-1 dark:text-brightbee-25" />
+        ),
       },
       {
         label: "Total de Chamados",
         value: totalChamados,
-        color: "bg-blue-100 text-blue-800 dark:bg-brightbeeDark-6 dark:text-brightbee-25",
-        icon: <MdApps className="text-blue-500 text-xl mb-1 dark:text-brightbee-25" />,
+        color:
+          "bg-blue-100 text-blue-800 dark:bg-brightbeeDark-6 dark:text-brightbee-25",
+        icon: (
+          <MdApps className="text-blue-500 text-xl mb-1 dark:text-brightbee-25" />
+        ),
       },
     ],
     [totalChamados, chamados]
@@ -98,7 +110,7 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
     <section
       style={{
         fontFamily: "Dm Sans, sans-serif",
-        color: dark ? "#fff" : "#3c1501ff" ,
+        color: dark ? "#fff" : "#3c1501ff",
         background: dark
           ? "linear-gradient(to right, #282828ff, #282828ff, #282828ff)"
           : "linear-gradient(to right, #fff1eb, #fff1eb, #fff1eb)",

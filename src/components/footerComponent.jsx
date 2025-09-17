@@ -35,9 +35,11 @@ export function Footer() {
               color: "#fff",
               fontSize: "14px",
               height: "auto",
+              lineHeight: "30px",
               textAlign: "justify",
               fontFamily: "Dm Sans, sans-serif",
-              margin: 0,
+              marginTop: "16px",
+              marginRight: "auto",
             }}
           >
             Sistema de chamados internos, facilitando
@@ -53,7 +55,7 @@ export function Footer() {
               fontSize: "14px",
               fontFamily: "Dm Sans, sans-serif",
               textAlign: "center",
-              margin: 0,
+              margin: "auto",
               padding: "4px 12px",
               background: "#3B82F6",
               fontWeight: "bold",
@@ -71,7 +73,7 @@ export function Footer() {
               fontSize: "14px",
               fontFamily: "Dm Sans, sans-serif",
               textAlign: "center",
-              margin: 0,
+              margin: "auto",
               padding: "4px 12px",
               background: "#22C55E",
               fontWeight: "bold",
@@ -89,14 +91,17 @@ export function Footer() {
               fontSize: "14px",
               fontFamily: "Dm Sans, sans-serif",
               textAlign: "center",
-              margin: 0,
+              margin: "auto",
               padding: "4px 12px",
               background: "#2C2C2C",
               fontWeight: "bold",
+              "&:hover": {
+                background: "#ff0000ff",
+              },
             }}
             target="_blank"
-            rel="noreferrer" 
-            className="hover:text-yellow-300 rounded-full"
+            rel="noreferrer"
+            className="rounded-full"
           >
             Console Firebase
           </a>

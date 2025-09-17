@@ -7,6 +7,7 @@ import {
   getDocs,
   addDoc,
 } from "firebase/firestore";
+
 import { db } from "../firebase.js";
 
 export async function getChamados() {
@@ -109,3 +110,11 @@ export async function handlerEnviarResposta(email, dataHora, modulo, problema, u
     return "Erro ao enviar resposta.";
   }
 }
+
+/*
+async function getReports() {
+  try {
+
+  }
+}
+*/

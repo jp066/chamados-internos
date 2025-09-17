@@ -31,7 +31,6 @@ export default function App() {
       return newDark;
     });
   };
-  // Aplica classe dark ao carregar, se necessário
   React.useEffect(() => {
     if (dark) {
       document.body.classList.add("dark");
@@ -106,6 +105,7 @@ export default function App() {
             setDark={setDark}
             darkModeHandler={darkModeHandler}
           />
+          {/* adicionar verificação de permissões para acessar planilha edit, forms edit e console firebase */}
           <Footer />
         </>
       )}

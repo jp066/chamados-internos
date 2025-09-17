@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+.confirm-button {
+  background-color: #3085d6;
+  &:hover {
+    background-color: #000000;
+  }
+  color: rgb(255, 255, 255);
+  font-family: "Dm Sans", sans-serif;
+  font-weight: "semi-bold";
+  border-radius: 9999px;
+}
+.deny-button {
+  background-color: #d33;
+  &:hover {
+    background-color: #000000;
+  }
+  color: rgb(255, 255, 255);
+  font-family: "Dm Sans", sans-serif;
+  font-weight: "semi-bold";
+  border-radius: 9999px;
+}
+.cancel-button {
+  background-color: #7c7b7b;
+  &:hover {
+    background-color: #000000;
+  }
+  color: rgb(255, 255, 255);
+  font-family: "Dm Sans", sans-serif;
+  font-weight: "semi-bold";
+  border-radius: 9999px;
+}
+
+body.dark .custom-modal {
+  background: #222; /* cor de fundo */
+  border-radius: 20px; /* bordas arredondadas */
+  color: #fff; /* cor do texto */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  padding: 32px 24px;
+}
+
+body:not(.dark) .custom-modal {
+  background: #fff; /* cor de fundo */
+  border-radius: 20px; /* bordas arredondadas */
+  color: #000; /* cor do texto */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  padding: 32px 24px;
+}

@@ -2,6 +2,8 @@ import { VscAccount } from "react-icons/vsc";
 import { IoMdLogOut } from "react-icons/io";
 import { FaRegLightbulb } from "react-icons/fa6";
 import { FaLightbulb } from "react-icons/fa6";
+import { BiSolidReport } from "react-icons/bi";
+import Swal from "sweetalert2";
 
 export function Header({
   usuario,
@@ -19,7 +21,8 @@ export function Header({
     boxShadow: "0 4px 6px -1px rgba(0,0,0,0.1)",
     width: "100%",
     padding: "1rem",
-    transition: "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)",
+    transition:
+      "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)",
   };
   console.log("Renderizando Header, modo dark:", setDark);
   return (
@@ -40,7 +43,7 @@ export function Header({
         </span>
         {!usuario ? (
           <button
-            className="bg-yellow-400 hover:bg-yellow-500 text-white flex items-center font-bold py-2 px-4 rounded-full shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
+            className="hover:bg-brightbeeDark-4 text-white flex items-center font-bold py-2 px-4 rounded-full shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
             onClick={loginGoogle}
           >
             <VscAccount size={30} color="white" />
@@ -60,12 +63,66 @@ export function Header({
             <IoMdLogOut
               size={24}
               color="white"
-              onClick={logoutGoogle}
+              onClick={() => {
+                Swal.fire({
+                  customClass: {
+                    popup: "custom-modal", // Classe personalizada para o modal
+                    title: "custom-title",
+                    confirmButton: "confirm-button",
+                    denyButton: "deny-button",
+                    cancelButton: "cancel-button",
+                  },
+                  title: "Você deseja fazer logout?",
+                  showDenyButton: true, // isso permite o botão de negação
+                  confirmButtonText: "Sair",
+                  denyButtonText: `Não sair`,
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    logoutGoogle();
+                  }
+                });
+              }}
               className="cursor-pointer"
             />
           </span>
         )}
-
+        {usuario && usuario.email.endsWith("@brightbee.com.br") && (
+          <button
+            onClick={() => {
+              console.log("Relatório gerado");
+/*              Swal.fire({
+                customClass: {
+                  popup: "custom-modal", // Classe personalizada para o modal
+                  title: "custom-title",
+                  confirmButton: "confirm-button",
+                  denyButton: "deny-button",
+                  cancelButton: "cancel-button",
+                },
+                title: "Você deseja gerar um relatório com os dados atuais?",
+                text: "Só pode ser gerado 1 relatório por semana por questão de custo ao Banco de Dados.",
+                showDenyButton: true, // isso permite o botão de negação
+                showCancelButton: true, // isso permite o botão de cancelamento
+                confirmButtonText: "Gerar relatório",
+                denyButtonText: `Não gerar relatório`,
+                cancelButtonText: "Cancelar",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  // gerarRelatorio(); // Chame a função para gerar o relatório, é uma função assíncrona.
+                  Swal.fire("Relatório gerado!", "", "success");
+                } else if (result.isDenied) {
+                  Swal.fire("Relatório não gerado", "", "info");
+                }
+              });*/
+              Swal.fire({
+                icon: 'info',
+                title: 'Relatório',
+                text: 'Função de geração de relatório será implementada em breve.',
+              }); 
+            }}
+          >
+            <BiSolidReport size={25} />
+          </button>
+        )}
         <button onClick={() => darkModeHandler()}>
           {dark && <FaLightbulb color="white" />}
           {!dark && <FaRegLightbulb color="white" />}
