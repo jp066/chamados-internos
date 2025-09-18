@@ -8,6 +8,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { db } from "../firebase.js";
+
 export async function getChamados() {
   try {
     const chamadosCollection = collection(db, "chamados");
@@ -129,3 +130,47 @@ async function getReports() {
   }
 }
 */
+
+// As duas funções para maior persistência, serão implementadas em algum lugar como redis ou banco de dados.
+let contadorChamadas = [];
+export async function contadorDeChamadas(limiteAlcancado, setLimiteAlcancado) {
+  if (limiteAlcancado) return;
+  let chamadas = contadorChamadas.length;
+  if (chamadas === 2) {
+    setLimiteAlcancado(true);
+    console.log("Limite de relatórios mensais atingido.");
+    return chamadas;
+  }
+  contadorChamadas.push(1);
+  console.log("Contador de chamadas de relatório:", contadorChamadas);
+  return contadorChamadas;
+}
+
+
+export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
+  try {
+    await contadorDeChamadas(limiteAlcancado, setLimiteAlcancado);
+    if (limiteAlcancado) {
+      console.log("Limite de relatórios mensais atingido.");
+      return;
+    }
+    const chamados = await getChamados();
+    const reportData = chamados.map((chamado) => ({
+      id: chamado.id,
+      usuario: chamado.usuario,
+      problema: chamado.problema,
+      status: chamado.status,
+      data: formatDate(chamado["Carimbo de data/hora"]),
+    }));
+    // gerarRelatorio(usuario)
+    console.log("Relatório simples gerado com sucesso:", reportData);
+    return reportData;
+  } catch (error) {
+    console.error(
+      "Erro ao gerar relatório simples:",
+      error.stack,
+      error.message
+    );
+    throw new Error("Erro ao gerar relatório simples.");
+  }
+}
