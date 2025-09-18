@@ -28,16 +28,12 @@ export function Header({
   return (
     <header style={headerStyle}>
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <a
-          href="/"
-          className="flex items-center justify-center sm:justify-start mb-2 sm:mb-0 focus:outline-none focus:ring-2 focus:ring-yellow-700 rounded-lg transition-shadow"
-        >
+
           <img
             src={require("../imgs/LOGOS.png")}
             alt="Logo"
             className="h-12 w-15 mr-1 drop-shadow-md"
           />
-        </a>
         <span className="text-white text-sm sm:text-base font-semibold text-center sm:text-left tracking-wide drop-shadow-sm">
           Chamados de Sistemas
         </span>
@@ -88,9 +84,9 @@ export function Header({
         )}
         {usuario && usuario.email.endsWith("@brightbee.com.br") && (
           <button
-            onClick={() => {
+            onClick={() => {/*
               console.log("Relatório gerado");
-/*              Swal.fire({
+              Swal.fire({
                 customClass: {
                   popup: "custom-modal", // Classe personalizada para o modal
                   title: "custom-title",
@@ -102,22 +98,37 @@ export function Header({
                 text: "Só pode ser gerado 1 relatório por semana por questão de custo ao Banco de Dados.",
                 showDenyButton: true, // isso permite o botão de negação
                 showCancelButton: true, // isso permite o botão de cancelamento
-                confirmButtonText: "Gerar relatório",
-                denyButtonText: `Não gerar relatório`,
+                confirmButtonText: "Relatório simples",
+                denyButtonText: `Relatório personalizado com filtros`,
                 cancelButtonText: "Cancelar",
               }).then((result) => {
                 if (result.isConfirmed) {
-                  // gerarRelatorio(); // Chame a função para gerar o relatório, é uma função assíncrona.
-                  Swal.fire("Relatório gerado!", "", "success");
+                  // reportSimple();
+                  Swal.fire({
+                    customClass: {
+                      popup: "custom-modal-small",
+                      title: "custom-title-small",
+                      text: "custom-text-small",
+                      confirmButton: "confirm-button-small",
+                    },
+                    icon: "success",
+                    title: "Relatório gerado com sucesso!",
+                    text: "O relatório foi enviado para o seu e-mail cadastrado.",
+                    confirmButtonText: "Fechar",
+                  });
                 } else if (result.isDenied) {
-                  Swal.fire("Relatório não gerado", "", "info");
+                  // <ReportCustomComponent />
                 }
               });*/
               Swal.fire({
+                customClass: {
+                  popup: "custom-modal-small",
+                  title: "custom-title-small",
+                },
                 icon: 'info',
                 title: 'Relatório',
                 text: 'Função de geração de relatório será implementada em breve.',
-              }); 
+              });
             }}
           >
             <BiSolidReport size={25} />
