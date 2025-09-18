@@ -4,8 +4,8 @@ import { FaRegLightbulb } from "react-icons/fa6";
 import { FaLightbulb } from "react-icons/fa6";
 import { BiSolidReport } from "react-icons/bi";
 import Swal from "sweetalert2";
-import { contadorDeChamadas, reportSimple } from "../services/firestoreService";
-import { useState } from "react";
+//import { contadorDeChamadas, reportSimple } from "../services/firestoreService";
+//import { useState } from "react";
 
 export function Header({
   usuario,
@@ -15,7 +15,7 @@ export function Header({
   setDark,
   darkModeHandler,
 }) {
-  const [limiteAlcancado, setLimiteAlcancado] = useState(false);
+//  const [limiteAlcancado, setLimiteAlcancado] = useState(false);
   const headerStyle = {
     color: "#fff",
     background: dark
