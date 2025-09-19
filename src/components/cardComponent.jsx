@@ -163,9 +163,10 @@ export function CardComponent(props) {
             ) : null}
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
               <strong>Problema: </strong>
-              {c["Categoria"] ? c["Categoria"] : null}
-              {c["O que ocorreu com o TOTVS RM?"] ||
-              c["O que ocorreu com o RM?"]
+              {c["Categoria"]
+                ? c["Categoria"]
+                : c["O que ocorreu com o TOTVS RM?"] ||
+                  c["O que ocorreu com o RM?"]
                 ? c["O que ocorreu com o TOTVS RM?"] ||
                   c["O que ocorreu com o RM?"]
                 : c["O que ocorreu com o Remark?"]

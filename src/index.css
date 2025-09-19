@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Transições ultra suaves para elementos */
+.smooth {
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: translateZ(0);
+  will-change: border-radius, transform, box-shadow;
+}
+
+.smooth:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode hover effect */
+.dark .smooth:hover {
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1), 0 4px 10px rgba(255, 255, 255, 0.05);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
