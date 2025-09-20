@@ -5,7 +5,7 @@ import { FaLightbulb } from "react-icons/fa6";
 import { TbAlignBoxBottomLeft } from "react-icons/tb";
 import Swal from "sweetalert2";
 import { IoDocumentTextOutline } from "react-icons/io5";
-import { contadorDeChamadas, reportSimple } from "../services/firestoreService";
+import { reportSimple } from "../services/firestoreService";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 
@@ -63,8 +63,8 @@ export function Header({
                 cancelButtonText: "Cancelar",
               }).then((result) => {
                 if (result.isConfirmed) {
-                  //                  reportSimple(limiteAlcancado, setLimiteAlcancado);
-                  //                  console.log("Limite alcançado:", limiteAlcancado);
+                  reportSimple(limiteAlcancado, setLimiteAlcancado);
+                  console.log("Limite alcançado:", limiteAlcancado);
                   if (limiteAlcancado) {
                     Swal.fire({
                       customClass: {
