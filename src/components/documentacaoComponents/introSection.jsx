@@ -10,6 +10,24 @@ export default function IntroSection() {
   return (
     <>
       <div>
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-4 rounded-lg">
+          <div className="flex items-start gap-2">
+            <span className="text-yellow-600 dark:text-yellow-400 text-lg">
+              ⚠️
+            </span>
+            <div>
+              <h3 className="font-semibold text-yellow-800 dark:text-yellow-300 mb-1">
+                Importante
+              </h3>
+              <p className="text-sm text-yellow-700 dark:text-yellow-400">
+                Esta documentação assume conhecimento básico em React, Firebase
+                e Google Apps Script. Para dúvidas específicas, consulte a
+                equipe de desenvolvimento.
+              </p>
+            </div>
+          </div>
+        </div>
+        &nbsp;
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4 rounded-lg mb-6">
           <div className="flex items-start gap-3">
             <span className="text-blue-600 dark:text-blue-400 text-xl">
@@ -29,14 +47,16 @@ export default function IntroSection() {
                 em telas maiores, aproveitando melhor o espaço disponível para
                 visualização de dados e operações complexas.
               </p>
-              &nbsp;<p className="text-sm text-blue-700 dark:text-blue-400 leading-relaxed">
+              &nbsp;
+              <p className="text-sm text-blue-700 dark:text-blue-400 leading-relaxed">
                 A abordagem Desktop-First garante que as funcionalidades
-                principais sejam otimizadas para o ambiente de trabalho, onde
-                a equipe passa a maior parte do tempo. Isso inclui layouts
+                principais sejam otimizadas para o ambiente de trabalho, onde a
+                equipe passa a maior parte do tempo. Isso inclui layouts
                 adaptativos, menus de fácil acesso e ferramentas de
                 produtividade integradas.
               </p>
-              &nbsp;<p className="text-sm text-blue-700 dark:text-blue-400 leading-relaxed">
+              &nbsp;
+              <p className="text-sm text-blue-700 dark:text-blue-400 leading-relaxed">
                 Posteriormente, o sistema pode ser adaptado para dispositivos
                 móveis, mas a prioridade inicial foi garantir uma experiência
                 robusta e eficiente para os usuários de desktop.
@@ -47,7 +67,6 @@ export default function IntroSection() {
         <h1 className="text-3xl font-bold mb-6 text-brightbee-400 dark:text-brightbeeDark-3">
           Documentação Técnica - Sistema de Chamados Internos Bright Bee School.
         </h1>
-
         {/* Visão Geral */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
@@ -83,7 +102,6 @@ export default function IntroSection() {
             Firebase Firestore.
           </p>
         </div>
-
         {/* Principais Funcionalidades */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
@@ -136,7 +154,6 @@ export default function IntroSection() {
             </div>
           </div>
         </div>
-
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
             Stack Tecnológica
@@ -171,7 +188,6 @@ export default function IntroSection() {
             ))}
           </div>
         </div>
-
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
             Fluxo do Sistema
@@ -233,7 +249,6 @@ export default function IntroSection() {
             </div>
           </div>
         </div>
-
         {/* Estrutura da Documentação */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
@@ -299,25 +314,6 @@ export default function IntroSection() {
               </span>
             </li>
           </ul>
-        </div>
-
-        {/* Nota Importante */}
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-4 rounded-lg">
-          <div className="flex items-start gap-2">
-            <span className="text-yellow-600 dark:text-yellow-400 text-lg">
-              ⚠️
-            </span>
-            <div>
-              <h3 className="font-semibold text-yellow-800 dark:text-yellow-300 mb-1">
-                Importante
-              </h3>
-              <p className="text-sm text-yellow-700 dark:text-yellow-400">
-                Esta documentação assume conhecimento básico em React, Firebase
-                e Google Apps Script. Para dúvidas específicas, consulte a
-                equipe de desenvolvimento.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </>

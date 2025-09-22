@@ -6,6 +6,7 @@ import {
   setTotalChamadosF,
   updateStatus,
 } from "../services/firestoreService.js";
+import { motion } from "motion/react";
 import {
   formatDate,
   handlerEnviarResposta,
@@ -100,7 +101,14 @@ export function CardComponent(props) {
         </div>
       ) : (
         chamadosFilter.map((c) => (
-          <div
+          <motion.div
+            initial={{ opacity: 0.85, scale: 0.95 }}
+            style={{ originX: 0, originY: 0 }}
+            whileHover={{
+              scale: 1,
+              transition: { duration: 0.2 },
+              opacity: 1,
+            }}
             key={c.id ? `card-${c.id}` : `card-${c["Categoria"]}`}
             className="bg-brightbee-50 rounded-3xl shadow-lg p-4 sm:p-6 flex flex-col gap-2 font-sans dark:bg-brightbeeDark-2"
           >
@@ -358,7 +366,7 @@ export function CardComponent(props) {
                   </>
                 ))
               : ""}
-          </div>
+          </motion.div>
         ))
       )}
     </div>

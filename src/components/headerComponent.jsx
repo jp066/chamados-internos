@@ -5,22 +5,28 @@ import { FaLightbulb } from "react-icons/fa6";
 import { TbAlignBoxBottomLeft } from "react-icons/tb";
 import Swal from "sweetalert2";
 import { IoDocumentTextOutline } from "react-icons/io5";
-import { contadorDeChamadas, reportSimple } from "../services/firestoreService";
+//import { contadorDeChamadas, reportSimple } from "../services/firestoreService";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
+import { motion } from "motion/react";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/DarkModeContext";
+import { LoginContext } from "../context/LoginContext";
+import { ModalComponent } from "./modalComponent";
 
-export function Header({
-  usuario,
-  loginGoogle,
-  logoutGoogle,
-  dark,
-  setDark,
-  darkModeHandler,
-}) {
-  const [limiteAlcancado, setLimiteAlcancado] = useState(false);
+export function Header() {
+  const { dark, setDark, darkModeHandler } = useContext(DarkModeContext);
+  const { usuario, setUsuario, loginGoogle, logoutGoogle } = useContext(LoginContext);
+//  const [limiteAlcancado, setLimiteAlcancado] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  console.log(setDark);
   let navigate = useNavigate();
   const headerStyle = {
     color: "#fff",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    zIndex: 1000,
     background: dark
       ? "linear-gradient(to right, #121212, #060910ff, #0c101aff)"
       : "linear-gradient(to right, #e9692c, #f08a54, #c94e0cc6)",
@@ -30,21 +36,35 @@ export function Header({
     transition:
       "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)",
   };
-  console.log("Renderizando Header, modo dark:", setDark);
   return (
-    <header style={headerStyle}>
+    <motion.header
+      style={headerStyle}
+    >
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <NavLink to="/">
-          <img
-            src={require("../imgs/LOGOS.png")}
-            alt="Logo"
-            className="h-12 w-15 mr-1 drop-shadow-md"
-          />
-        </NavLink>
+        <motion.div
+          initial={{ opacity: 0.6, scale: 1 }}
+          style={{ originX: 0, originY: 0 }}
+          whileHover={{ scale: 1.2, transition: { duration: 0.2 }, opacity: 1 }}
+        >
+          <NavLink to="/">
+            <img
+              src={require("../imgs/LOGOS.png")}
+              alt="Logo"
+              className="h-12 w-15 mr-1 drop-shadow-md"
+            />
+          </NavLink>
+        </motion.div>
         {usuario && usuario.email.endsWith("@brightbee.com.br") && (
-          <button
+          <motion.button
+            initial={{ opacity: 0.6, scale: 1 }}
+            style={{ originX: 0, originY: 0 }}
+            whileHover={{
+              scale: 1.1,
+              transition: { duration: 0.2 },
+              opacity: 1,
+            }}
             className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md transition-all duration-200"
-            onClick={() => {
+            onClick={() => {/*
               console.log("Botão de relatório clicado");
               Swal.fire({
                 customClass: {
@@ -93,8 +113,9 @@ export function Header({
                     });
                   }
                 } else if (result.isDenied) {
+                  setShowModal(true);
                 }
-              }); /*
+              }); */
               Swal.fire({
                 customClass: {
                   popup: "custom-modal-small",
@@ -103,39 +124,59 @@ export function Header({
                 icon: 'info',
                 title: 'Relatório',
                 text: 'Função de geração de relatório será implementada em breve.',
-              });*/
+              });
             }}
           >
             <TbAlignBoxBottomLeft size={25} /> &nbsp; Gerar Relatório
-          </button>
+          </motion.button>
         )}
-        <button
-          className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md transition-all"
+        <motion.button
+          initial={{ opacity: 0.6, scale: 1 }}
+          style={{ originX: 0, originY: 0 }}
+          whileHover={{ scale: 1.1, transition: { duration: 0.2 }, opacity: 1 }}
+          className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md"
           onClick={() => navigate("/documentacao")}
         >
           <IoDocumentTextOutline size={25} color="white" />
           &nbsp; Documentação
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          initial={{ opacity: 0.6, scale: 1 }}
+          style={{ originX: 0, originY: 0 }}
+          whileHover={{ scale: 1.1, transition: { duration: 0.2 }, opacity: 1 }}
           onClick={() => darkModeHandler()}
           className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md transition-all"
         >
           {dark && <FaLightbulb color="white" />}
           {!dark && <FaRegLightbulb color="white" />}
           &nbsp; Modo {dark ? "Escuro" : "Claro"}
-        </button>
+        </motion.button>
         {!usuario ? (
-          <button
+          <motion.button
+            initial={{ opacity: 0.6, scale: 1 }}
+            style={{ originX: 0, originY: 0 }}
+            whileHover={{
+              scale: 1.2,
+              transition: { duration: 0.2 },
+              opacity: 1,
+            }}
             className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md transition-all duration-200"
             onClick={loginGoogle}
           >
             <VscAccount size={30} color="white" />
             &nbsp; Login
-          </button>
+          </motion.button>
         ) : (
           <span className="text-white text-sm sm:text-base font-semibold text-center sm:text-left tracking-wide drop-shadow-sm flex items-center gap-2">
             {usuario.photoURL && (
-              <img
+              <motion.img
+                initial={{ opacity: 0.6, scale: 1 }}
+                style={{ originX: 0, originY: 0 }}
+                whileHover={{
+                  scale: 1.2,
+                  transition: { duration: 0.2 },
+                  opacity: 1,
+                }}
                 src={usuario.photoURL}
                 alt="usuario"
                 className="h-8 w-8 rounded-full"
@@ -162,6 +203,8 @@ export function Header({
                 }).then((result) => {
                   if (result.isConfirmed) {
                     logoutGoogle();
+                    setUsuario(null); // Limpa o estado do usuário
+                    localStorage.removeItem("usuario"); // Remove do localStorage
                   }
                 });
               }}
@@ -170,6 +213,9 @@ export function Header({
           </span>
         )}
       </div>
-    </header>
+      {showModal && (
+        <ModalComponent onClose={() => setShowModal(false)} style={{ zIndex: 1000 }} />
+      )}
+    </motion.header>
   );
 }

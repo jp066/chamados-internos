@@ -4,22 +4,26 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import SidebarComponent from "./sidebarComponent";
 import IntroSection from "./documentacaoComponents/introSection";
 import GoogleIntegration from "./documentacaoComponents/googleIntegration";
+import { LoginContext } from "../context/LoginContext";
+import loginGoogle from "./appComponent";
 
 export default function DocumentComponent() {
   const { dark, setDark, darkModeHandler } = useContext(DarkModeContext);
+  const { usuario, setUsuario } = useContext(LoginContext);
   const [activeSection, setActiveSection] = useState("intro-section");
 
   const handleSectionClick = (sectionId) => {
     setActiveSection(sectionId);
-    
+
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
+
   return (
     <div className="min-h-screen font-sans">
       {/* Header fixo */}
@@ -28,6 +32,13 @@ export default function DocumentComponent() {
           dark={dark}
           setDark={setDark}
           darkModeHandler={darkModeHandler}
+          usuario={usuario}
+          setUsuario={setUsuario}
+          loginGoogle={loginGoogle} // ← Você precisa ter essa função
+          logoutGoogle={() => {
+            setUsuario(null);
+            localStorage.removeItem("usuario");
+          }}
         />
       </div>
 
