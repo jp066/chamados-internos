@@ -112,9 +112,11 @@ export function Header() {
                           text: "custom-text-small",
                           confirmButton: "confirm-button-small",
                         },
-                        icon: "success",
+//                        icon: "success",
+                        icon: "info",
                         title:
-                          "O relatório foi enviado para o seu e-mail cadastrado.",
+//                          "O relatório foi enviado para o seu e-mail cadastrado.",
+                          "Em desenvolvimento",
                         confirmButtonText: "Ok",
                       });
                     }
