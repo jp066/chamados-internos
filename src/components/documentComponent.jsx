@@ -1,7 +1,7 @@
 import { Header } from "./headerComponent";
 import { useContext, useState } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
-import SidebarComponent from "./sidebarComponent";
+import SidebarComponent from "../elements/sidebarComponent";
 import IntroSection from "./documentacaoComponents/introSection";
 import GoogleIntegration from "./documentacaoComponents/googleIntegration";
 import { LoginContext } from "../context/LoginContext";

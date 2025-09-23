@@ -13,6 +13,7 @@ import { useContext } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { LoginContext } from "../context/LoginContext";
 import { ModalRelatorio } from "./modalRelatorio";
+import { HeaderMobile } from "./mobile/headerMobile";
 
 export function Header() {
   const { dark, setDark, darkModeHandler } = useContext(DarkModeContext);
@@ -65,7 +66,7 @@ export function Header() {
               initial={{ opacity: 0.6, scale: 1 }}
               style={{ originX: 0, originY: 0 }}
               whileHover={{
-                scale: 1.1,
+                scale: 1.05,
                 transition: { duration: 0.2 },
                 opacity: 1,
               }}
@@ -84,8 +85,8 @@ export function Header() {
                   text: "Só pode ser gerado no maximo 3 relatórios por mês por questão de custo ao Banco de Dados.",
                   showDenyButton: true, // isso permite o botão de negação
                   showCancelButton: true, // isso permite o botão de cancelamento
-                  confirmButtonText: "Relatório simples",
-                  denyButtonText: `Relatório personalizado com filtros`,
+                  confirmButtonText: "Relatório rápido  📄",
+                  denyButtonText: "Relatório detalhado  🔎",
                   cancelButtonText: "Cancelar",
                 }).then((result) => {
                   if (result.isConfirmed) {
@@ -112,10 +113,10 @@ export function Header() {
                           text: "custom-text-small",
                           confirmButton: "confirm-button-small",
                         },
-//                        icon: "success",
+                        //                        icon: "success",
                         icon: "info",
                         title:
-//                          "O relatório foi enviado para o seu e-mail cadastrado.",
+                          //                          "O relatório foi enviado para o seu e-mail cadastrado.",
                           "Em desenvolvimento",
                         confirmButtonText: "Ok",
                       });
@@ -133,7 +134,7 @@ export function Header() {
             initial={{ opacity: 0.6, scale: 1 }}
             style={{ originX: 0, originY: 0 }}
             whileHover={{
-              scale: 1.1,
+              scale: 1.05,
               transition: { duration: 0.2 },
               opacity: 1,
             }}
@@ -147,7 +148,7 @@ export function Header() {
             initial={{ opacity: 0.6, scale: 1 }}
             style={{ originX: 0, originY: 0 }}
             whileHover={{
-              scale: 1.1,
+              scale: 1.05,
               transition: { duration: 0.2 },
               opacity: 1,
             }}
@@ -163,7 +164,7 @@ export function Header() {
               initial={{ opacity: 0.6, scale: 1 }}
               style={{ originX: 0, originY: 0 }}
               whileHover={{
-                scale: 1.2,
+                scale: 1.05,
                 transition: { duration: 0.2 },
                 opacity: 1,
               }}
@@ -200,7 +201,7 @@ export function Header() {
                       popup: "custom-modal", // Classe personalizada para o modal
                       title: "custom-title",
                       confirmButton: "confirm-button",
-                      denyButton: "deny-button",
+                      denyButton: "deny-button-cancel",
                       cancelButton: "cancel-button",
                     },
                     title: "Você deseja fazer logout?",
@@ -223,7 +224,12 @@ export function Header() {
       </div>
 
       {/* Header Mobile */}
-      <div
+      <HeaderMobile
+        openHamburger={openHamburger}
+        setOpenHamburger={setOpenHamburger}
+      />
+      {/* 
+<div
         className="md:hidden text-white text-1xl cursor-pointer"
         onClick={() => setOpenHamburger(!openHamburger)}
       >
@@ -243,6 +249,7 @@ export function Header() {
           )}
         </div>
       )}
+*/}
       {showModal && (
         <ModalRelatorio
           onClose={() => setShowModal(false)}

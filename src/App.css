@@ -52,8 +52,21 @@
   border-radius: 9999px;
 }
 
+.deny-button-cancel {
+  background-color: #bc0000;
+  border: outset 3px rgb(126, 38, 38);
+  &:hover {
+    background-color: #000000;
+    border: outset 3px rgb(211, 191, 191);
+  }
+  color: rgb(255, 255, 255);
+  font-family: "Dm Sans", sans-serif;
+  font-weight: "semi-bold";
+  border-radius: 9999px;
+}
+
 .cancel-button, .cancel-button-notification {
-  background-color: #7c7b7b;
+  background-color: #bc0000;
   &:hover {
     background-color: #000000;
   }

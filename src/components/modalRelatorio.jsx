@@ -124,11 +124,7 @@ export function ModalRelatorio({ onClose }) {
                 </label>
                 <div className="space-y-3">
                   <label className="flex items-center cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      className="checkbox-custom mr-3"
-                      defaultChecked
-                    />
+                    <input type="checkbox" className="checkbox-custom mr-3"/>
                     <span className="text-white group-hover:text-white transition-colors duration-200">
                       Em aberto
                     </span>

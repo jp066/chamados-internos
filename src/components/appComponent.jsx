@@ -32,7 +32,6 @@ export default function Home() {
     }
   }, [dark]);
 
-
   // VERIFICAÇÃO DE E-MAILS PERMITIDOS
   const isTeamMember =
     usuario &&
@@ -54,6 +53,11 @@ export default function Home() {
         setDark={setDark}
         darkModeHandler={darkModeHandler}
       />
+      {!usuario ? (
+        <div style={{ height: "80px" }}></div>
+      ) : (
+        <div style={{ height: "0px" }}></div>
+      )}
       {!usuario ? (
         <h1 className="text-center font-sans text-2xl mt-20 dark:text-white text-brightbeeDark-900">
           Por favor, faça login para continuar.
