@@ -37,10 +37,14 @@
   }
 }
 
-.confirm-button, .confirm-button-small, .deny-button {
-  background-color: #e9692c;
+.confirm-button,
+.confirm-button-small,
+.deny-button {
+  background-color: rgb(30 41 59);
+  border: outset 3px rgb(38, 72, 126);
   &:hover {
     background-color: #000000;
+    border: outset 3px rgb(191, 199, 211);
   }
   color: rgb(255, 255, 255);
   font-family: "Dm Sans", sans-serif;
@@ -48,7 +52,7 @@
   border-radius: 9999px;
 }
 
-.cancel-button {
+.cancel-button, .cancel-button-notification {
   background-color: #7c7b7b;
   &:hover {
     background-color: #000000;
@@ -59,7 +63,8 @@
   border-radius: 9999px;
 }
 
-body.dark .custom-modal, body.dark .custom-modal-small {
+body.dark .custom-modal,
+body.dark .custom-modal-small, .custom-modal-notification {
   height: auto;
   width: auto;
   max-width: 50%;
@@ -70,7 +75,8 @@ body.dark .custom-modal, body.dark .custom-modal-small {
   padding: 32px 24px;
 }
 
-body:not(.dark) .custom-modal, body:not(.dark) .custom-modal-small {
+body:not(.dark) .custom-modal,
+body:not(.dark) .custom-modal-small {
   height: auto;
   width: auto;
   max-width: 50%;
@@ -81,9 +87,11 @@ body:not(.dark) .custom-modal, body:not(.dark) .custom-modal-small {
   padding: 32px 24px;
 }
 
-.custom-title-small, .custom-text-small {
+.custom-title-small,
+.custom-text-small {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 16px;
   font-family: "Dm Sans", sans-serif;
 }
+

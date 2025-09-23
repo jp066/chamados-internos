@@ -65,7 +65,7 @@ export default function Home() {
         </h1>
       ) : (
         <>
-          <div style={{ height: "64px" }}></div>
+          <div style={{ height: "80px" }}></div>
           <Hero
             dark={dark}
             setDark={setDark}
