@@ -222,34 +222,11 @@ export function Header() {
           )}
         </div>
       </div>
-
       {/* Header Mobile */}
       <HeaderMobile
         openHamburger={openHamburger}
         setOpenHamburger={setOpenHamburger}
       />
-      {/* 
-<div
-        className="md:hidden text-white text-1xl cursor-pointer"
-        onClick={() => setOpenHamburger(!openHamburger)}
-      >
-        ☰
-      </div>
-      {openHamburger && (
-        <div className="md:hidden flex flex-col items-center gap-4 py-4">
-          <button className="text-white">Gerar Relatório</button>
-          <button className="text-white">Documentação</button>
-          <button className="text-white">
-            Modo {dark ? "Escuro" : "Claro"}
-          </button>
-          {!usuario ? (
-            <button className="text-white">Login</button>
-          ) : (
-            <button className="text-white">Logout</button>
-          )}
-        </div>
-      )}
-*/}
       {showModal && (
         <ModalRelatorio
           onClose={() => setShowModal(false)}
