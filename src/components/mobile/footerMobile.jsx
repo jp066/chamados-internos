@@ -76,7 +76,7 @@ export function FooterMobile() {
               Console Firebase
             </motion.a>
           </div>
-          <div className="flex h-8 w-full border-t-2 border-white mt-4">
+          <div className="flex h-15 w-full border-t-2 border-white mt-4">
             <p
               className="container mx-auto text-white mt-4"
               style={{
