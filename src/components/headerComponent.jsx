@@ -27,7 +27,8 @@ export function Header() {
   let navigate = useNavigate();
   const headerStyle = {
     color: "#fff",
-    position: !openHamburger ? "fixed" : "relative", // muda para relative quando o menu está aberto
+    position: "fixed", // muda para relative quando o menu está aberto
+    
     top: -10, // mantém no topo quando fixo
     left: 0,
     zIndex: 1000,
@@ -37,8 +38,6 @@ export function Header() {
     boxShadow: "0 4px 6px -1px rgba(0,0,0,0.1)", // essa linha adiciona a sombra
     width: "100%",
     padding: "1rem",
-    transition:
-      "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)",
   };
   return (
     <motion.header

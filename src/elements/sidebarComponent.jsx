@@ -8,8 +8,8 @@ import {
 export default function SidebarComponent({ activeSection, handleSectionClick, dark, darkModeHandler, setDark }) {
   return (
     <>
-      <div className="w-64 flex-shrink-0">
-        <Sidebar className="fixed left-0 top-16 h-full w-64 z-40">
+      <div className=" w-64 flex-shrink-0">
+        <Sidebar className="hidden md:flex fixed left-0 top-16 h-full w-64 z-40">
           <SidebarItems
             style={{
               background: dark ? "#181818" : "#e9692c",

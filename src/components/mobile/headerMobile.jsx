@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { LoginContext } from "../../context/LoginContext";
 import { IoMdLogOut } from "react-icons/io";
@@ -13,6 +14,7 @@ export function HeaderMobile({ openHamburger, setOpenHamburger }) {
   const { dark, darkModeHandler } = useContext(DarkModeContext);
   const { usuario, setUsuario, loginGoogle, logoutGoogle } =
     useContext(LoginContext);
+  const navigate = useNavigate();
   return (
     <div>
       <div
@@ -22,11 +24,14 @@ export function HeaderMobile({ openHamburger, setOpenHamburger }) {
         ☰
       </div>
       {openHamburger && (
-        <div className="md:hidden flex flex-col items-center gap-4 py-4">
-          <button className="text-white">Gerar Relatório &nbsp; 
+        <div className="md:hidden flex flex-col items-center gap-4 py-4" style={{
+          borderBottomRightRadius: "8px",
+          borderBottomLeftRadius: "8px",
+        }}>
+          <button className="text-white">Gerar Relatório &nbsp;
             <TbAlignBoxBottomLeft size={20} className="inline mb-1" />
           </button>
-          <button className="text-white">
+          <button className="text-white" onClick={() => navigate("/documentacao")}>
             Documentação &nbsp;
             <IoDocumentTextOutline size={20} className="inline mb-1" />
           </button>
@@ -69,11 +74,11 @@ export function HeaderMobile({ openHamburger, setOpenHamburger }) {
                 onClick={() => {
                   Swal.fire({
                     customClass: {
-                      popup: "custom-modal", // Classe personalizada para o modal
-                      title: "custom-title",
-                      confirmButton: "confirm-button",
-                      denyButton: "deny-button",
-                      cancelButton: "cancel-button",
+                      popup: "custom-modal-mobile", // Classe personalizada para o modal
+                      title: "custom-title-mobile",
+                      confirmButton: "confirm-button-mobile",
+                      denyButton: "deny-button-mobile",
+                      cancelButton: "cancel-button-mobile",
                     },
                     title: "Você deseja fazer logout?",
                     showDenyButton: true, // isso permite o botão de negação

@@ -120,7 +120,7 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
         animation: "fade-in 0.7s cubic-bezier(.4,0,.2,1) both",
       }}
     >
-      <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      <div className="md:grid flex-col justify-between grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         {stats.map((stat) => (
           <button
             className={`focus:outline-none w-full`}

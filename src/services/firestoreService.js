@@ -1,4 +1,3 @@
-// services/firestoreService.js
 import {
   doc,
   updateDoc,
@@ -123,14 +122,6 @@ export async function handlerEnviarResposta(
   }
 }
 
-/*
-async function getReports() {
-  try {
-
-  }
-}
-*/
-
 // As duas funções para maior persistência, serão implementadas em algum lugar como redis ou banco de dados.
 let contadorChamadas = [];
 export async function contadorDeChamadas(limiteAlcancado, setLimiteAlcancado) {
@@ -145,6 +136,7 @@ export async function contadorDeChamadas(limiteAlcancado, setLimiteAlcancado) {
   console.log("Contador de chamadas de relatório:", contadorChamadas);
   return contadorChamadas;
 }
+
 
 
 export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
