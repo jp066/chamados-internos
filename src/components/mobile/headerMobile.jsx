@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { LoginContext } from "../../context/LoginContext";
 import { IoMdLogOut } from "react-icons/io";
@@ -14,24 +14,64 @@ export function HeaderMobile({ openHamburger, setOpenHamburger }) {
   const { dark, darkModeHandler } = useContext(DarkModeContext);
   const { usuario, setUsuario, loginGoogle, logoutGoogle } =
     useContext(LoginContext);
-  const navigate = useNavigate();
+//  const navigate = useNavigate();
   return (
     <div>
       <div
         className="md:hidden text-white text-1xl cursor-pointer"
+        style={{ transition: "all 0.3s ease-in-out" }}
         onClick={() => setOpenHamburger(!openHamburger)}
       >
         ☰
       </div>
       {openHamburger && (
-        <div className="md:hidden flex flex-col items-center gap-4 py-4" style={{
-          borderBottomRightRadius: "8px",
-          borderBottomLeftRadius: "8px",
-        }}>
-          <button className="text-white">Gerar Relatório &nbsp;
+        <div
+          className="md:hidden flex flex-col items-center gap-4 py-4"
+          style={{
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            borderRadius: "8px",
+            padding: "10px",
+          }}
+        >
+          <button
+            className="text-white"
+            onClick={() => {
+              Swal.fire({
+                customClass: {
+                  popup: "custom-modal-mobile", // Classe personalizada para o modal
+                  title: "custom-title-mobile",
+                  confirmButton: "confirm-button-mobile",
+                  denyButton: "deny-button-mobile",
+                  cancelButton: "cancel-button-mobile",
+                },
+                title: "Em breve chegará aos dispositivos móveis! 😉",
+                showDenyButton: false, // isso permite o botão de negação
+                showConfirmButton: true,
+                confirmButtonText: "Certo!"
+              });
+            }}
+          >
+            Gerar Relatório &nbsp;
             <TbAlignBoxBottomLeft size={20} className="inline mb-1" />
           </button>
-          <button className="text-white" onClick={() => navigate("/documentacao")}>
+          <button
+            className="text-white"
+            onClick={() => {
+              Swal.fire({
+                customClass: {
+                  popup: "custom-modal-mobile", // Classe personalizada para o modal
+                  title: "custom-title-mobile",
+                  confirmButton: "confirm-button-mobile"
+                },
+                title: "Em breve chegará aos dispositivos móveis! 😉",
+                showDenyButton: false, // isso permite o botão de negação
+                showConfirmButton: true,
+                confirmButtonText: "Certo!"
+              });
+            }}
+          >
+            {" "}
+            {/*  onClick={() => navigate("/documentacao")} */}
             Documentação &nbsp;
             <IoDocumentTextOutline size={20} className="inline mb-1" />
           </button>

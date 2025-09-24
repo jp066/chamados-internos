@@ -6,6 +6,7 @@ import IntroSection from "./documentacaoComponents/introSection";
 import GoogleIntegration from "./documentacaoComponents/googleIntegration";
 import { LoginContext } from "../context/LoginContext";
 import loginGoogle from "./appComponent";
+import { DocumentMobile } from "./mobile/documentMobile";
 
 export default function DocumentComponent() {
   const { dark, setDark, darkModeHandler } = useContext(DarkModeContext);
@@ -44,7 +45,7 @@ export default function DocumentComponent() {
 
       {/* Container principal */}
       <div
-        className="flex min-h-screen pt-16"
+        className="hidden md:flex flex min-h-screen pt-16"
         style={{
           background: dark ? "#181818" : "#fff1eb",
           color: dark ? "#ffffff" : "#000000",
@@ -135,6 +136,8 @@ export default function DocumentComponent() {
           </section>
         </main>
       </div>
+
+      <DocumentMobile />
     </div>
   );
 }

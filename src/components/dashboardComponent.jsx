@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { FaCheckCircle, FaClock, FaExclamationCircle } from "react-icons/fa";
 import { MdApps } from "react-icons/md";
 import { GrRadialSelected } from "react-icons/gr";
@@ -7,6 +7,7 @@ import {
   setTotalChamadosF,
 } from "../services/firestoreService.js";
 import { CardComponent } from "./cardComponent.jsx";
+
 export function Dashboard({ dark, setDark, darkModeHandler }) {
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
