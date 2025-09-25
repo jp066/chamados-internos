@@ -4,7 +4,6 @@ import { scrollToSection } from "../../utils/scrollToSection.js";
 import { RxPinTop } from "react-icons/rx";
 import { IntroSectionMobile } from "../documentacaoComponents/mobileDocuments/introSectionMobile.jsx";
 import GoogleIntegrationMobile from "../documentacaoComponents/mobileDocuments/googleIntegrationMobile.jsx";
-import Swal from "sweetalert2";
 
 export function DocumentMobile() {
   const { dark } = useContext(DarkModeContext);

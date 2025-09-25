@@ -143,11 +143,12 @@ export function CardComponent(props) {
               </p>
             ) : null}
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+              <strong>Categoria: </strong>
+              {c["Categoria"]}
+            </p>
+            <p className="text-md sm:text-lg text-center sm:text-left font-sans">
               <strong>Problema: </strong>
-              {c["Categoria"]
-                ? c["Categoria"]
-                : c["O que ocorreu com o TOTVS RM?"] ||
-                  c["O que ocorreu com o RM?"]
+              { c["O que ocorreu com o TOTVS RM?"]
                 ? c["O que ocorreu com o TOTVS RM?"] ||
                   c["O que ocorreu com o RM?"]
                 : c["O que ocorreu com o Remark?"]
@@ -158,7 +159,7 @@ export function CardComponent(props) {
                 ? c["O que ocorreu com o ZapSign?"]
                 : c["O que ocorreu com os Portais?"]
                 ? c["O que ocorreu com os Portais?"]
-                : c["Qual a outra categoria?"]}
+                : c["Outro"]}
             </p>
             {c["Informe o nome do usuario:"] ? (
               <p className="text-md sm:text-lg text-center sm:text-left font-sans">
@@ -168,11 +169,11 @@ export function CardComponent(props) {
             <p className="text-md sm:text-lg text-center sm:text-left font-sans">
               <strong>Descrição: </strong>
               {c["Descrição"]
-                ? descricaoExpandida[c.id]
+                ? (descricaoExpandida[c.id]
                   ? c["Descrição"]
                   : c["Descrição"].length > 100
                   ? c["Descrição"].slice(0, 100) + "..."
-                  : c["Descrição"]
+                  : c["Descrição"])
                 : "Sem descrição"}
             </p>
             {c["Descrição"] && c["Descrição"].length > 100 && (

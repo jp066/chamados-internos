@@ -137,8 +137,6 @@ export async function contadorDeChamadas(limiteAlcancado, setLimiteAlcancado) {
   return contadorChamadas;
 }
 
-
-
 export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
   try {
     await contadorDeChamadas(limiteAlcancado, setLimiteAlcancado);
@@ -166,3 +164,22 @@ export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
     throw new Error("Erro ao gerar relatório simples.");
   }
 }
+
+export function reportMock() {
+  return [
+    {
+      id: "1",
+      usuario: "João Silva",
+      problema: "Erro ao acessar o sistema",
+      status: "Aberto",
+      data: "01/10/2023 - 10:00",
+    },
+    {
+      id: "2",
+      usuario: "Maria Oliveira",
+      problema: "Dúvida sobre funcionalidade",
+      status: "Em andamento",
+      data: "02/10/2023 - 11:00",
+    },
+  ];
+} // Mock para testes e desenvolvimento.
