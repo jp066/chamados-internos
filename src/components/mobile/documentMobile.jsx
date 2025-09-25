@@ -1,9 +1,23 @@
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { scrollToSection } from "../../utils/scrollToSection.js";
+import { RxPinTop } from "react-icons/rx";
+import { IntroSectionMobile } from "../documentacaoComponents/mobileDocuments/introSectionMobile.jsx";
+import GoogleIntegrationMobile from "../documentacaoComponents/mobileDocuments/googleIntegrationMobile.jsx";
+import Swal from "sweetalert2";
 
 export function DocumentMobile() {
   const { dark } = useContext(DarkModeContext);
+  const optionsSection = [
+    { value: "Avisos", label: "Avisos" },
+    { value: "intro-section-mobile", label: "Introdução" },
+    { value: "google-services-mobile", label: "Serviços Google" },
+    { value: "telegramBot-mobile", label: "TelegramBot" },
+    { value: "firebase-mobile", label: "Firebase" },
+    { value: "react-mobile", label: "Aplicação React" },
+    { value: "cloudinary-mobile", label: "Cloudinary" },
+    { value: "relatorios-mobile", label: "Relatórios com MUI x Chart.js" },
+  ];
   return (
     <div
       className="md:hidden p-4 max-w-3xl mx-auto"
@@ -38,54 +52,40 @@ export function DocumentMobile() {
             }
           }}
         >
-          <option value="">Seções</option>
-          <option value="intro-section-mobile">Introdução</option>
-          <option value="formulario-section-mobile">Formulário</option>
+          <option value="">Ir para seção...</option>
+          {optionsSection.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
       </div>
       <div>
-        <h1 className="text-3xl font-bold mt-12 mb-6">
-          Documentação do Sistema de Chamados
-        </h1>
-        <section
-          id="intro-section-mobile"
-          className="mb-8"
-          style={{
-            scrollMarginTop: "80px",
-          }}
-        >
-          <h2 className="text-2xl font-bold mb-4">Introdução</h2>
-          <p className="mb-4">
-            Bem-vindo à documentação do Sistema de Chamados! Este sistema foi
-            desenvolvido para facilitar a gestão de chamados internos em uma
-            organização, permitindo que os funcionários registrem, acompanhem e
-            resolvam problemas de forma eficiente.
-          </p>
-          <p className="mb-4">
-            Esta documentação tem como objetivo fornecer informações claras e
-            concisas sobre o uso do sistema, suas funcionalidades e melhores
-            práticas.
-          </p>
+        {/* Áreas de Seções */}
+        <section id="Avisos">
+          <IntroSectionMobile />
         </section>
-        <section
-          id="formulario-section-mobile"
-          className="mb-8"
-          style={{
-            scrollMarginTop: "80px",
-          }}
-        >
-          <h2 className="text-2xl font-bold mb-4">Formulário</h2>
-          <p className="mb-4">
-            O formulário do Sistema de Chamados é a principal interface para
-            registro de novos chamados. Nele, os usuários podem fornecer
-            informações detalhadas sobre o problema que estão enfrentando.
-          </p>
-          <p className="mb-4">
-            Para acessar o formulário, clique no botão "Novo Chamado" na página
-            inicial do sistema.
-          </p>
+        <section id="google-services-mobile">
+          <GoogleIntegrationMobile />
         </section>
+        {optionsSection.slice(3).map((section) => (
+          <section key={section.value} id={section.value}>
+            <h2 className="text-2xl font-bold mt-12 mb-4">
+              {section.label}
+            </h2>
+            <p className="mb-4">
+              Conteúdo da seção {section.label} em desenvolvimento...
+            </p>
+          </section>
+        ))}
       </div>
+      <button>
+        <RxPinTop
+          className="fixed bottom-4 right-4 text-3xl"
+          onClick={() => window.scrollTo(0, 0)}
+          color="#ff4500"
+        />
+      </button>
     </div>
   );
 }

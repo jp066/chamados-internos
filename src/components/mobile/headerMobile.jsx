@@ -1,5 +1,5 @@
 import { useContext } from "react";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { LoginContext } from "../../context/LoginContext";
 import { IoMdLogOut } from "react-icons/io";
@@ -14,7 +14,7 @@ export function HeaderMobile({ openHamburger, setOpenHamburger }) {
   const { dark, darkModeHandler } = useContext(DarkModeContext);
   const { usuario, setUsuario, loginGoogle, logoutGoogle } =
     useContext(LoginContext);
-//  const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div>
       <div
@@ -56,22 +56,7 @@ export function HeaderMobile({ openHamburger, setOpenHamburger }) {
           </button>
           <button
             className="text-white"
-            onClick={() => {
-              Swal.fire({
-                customClass: {
-                  popup: "custom-modal-mobile", // Classe personalizada para o modal
-                  title: "custom-title-mobile",
-                  confirmButton: "confirm-button-mobile"
-                },
-                title: "Em breve chegará aos dispositivos móveis! 😉",
-                showDenyButton: false, // isso permite o botão de negação
-                showConfirmButton: true,
-                confirmButtonText: "Certo!"
-              });
-            }}
-          >
-            {" "}
-            {/*  onClick={() => navigate("/documentacao")} */}
+            onClick={() => navigate("/documentacao")}>
             Documentação &nbsp;
             <IoDocumentTextOutline size={20} className="inline mb-1" />
           </button>

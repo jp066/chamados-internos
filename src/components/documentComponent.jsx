@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import SidebarComponent from "../elements/sidebarComponent";
 import IntroSection from "./documentacaoComponents/introSection";
-import GoogleIntegration from "./documentacaoComponents/googleIntegration";
+import GoogleIntegration from "./documentacaoComponents/mobileDocuments/googleIntegrationMobile";
 import { LoginContext } from "../context/LoginContext";
 import loginGoogle from "./appComponent";
 import { DocumentMobile } from "./mobile/documentMobile";
