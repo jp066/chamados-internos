@@ -60,10 +60,11 @@ export default function Home() {
       )}
       {!usuario ? (
         <h1 className="text-center font-sans text-2xl mt-20 dark:text-white text-brightbeeDark-900">
-          Por favor, faça login para continuar.
+          Por favor, faça login para acessar.
         </h1>
       ) : !isTeamMember ? (
         <h1 className="text-center font-sans text-2xl mt-20 text-red-600 dark:text-white">
+          <div style={{ height: "80px" }}></div>
           <strong>Você não tem permissão para acessar este link.</strong> <br />
           Acesso restrito a membros da equipe de Sistemas.
         </h1>

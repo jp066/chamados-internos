@@ -199,7 +199,7 @@ export function CardComponent(props) {
                   href={c["Imagem descritiva"]}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 underline md:hidden" // sm:break-all para quebrar a linha em telas pequenas
+                  className="text-blue-600 underline" // sm:break-all para quebrar a linha em telas pequenas
                 >
                   {c["Imagem descritiva"]}
                 </a>

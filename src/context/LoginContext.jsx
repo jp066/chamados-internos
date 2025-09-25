@@ -18,6 +18,7 @@ export function LoginProvider({ children }) {
   const loginGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
+      provider.setCustomParameters({ prompt: 'select_account' });
       const result = await signInWithPopup(auth, provider);
       localStorage.setItem("usuario", JSON.stringify(result.user));
       setUsuario(result.user);
@@ -29,8 +30,12 @@ export function LoginProvider({ children }) {
   const logoutGoogle = async () => {
     try {
       await signOut(auth);
-      setUsuario(null);
-      localStorage.removeItem("usuario");
+      setUsuario(null); // Limpa o estado do usuário
+      localStorage.removeItem("usuario"); // Remove do localStorage
+      // por que quando vou fazer login de novo ele automaticamente ja loga na conta antiga?
+      // Isso acontece porque o Firebase mantém a sessão do usuário. Para evitar isso, você pode usar o método signOut do Firebase Auth, que já está sendo chamado aqui.
+      // Se quiser garantir que o popup de login sempre peça a conta, você pode configurar o provedor para solicitar a seleção da conta:
+      // provider.setCustomParameters({ prompt: 'select_account' });
     } catch (error) {
       console.error("Erro ao fazer logout:", error);
     }

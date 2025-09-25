@@ -20,7 +20,7 @@ export function ModalRelatorio({ onClose }) {
   // essa função deve buscar os solicitantes no banco de dados e retornar um objeto.
   const solicitantesTeste = [
     { id: 1, name: "joaopedro@brightbee.com.br" },
-    { id: 2, name: "lucia.fernandes@brightbee.com.br" },
+    { id: 2, name: "jucia.fernandes@brightbee.com.br" },
     { id: 3, name: "rafael.lima@brightbee.com.br" },
     { id: 4, name: "camila.rodrigues@brightbee.com.br" },
     { id: 5, name: "bruno.almeida@brightbee.com.br" },

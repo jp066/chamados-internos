@@ -26,7 +26,15 @@ export default function DocumentComponent() {
   };
 
   return (
-    <div className="min-h-screen font-sans">
+    <div
+      className="min-h-screen font-sans"
+      style={{
+        background: dark ? "#181818" : "#fff1eb",
+        color: dark ? "#ffffff" : "#000000",
+        transition:
+          "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)",
+      }}
+    >
       {/* Header fixo */}
       <div className="fixed top-0 left-0 w-full h-16 z-50 shadow-md">
         <Header
@@ -46,12 +54,6 @@ export default function DocumentComponent() {
       {/* Container principal */}
       <div
         className="hidden md:flex flex min-h-screen pt-16"
-        style={{
-          background: dark ? "#181818" : "#fff1eb",
-          color: dark ? "#ffffff" : "#000000",
-          transition:
-            "background 0.7s cubic-bezier(.4,0,.2,1), color 0.7s cubic-bezier(.4,0,.2,1)",
-        }}
       >
         {/* Sidebar */}
         <SidebarComponent
@@ -136,7 +138,6 @@ export default function DocumentComponent() {
           </section>
         </main>
       </div>
-
       <DocumentMobile />
     </div>
   );
