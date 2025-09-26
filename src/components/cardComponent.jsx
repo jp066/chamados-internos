@@ -19,7 +19,6 @@ export function CardComponent(props) {
   const [files, setFiles] = useState({}); // Novo estado para arquivos por card
   console.log("Respostas:", setRespostas);
   const { chamadosFilter, busca, setBusca, onStatusChange } = props;
-//  const { onStatusChange } = props;
   const { dark, setDark, darkModeHandler } = props;
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);

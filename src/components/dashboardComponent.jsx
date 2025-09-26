@@ -79,9 +79,15 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
     setFiltro(stat.label);
   };
 
+  // estado para a busca
   const [busca, setBusca] = useState("");
+  // chamados filtrados é o hook que filtra os chamados com base no filtro e na busca.
+  // Usando useMemo para otimizar o desempenho, evitando recalcular desnecessariamente.
   const chamadosFiltrados = useMemo(() => {
-    let filtrados = chamados;
+    let filtrados = chamados; 
+    // foi criada uma variável local para armazenar os chamados filtrados
+    // A cada vez que o filtro ou a busca mudam, o useMemo recalcula os chamados filtrados e aloque novos valores a filtrados.
+    // Isso evita que o filtro seja aplicado várias vezes desnecessariamente.
     if (filtro === "Abertos") {
       filtrados = filtrados.filter((c) => c.status === "em aberto");
     }
@@ -92,6 +98,7 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
       filtrados = filtrados.filter((c) => c.status === "em andamento");
     }
     if (busca) {
+      // Função de busca que verifica se o termo de busca está presente em qualquer um dos campos relevantes
       filtrados = filtrados.filter(
         (c) =>
           c["Categoria"]?.toLowerCase().includes(busca.toLowerCase()) ||
@@ -103,9 +110,11 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
           c["ID"]?.toString().includes(busca)
       );
     }
-    return filtrados;
-  }, [chamados, filtro, busca]);
+    return filtrados; // chamadosFiltrados é retornado com a variável local filtrados.
+  }, [chamados, filtro, busca]); // São os valores que disparam a recalculação dos chamados filtrados.
 
+
+  // Função para atualizar a lista de chamados após uma alteração
   async function fetchChamados() {
     setLoading(true);
     setError(null);
@@ -160,10 +169,10 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
         {loading && <p className="text-gray-500">Carregando chamados...</p>}
         {error && <p className="text-red-500">{error}</p>}
         <CardComponent
-          chamadosFilter={chamadosFiltrados}
-          busca={busca}
-          setBusca={setBusca}
-          onStatusChange={fetchChamados}
+          chamadosFilter={chamadosFiltrados} // Passa os chamados filtrados para o CardComponent
+          busca={busca} // Passa o estado de busca para o CardComponent
+          setBusca={setBusca} // Passa a função para atualizar a busca para o CardComponent
+          onStatusChange={fetchChamados} // Passa a função para atualizar a lista de chamados após uma alteração
           dark={dark}
           setDark={setDark}
           darkModeHandler={darkModeHandler}
