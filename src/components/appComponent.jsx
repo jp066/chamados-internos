@@ -13,25 +13,6 @@ export default function Home() {
   const { usuario, loginGoogle } = useContext(LoginContext);
   const { dark, setDark } = useContext(DarkModeContext);
 
-  const darkModeHandler = () => {
-    setDark((prev) => {
-      const newDark = !prev;
-      localStorage.setItem("darkMode", newDark);
-      if (newDark) {
-        document.body.classList.add("dark");
-      } else {
-        document.body.classList.remove("dark");
-      }
-      return newDark;
-    });
-  };
-  React.useEffect(() => {
-    if (dark) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-  }, [dark]);
 
   // VERIFICAÇÃO DE E-MAILS PERMITIDOS
   const isTeamMember =
@@ -48,14 +29,13 @@ export default function Home() {
     /*<>
       <ChartSimple />
     </>*/
-    <div className="min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1 dark:via-brightbeeDark-13 dark:to-brightbeeDark-1 transition-all duration-700 ease-out">
+    <div className="min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1 dark:via-brightbeeDark-13 dark:to-brightbeeDark-1 transition-colors duration-500">
       <Header
         usuario={usuario}
         loginGoogle={loginGoogle}
         logoutGoogle={signOut}
         dark={dark}
         setDark={setDark}
-        darkModeHandler={darkModeHandler}
       />
       {!usuario ? (
         <div style={{ height: "80px" }}></div>
@@ -78,12 +58,10 @@ export default function Home() {
           <Hero
             dark={dark}
             setDark={setDark}
-            darkModeHandler={darkModeHandler}
           />
           <Dashboard
             dark={dark}
             setDark={setDark}
-            darkModeHandler={darkModeHandler}
           />
           <Footer />
         </>

@@ -25,24 +25,15 @@ export function Header() {
   console.log(setDark);
   console.log(setLimiteAlcancado);
   let navigate = useNavigate();
-  const headerStyle = {
-    color: "#fff",
-    position: "fixed", // muda para relative quando o menu está aberto
-    
-    top: -10, // mantém no topo quando fixo
-    left: 0,
-    zIndex: 1000,
-    background: dark
-      ? "linear-gradient(to right, #121212, #060910ff, #0c101aff)"
-      : "linear-gradient(to right, #e9692c, #f08a54, #c94e0cc6)",
-    boxShadow: "0 4px 6px -1px rgba(0,0,0,0.1)", // essa linha adiciona a sombra
-    width: "100%",
-    padding: "1rem",
-  };
   return (
     <motion.header
-      style={headerStyle}
-      className={`nav ${openHamburger ? "open" : ""} w-full`}
+      className={`fixed top-[-10px] left-0 z-[1000] p-4 nav ${
+        openHamburger ? "open" : ""
+      } w-full ${
+        dark
+          ? "bg-gradient-to-r from-headerDark-1 via-headerDark-2 to-headerDark-3"
+          : "bg-gradient-to-r from-headerLight-1 via-headerLight-2 to-headerLight-3"
+      } transition-colors duration-500`}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
         <motion.div
@@ -69,7 +60,7 @@ export function Header() {
                 transition: { duration: 0.2 },
                 opacity: 1,
               }}
-              className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md transition-all duration-200"
+              className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-300"
               onClick={() => {
                 console.log("Botão de relatório clicado");
                 Swal.fire({
@@ -152,7 +143,7 @@ export function Header() {
               opacity: 1,
             }}
             onClick={() => darkModeHandler()}
-            className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md transition-all"
+            className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-500"
           >
             {dark && <FaLightbulb color="white" />}
             {!dark && <FaRegLightbulb color="white" />}

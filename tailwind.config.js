@@ -38,6 +38,16 @@ module.exports = {
           13: "#404041",
           14: "#ffc20e",
         },
+        headerDark: {
+          1: "#121212",
+          2: "#060910ff",
+          3: "#0c101aff",
+        },
+        headerLight: {
+          1: "#e9692c",
+          2: "#f08a54",
+          3: "#c94e0cc6",
+        },
       },
       fontFamily: {
         sans: ["Dm Sans", "sans-serif"],

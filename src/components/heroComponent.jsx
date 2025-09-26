@@ -1,4 +1,4 @@
-export function Hero({dark, setDark, darkModeHandler}) {
+export function Hero({dark, setDark}) {
     return (
         <div className="font-sans text-gray-800 p-8 bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 shadow-inner w-full dark:bg-gradient-to-r dark:from-brightbeeDark-1.2 dark:via-brightbeeDark-1.2 dark:to-brightbeeDark-1.2 dark:border-b-2 border-brightbeeDark-1 pb-6 transition-colors duration-700">
             <div className="'max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'">

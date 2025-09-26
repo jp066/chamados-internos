@@ -43,9 +43,7 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
         value: chamados.filter((c) => c.status === "em aberto").length,
         color:
           "bg-yellow-100 text-yellow-800 dark:bg-brightbeeDark-4 dark:text-brightbee-25",
-        icon: (
-          <FaExclamationCircle />
-        ),
+        icon: <FaExclamationCircle />,
       },
       {
         label: "Em Andamento",
@@ -81,18 +79,32 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
     setFiltro(stat.label);
   };
 
+  const [busca, setBusca] = useState("");
   const chamadosFiltrados = useMemo(() => {
+    let filtrados = chamados;
     if (filtro === "Abertos") {
-      return chamados.filter((c) => c.status === "em aberto");
+      filtrados = filtrados.filter((c) => c.status === "em aberto");
     }
     if (filtro === "Concluídos") {
-      return chamados.filter((c) => c.status === "concluído");
+      filtrados = filtrados.filter((c) => c.status === "concluído");
     }
     if (filtro === "Em Andamento") {
-      return chamados.filter((c) => c.status === "em andamento");
+      filtrados = filtrados.filter((c) => c.status === "em andamento");
     }
-    return chamados;
-  }, [chamados, filtro]);
+    if (busca) {
+      filtrados = filtrados.filter(
+        (c) =>
+          c["Categoria"]?.toLowerCase().includes(busca.toLowerCase()) ||
+          c["Descrição"]?.toLowerCase().includes(busca.toLowerCase()) ||
+          c["Endereço de e-mail"]?.toLowerCase().includes(busca.toLowerCase()) ||
+          c["Problema"]?.toLowerCase().includes(busca.toLowerCase()) ||
+          c["Modulo"]?.toLowerCase().includes(busca.toLowerCase()) ||
+          c["Categoria"]?.toLowerCase().includes(busca.toLowerCase()) ||
+          c["ID"]?.toString().includes(busca)
+      );
+    }
+    return filtrados;
+  }, [chamados, filtro, busca]);
 
   async function fetchChamados() {
     setLoading(true);
@@ -118,10 +130,9 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
         boxShadow: "inset 0 2px 8px 0 rgba(0,0,0,0.08)",
         width: "100%",
         padding: "1rem",
-        animation: "fade-in 0.7s cubic-bezier(.4,0,.2,1) both",
       }}
     >
-      <div className="md:grid flex-col justify-between grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      <div className="md:grid flex-col justify-between grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-4 gap-4 mb-8 transition-colors duration-500">
         {stats.map((stat) => (
           <button
             className={`focus:outline-none w-full`}
@@ -150,6 +161,8 @@ export function Dashboard({ dark, setDark, darkModeHandler }) {
         {error && <p className="text-red-500">{error}</p>}
         <CardComponent
           chamadosFilter={chamadosFiltrados}
+          busca={busca}
+          setBusca={setBusca}
           onStatusChange={fetchChamados}
           dark={dark}
           setDark={setDark}

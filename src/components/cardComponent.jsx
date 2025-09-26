@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { FaCheckCircle, FaExclamationCircle, FaClock } from "react-icons/fa";
 import { RxDashboard, RxLockOpen2, RxLockClosed } from "react-icons/rx";
 import {
@@ -18,8 +18,8 @@ export function CardComponent(props) {
   const [respostas, setRespostas] = useState({});
   const [files, setFiles] = useState({}); // Novo estado para arquivos por card
   console.log("Respostas:", setRespostas);
-  const { chamadosFilter } = props;
-  const { onStatusChange } = props;
+  const { chamadosFilter, busca, setBusca, onStatusChange } = props;
+//  const { onStatusChange } = props;
   const { dark, setDark, darkModeHandler } = props;
   const [totalChamados, setTotalChamados] = useState(0);
   const [chamados, setchamados] = useState([]);
@@ -50,7 +50,7 @@ export function CardComponent(props) {
     }
     fetchTotal();
   }, []);
-  const [busca, setBusca] = useState("");
+
   return (
     <div className="flex-col justify-between grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 mb-8 dark:text-white">
       <h3 className="text-lg font-semibold mb-4 text-gray-900 flex items-center gap-2 dark:text-white">
@@ -60,7 +60,7 @@ export function CardComponent(props) {
       <div className="col-span-full flex justify-end">
         <input
           type="text"
-          placeholder="Buscar chamado..."
+          placeholder="Busque chamados por Categoria, Descrição, Email, Modulo, Problema ou ID"
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
           className="font-sans min-w-full text-left text-sm border border-brightbee-100 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow dark:bg-brightbeeDark-2 dark:border-blue-400 dark:text-white"
@@ -85,7 +85,7 @@ export function CardComponent(props) {
             key={c.id ? `card-${c.id}` : `card-${c["Categoria"]}`}
             className="bg-brightbee-50 rounded-3xl shadow-lg p-4 sm:p-6 flex flex-col gap-2 font-sans dark:bg-brightbeeDark-2"
           >
-            <span className="text-md sm:text-lg text-center sm:text-left font-semibold font-sans">
+            <span className="text-md text-center sm:text-left font-semibold font-sans">
               {c["Categoria"]}
             </span>
             <div>
@@ -128,27 +128,32 @@ export function CardComponent(props) {
             {/*
               Usuario logado que fechou o chamado
             */}
-            <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+            <p className="text-lg font-sans max-w-full break-words">
               <strong>Email: </strong>
-              {c["Endereço de e-mail"]}
+              <a
+                href={`mailto:${c["Endereço de e-mail"]}`}
+                className="text-blue-600 underline"
+              >
+                {c["Endereço de e-mail"]}
+              </a>
             </p>
-            <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+            <p className="text-lg font-sans">
               <strong>Data: </strong>
               {formatDate(c["Carimbo de data/hora"])}
             </p>
             {c["A solicitação é referente a qual modulo?"] ? (
-              <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+              <p className="text-lg font-sans">
                 <strong>Modulo: </strong>
                 {c["A solicitação é referente a qual modulo?"]}
               </p>
             ) : null}
-            <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+            <p className="text-lg font-sans">
               <strong>Categoria: </strong>
               {c["Categoria"]}
             </p>
-            <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+            <p className="text-lg font-sans">
               <strong>Problema: </strong>
-              { c["O que ocorreu com o TOTVS RM?"]
+              {c["O que ocorreu com o TOTVS RM?"]
                 ? c["O que ocorreu com o TOTVS RM?"] ||
                   c["O que ocorreu com o RM?"]
                 : c["O que ocorreu com o Remark?"]
@@ -162,18 +167,18 @@ export function CardComponent(props) {
                 : c["Outro"]}
             </p>
             {c["Informe o nome do usuario:"] ? (
-              <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+              <p className="text-lg font-sans">
                 <strong>Usuario:</strong> {c["Informe o nome do usuario:"]}
               </p>
             ) : null}
-            <p className="text-md sm:text-lg text-center sm:text-left font-sans">
+            <p className="text-lg font-sans">
               <strong>Descrição: </strong>
               {c["Descrição"]
-                ? (descricaoExpandida[c.id]
+                ? descricaoExpandida[c.id]
                   ? c["Descrição"]
                   : c["Descrição"].length > 100
                   ? c["Descrição"].slice(0, 100) + "..."
-                  : c["Descrição"])
+                  : c["Descrição"]
                 : "Sem descrição"}
             </p>
             {c["Descrição"] && c["Descrição"].length > 100 && (
@@ -194,13 +199,13 @@ export function CardComponent(props) {
               </button>
             )}
             {c["Imagem descritiva"] && (
-              <span>
+              <span className="max-w-full break-words text-lg font-sans">
                 <strong>Link da imagem: </strong>
                 <a
                   href={c["Imagem descritiva"]}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 underline" // sm:break-all para quebrar a linha em telas pequenas
+                  className="text-blue-600 underline"
                 >
                   {c["Imagem descritiva"]}
                 </a>

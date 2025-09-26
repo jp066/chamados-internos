@@ -1,4 +1,3 @@
-import { createGlobalStyle } from "styled-components";
 export default createGlobalStyle`
 *,
 *::after,
@@ -11,6 +10,6 @@ body {
   margin: 0;    
   padding: 0;    
   font-family: sans-serif;    
-  transition: all 0.25s linear;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 `;

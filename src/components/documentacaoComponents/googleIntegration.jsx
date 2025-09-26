@@ -101,7 +101,7 @@ export default function GoogleIntegration() {
             </div>
           </div>
         </div>
-        <div className="mb-8">
+        <div className="mb-8 ">
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
             Formulário
           </h2>
@@ -113,7 +113,6 @@ export default function GoogleIntegration() {
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.3, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
             whileHover={{
               opacity: 1,
             }}
@@ -126,7 +125,7 @@ export default function GoogleIntegration() {
               <span
                 className={`transform transition-transform duration-200 ${
                   isFormOpen ? "rotate-180" : ""
-                }`}
+                }`} // transformação suave ao girar o ícone
               >
                 ⯆
               </span>
@@ -245,13 +244,7 @@ export default function GoogleIntegration() {
               className="w-full text-left flex items-center justify-between hover:text-brightbee-600 dark:hover:text-brightbeeDark-3 transition-colors duration-200"
             >
               <span>Detalhes da Planilha</span>
-              <span
-                className={`transform transition-transform duration-200 ${
-                  isSheetOpen ? "rotate-180" : ""
-                }`}
-              >
-                ⯆
-              </span>
+              <span className={`transition-transform duration-200 ${isSheetOpen ? "rotate-180" : ""}`}>⯆</span>
             </button>
             {isSheetOpen && (
               <div className="mt-4 p-4 text-gray-700 dark:text-gray-300 bg-white dark:bg-brightbeeDark-7 rounded-lg border-l-4 border-brightbee-400 dark:border-brightbeeDark-3">
