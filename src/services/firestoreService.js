@@ -139,7 +139,7 @@ export async function contadorDeChamadas(limiteAlcancado, setLimiteAlcancado) {
 
 export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
   try {
-    await contadorDeChamadas(limiteAlcancado, setLimiteAlcancado);
+    //    await contadorDeChamadas(limiteAlcancado, setLimiteAlcancado);
     if (limiteAlcancado) {
       console.log("Limite de relatórios mensais atingido.");
       return;
@@ -147,13 +147,28 @@ export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
     const chamados = await getChamados();
     const reportData = chamados.map((chamado) => ({
       id: chamado.id,
-      usuario: chamado.usuario,
-      problema: chamado.problema,
+      usuario: chamado["Endereço de e-mail"],
+      categoria: chamado["Categoria"],
+      modulo: chamado["A solicitação é referente a qual modulo?"],
+      sala: chamado["Sala"],
+      problema: chamado["O que ocorreu com o TOTVS RM?"]
+        ? chamado["O que ocorreu com o TOTVS RM?"]
+        : chamado["O que ocorreu com o Remark?"]
+        ? chamado["O que ocorreu com o Remark?"]
+        : chamado["O que ocorreu com o Workchat?"]
+        ? chamado["O que ocorreu com o Workchat?"]
+        : chamado["O que ocorreu com o ZapSign?"]
+        ? chamado["O que ocorreu com o ZapSign?"]
+        : chamado["O que ocorreu com os Portais?"],
       status: chamado.status,
       data: formatDate(chamado["Carimbo de data/hora"]),
     }));
-    // gerarRelatorio(usuario)
-    console.log("Relatório simples gerado com sucesso:", reportData);
+    const response = (reportData.JSONString = JSON.stringify(
+      reportData,
+      null,
+      1
+    ));
+    console.log("Relatório simples gerado com sucesso:", response);
     return reportData;
   } catch (error) {
     console.error(
@@ -185,4 +200,3 @@ export function reportMock() {
     },
   ];
 }
-

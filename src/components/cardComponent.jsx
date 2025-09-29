@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { FaCheckCircle, FaExclamationCircle, FaClock } from "react-icons/fa";
 import { RxDashboard, RxLockOpen2, RxLockClosed } from "react-icons/rx";
 import {
@@ -74,7 +74,7 @@ export function CardComponent(props) {
       ) : (
         chamadosFilter.map((c) => (
           <motion.div
-            initial={{ opacity: 0.85, scale: 0.95 }}
+            initial={{ opacity: 0.85, scale: 0.99 }}
             style={{ originX: 0, originY: 0 }}
             whileHover={{
               scale: 1,
@@ -123,7 +123,6 @@ export function CardComponent(props) {
                 </button>
               )}
             </div>
-
             {/*
               Usuario logado que fechou o chamado
             */}
@@ -300,47 +299,52 @@ export function CardComponent(props) {
                         setFiles((prev) => ({ ...prev, [c.id]: newFile }))
                       } // Atualiza o arquivo selecionado
                     />
-                    <button
-                      className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-brightbee-50 dark:bg-brightbeeDark-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow font-sans"
-                      onClick={() => {
-                        if (!respostas[c.id] || respostas[c.id].trim() === "") {
-                          Swal.fire({
-                            title: "A resposta é obrigatória",
-                            text: "Por favor, insira uma resposta antes de enviar.",
-                            icon: "warning",
-                            confirmButtonText: "OK",
-                            backdrop: true,
-                            confirmButtonColor: "#fbbf24",
-                            timer: 3000,
-                          });
-                          return;
-                        }
-                        handlerEnviarResposta(
-                          c["Endereço de e-mail"],
-                          formatDate(c["Carimbo de data/hora"]),
-                          c["A solicitação é referente a qual modulo?"],
-                          c["O que ocorreu com o TOTVS RM?"] ||
-                            c["O que ocorreu com o RM?"] ||
-                            c["O que ocorreu com o Remark?"] ||
-                            c["O que ocorreu com o Workchat?"] ||
-                            c["O que ocorreu com o ZapSign?"] ||
-                            c["O que ocorreu com os Portais?"] ||
-                            c["Qual a outra categoria?"] ||
-                            "Sem problema",
-                          c["Informe o nome do usuario:"] || "Sem usuário",
-                          c["Descrição"] || "Sem descrição",
-                          c.id,
-                          respostas[c.id],
-                          files[c.id] || null // Passa o arquivo ou null se não houver
-                        );
-                        setRespostas((prev) => ({ ...prev, [c.id]: "" }));
-                        setFiles((prev) => ({ ...prev, [c.id]: null })); // Limpa o arquivo após enviar
-                      }}
-                    >
-                      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-yellow-400 rounded-full group-hover:bg-transparent group-hover:dark:bg-transparent font-semibold font-sans">
-                        Enviar resposta
-                      </span>
-                    </button>
+                    <div className="flex justify-center p-0.5 mb-2 mt-2">
+                      <button
+                        className="text-sm text-gray-900 rounded-lg group bg-brightbee-50 dark:bg-brightbeeDark-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-shadow font-sans"
+                        onClick={() => {
+                          if (
+                            !respostas[c.id] ||
+                            respostas[c.id].trim() === ""
+                          ) {
+                            Swal.fire({
+                              title: "A resposta é obrigatória",
+                              text: "Por favor, insira uma resposta antes de enviar.",
+                              icon: "warning",
+                              confirmButtonText: "OK",
+                              backdrop: true,
+                              confirmButtonColor: "#fbbf24",
+                              timer: 3000,
+                            });
+                            return;
+                          }
+                          handlerEnviarResposta(
+                            c["Endereço de e-mail"],
+                            formatDate(c["Carimbo de data/hora"]),
+                            c["A solicitação é referente a qual modulo?"],
+                            c["O que ocorreu com o TOTVS RM?"] ||
+                              c["O que ocorreu com o RM?"] ||
+                              c["O que ocorreu com o Remark?"] ||
+                              c["O que ocorreu com o Workchat?"] ||
+                              c["O que ocorreu com o ZapSign?"] ||
+                              c["O que ocorreu com os Portais?"] ||
+                              c["Qual a outra categoria?"] ||
+                              "Sem problema",
+                            c["Informe o nome do usuario:"] || "Sem usuário",
+                            c["Descrição"] || "Sem descrição",
+                            c.id,
+                            respostas[c.id],
+                            files[c.id] || null // Passa o arquivo ou null se não houver
+                          );
+                          setRespostas((prev) => ({ ...prev, [c.id]: "" }));
+                          setFiles((prev) => ({ ...prev, [c.id]: null })); // Limpa o arquivo após enviar
+                        }}
+                      >
+                        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-yellow-400 rounded-full group-hover:bg-transparent group-hover:dark:bg-transparent font-semibold font-sans">
+                          Enviar resposta
+                        </span>
+                      </button>
+                    </div>
                   </>
                 ))
               : ""}
