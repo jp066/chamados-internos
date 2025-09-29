@@ -35,21 +35,7 @@ export function HeaderMobile({ openHamburger, setOpenHamburger }) {
         >
           <button
             className="text-white"
-            onClick={() => {
-              Swal.fire({
-                customClass: {
-                  popup: "custom-modal-mobile", // Classe personalizada para o modal
-                  title: "custom-title-mobile",
-                  confirmButton: "confirm-button-mobile",
-                  denyButton: "deny-button-mobile",
-                  cancelButton: "cancel-button-mobile",
-                },
-                title: "Em breve chegará aos dispositivos móveis! 😉",
-                showDenyButton: false, // isso permite o botão de negação
-                showConfirmButton: true,
-                confirmButtonText: "Certo!"
-              });
-            }}
+            onClick={() => navigate("/relatorio")}
           >
             Gerar Relatório &nbsp;
             <TbAlignBoxBottomLeft size={20} className="inline mb-1" />
