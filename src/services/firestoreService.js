@@ -165,14 +165,16 @@ export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
   }
 }
 
+// essa
 export function reportMock() {
   return [
     {
-      id: "1",
-      usuario: "João Silva",
-      problema: "Erro ao acessar o sistema",
+      categoria: "Totvs",
+      modulo: "Educacional",
+      solicitante: "teste@brightbee.com.br",
+      problema: "Erro no sistema",
       status: "Aberto",
-      data: "01/10/2023 - 10:00",
+      sala: "Secretaria",
     },
     {
       id: "2",
@@ -182,4 +184,5 @@ export function reportMock() {
       data: "02/10/2023 - 11:00",
     },
   ];
-} // Mock para testes e desenvolvimento.
+}
+

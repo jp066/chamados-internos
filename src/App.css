@@ -139,3 +139,12 @@ body:not(.dark) .custom-modal-small {
   font-weight: "semi-bold";
   border-radius: 9999px;
 }
+
+.swal-wide {
+  background-color: rgb(30 41 59) !important;
+  color: rgb(255, 255, 255) !important;
+  width: 600px !important;
+  max-width: 90% !important;
+  font-size: 1.2rem !important;
+  border-radius: 25px !important;
+}
