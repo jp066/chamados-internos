@@ -80,8 +80,9 @@ export function Header() {
                   cancelButtonText: "Cancelar",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    //                  reportSimple(limiteAlcancado, setLimiteAlcancado);
-                    //                  console.log("Limite alcançado:", limiteAlcancado);
+                    //reportSimple(limiteAlcancado, setLimiteAlcancado);
+                    //console.log("Limite alcançado:", limiteAlcancado);
+                    navigate("/relatorio");
                     if (limiteAlcancado) {
                       Swal.fire({
                         customClass: {
@@ -93,21 +94,6 @@ export function Header() {
                         icon: "error",
                         title: "Limite de relatórios mensais atingido",
                         text: "Você atingiu o limite de  relatórios mensais. Por favor, entre em contato com o suporte para mais informações.",
-                        confirmButtonText: "Ok",
-                      });
-                    } else {
-                      Swal.fire({
-                        customClass: {
-                          popup: "custom-modal-small",
-                          title: "custom-title-small",
-                          text: "custom-text-small",
-                          confirmButton: "confirm-button-small",
-                        },
-                        //                        icon: "success",
-                        icon: "info",
-                        title:
-                          //                          "O relatório foi enviado para o seu e-mail cadastrado.",
-                          "Em desenvolvimento",
                         confirmButtonText: "Ok",
                       });
                     }

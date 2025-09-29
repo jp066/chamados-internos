@@ -42,7 +42,8 @@ export function ChartSimple() {
         </button>
         <button
           className="bg-brightbeeDark-15 hover:bg-brightbeeDark-13 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 flex items-center"
-          onClick={() => {}}
+          onClick={() => {
+          }}
         >
           <FaDownload className="inline-block mr-2" />
           Exportar Relatório

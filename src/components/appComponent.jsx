@@ -1,18 +1,15 @@
-//import React from "react";
-//import { Header } from "./headerComponent";
-//import { Hero } from "./heroComponent";
-//import { Dashboard } from "./dashboardComponent";
-//import { Footer } from "./footerComponent.jsx";
-//import { signOut } from "../firebase.js";
+import { Header } from "./headerComponent";
+import { Hero } from "./heroComponent";
+import { Dashboard } from "./dashboardComponent";
+import { Footer } from "./footerComponent.jsx";
+import { signOut } from "../firebase.js";
 import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 import { DarkModeContext } from "../context/DarkModeContext";
-import {ChartSimple} from "./charts/charts_simple.jsx";
 
 export default function Home() {
   const { usuario, loginGoogle } = useContext(LoginContext);
   const { dark, setDark } = useContext(DarkModeContext);
-
 
   // VERIFICAÇÃO DE E-MAILS PERMITIDOS
   const isTeamMember =
@@ -26,10 +23,7 @@ export default function Home() {
       usuario.email === "flaviaalves@brightbee.com.br");
 
   return (
-    <>
-      <ChartSimple />
-    </>
-/*    <div className="min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1 dark:via-brightbeeDark-13 dark:to-brightbeeDark-1 transition-colors duration-500">
+    <div className="min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1 dark:via-brightbeeDark-13 dark:to-brightbeeDark-1 transition-colors duration-500">
       <Header
         usuario={usuario}
         loginGoogle={loginGoogle}
@@ -55,17 +49,11 @@ export default function Home() {
       ) : (
         <>
           <div style={{ height: "80px" }}></div>
-          <Hero
-            dark={dark}
-            setDark={setDark}
-          />
-          <Dashboard
-            dark={dark}
-            setDark={setDark}
-          />
+          <Hero dark={dark} setDark={setDark} />
+          <Dashboard dark={dark} setDark={setDark} />
           <Footer />
         </>
       )}
-    </div>*/
+    </div>
   );
 }
