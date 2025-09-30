@@ -1,5 +1,4 @@
 import { counterFields } from "./counterFields.js";
-import { formatingObject } from "./formatingObject.js";
 
 export const dataMock = [
   {
@@ -796,14 +795,9 @@ export const dataMock = [
     status: "concluído",
     data: "09/09/2025 - 09:15:35",
   },
-];
+]; // alterar para dados reais quando tiver
 
 const dataCategory = counterFields(dataMock, "categoria");
-/*[
-  { id: 0, value: 10, label: "Totvs" },
-  { id: 1, value: 15, label: "Remark" },
-  { id: 2, value: 20, label: "ZapSign" },
-];*/
 
 const dataModule = counterFields(dataMock, "modulo");
 

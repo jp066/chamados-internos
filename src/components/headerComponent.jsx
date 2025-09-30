@@ -80,7 +80,7 @@ export function Header() {
                   cancelButtonText: "Cancelar",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    reportSimple(limiteAlcancado, setLimiteAlcancado); 
+                    // reportSimple(limiteAlcancado, setLimiteAlcancado); 
                     // essa função vai buscar os dados e enviar para a função que vai processar
                     // os dados(transformar em objetos com id, value e label) e depois salvar em um estado global ou contexto
                     // para ser usado na página de relatório.
