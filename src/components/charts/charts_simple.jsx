@@ -5,7 +5,6 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { loadData } from "../../utils/mocks";
 import { useEffect, useState } from "react";
-import { Spinner } from "flowbite-react";
 
 const { innerWidth } = window; // Obtém a largura da janela
 
