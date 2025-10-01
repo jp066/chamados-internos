@@ -3,18 +3,46 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import { MdFileDownloadDone } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import {
-  dataCategory,
-  dataModule,
-  dataRequester,
-  dataProblem,
-  dataStatus,
-  dataRoom,
-} from "../../utils/mocks";
+import { loadData } from "../../utils/mocks";
+import { useEffect, useState } from "react";
+import { Spinner } from "flowbite-react";
 
 const { innerWidth } = window; // Obtém a largura da janela
 
 export function ChartSimple() {
+  const [chartData, setChartData] = useState(null);
+  useEffect(() => {
+    async function fetchData() {
+      const data = await loadData();
+      setChartData(data);
+    }
+    fetchData();
+  }, []);
+
+  const navigate = useNavigate();
+  const legendSxGlobal = {
+    fontSize: 14,
+    color: "#ffffff",
+    wordBreak: innerWidth > 768 ? "normal" : "break-word", // Ajusta a posição da legenda com base na largura da janela
+  };
+
+  if (!chartData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Carregando...
+      </div>
+    );
+  }
+
+  const {
+    dataCategory,
+    dataModule,
+    dataRequester,
+    dataProblem,
+    dataStatus,
+    dataRoom,
+  } = chartData;
+
   const nameGraph = [
     "Categoria",
     "Módulo",
@@ -31,12 +59,6 @@ export function ChartSimple() {
     dataStatus,
     dataRoom,
   ];
-  const navigate = useNavigate();
-  const legendSxGlobal = {
-    fontSize: 14,
-    color: "#ffffff",
-    wordBreak: innerWidth > 768 ? "normal" : "break-word", // Ajusta a posição da legenda com base na largura da janela
-  };
 
   return (
     <div
@@ -83,20 +105,20 @@ export function ChartSimple() {
                 {nameGraph[index]}
               </h1>
               <div className="flex justify-center mt-4 mb-10">
-                  <PieChart
-                    series={[
-                      {
-                        data: data,
-                        arcLabel: "value",
-                        arcLabelMinAngle: 10,
-                      },
-                    ]}
-                    width={innerWidth > 768 ? 200 : 150} 
-                    height={innerWidth > 768 ? 200 : 150}
-                    slotProps={{
-                      legend: { sx: legendSxGlobal, position: "bottom" },
-                    }}
-                  />
+                <PieChart
+                  series={[
+                    {
+                      data: data,
+                      arcLabel: "value",
+                      arcLabelMinAngle: 10,
+                    },
+                  ]}
+                  width={innerWidth > 768 ? 200 : 150}
+                  height={innerWidth > 768 ? 200 : 150}
+                  slotProps={{
+                    legend: { sx: legendSxGlobal, position: "bottom" },
+                  }}
+                />
               </div>
             </div>
           </div>

@@ -29,7 +29,7 @@ export async function getChamados() {
       );
       return dateB - dateA;
     });
-    console.log(chamadosOrdenados);
+    console.log("esses são os chamados: ", chamadosOrdenados);
     return chamadosOrdenados;
   } catch (err) {
     console.error("Error fetching chamados:", err);
@@ -163,11 +163,7 @@ export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
       status: chamado.status,
       data: formatDate(chamado["Carimbo de data/hora"]),
     }));
-    const response = (reportData.JSONString = JSON.stringify(
-      reportData,
-      null,
-      1
-    ));
+    const response = new Array(reportData); // transformar em array
     console.log("Relatório simples gerado com sucesso:", response);
     return reportData;
   } catch (error) {
@@ -180,8 +176,8 @@ export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
   }
 }
 
-// essa
-export function reportMock() {
+
+export function reportMockFilter() {
   return [
     {
       categoria: "Totvs",

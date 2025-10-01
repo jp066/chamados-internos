@@ -14,6 +14,7 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import { LoginContext } from "../context/LoginContext";
 import { ModalRelatorio } from "./modalRelatorio";
 import { HeaderMobile } from "./mobile/headerMobile";
+import { contadorDeChamadas } from "../services/firestoreService";
 
 export function Header() {
   const { dark, setDark, darkModeHandler } = useContext(DarkModeContext);
@@ -75,16 +76,12 @@ export function Header() {
                   text: "Só pode ser gerado no maximo 3 relatórios por mês por questão de custo ao Banco de Dados.",
                   showDenyButton: true, // isso permite o botão de negação
                   showCancelButton: true, // isso permite o botão de cancelamento
-                  confirmButtonText: "Relatório rápido  📄",
-                  denyButtonText: "Relatório detalhado  🔎",
+                  confirmButtonText: "KPI rápido  📄",
+                  denyButtonText: "KPI detalhado  🔎",
                   cancelButtonText: "Cancelar",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    // reportSimple(limiteAlcancado, setLimiteAlcancado); 
-                    // essa função vai buscar os dados e enviar para a função que vai processar
-                    // os dados(transformar em objetos com id, value e label) e depois salvar em um estado global ou contexto
-                    // para ser usado na página de relatório.
-                    // A página de relatório vai buscar esses dados e mostrar na tela.
+                    contadorDeChamadas(limiteAlcancado, setLimiteAlcancado);
                     console.log("Limite alcançado:", limiteAlcancado);
                     navigate("/relatorio");
                     if (limiteAlcancado) {
@@ -107,7 +104,7 @@ export function Header() {
                 });
               }}
             >
-              <TbAlignBoxBottomLeft size={25} /> &nbsp; Gerar Relatório
+              <TbAlignBoxBottomLeft size={25} /> &nbsp; Gerar KPI
             </motion.button>
           )}
           <motion.button
