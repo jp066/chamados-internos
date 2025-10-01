@@ -5,7 +5,7 @@ import { FaLightbulb } from "react-icons/fa6";
 import { TbAlignBoxBottomLeft } from "react-icons/tb";
 import Swal from "sweetalert2";
 import { IoDocumentTextOutline } from "react-icons/io5";
-import { reportSimple } from "../services/firestoreService";
+//import { reportSimple } from "../services/firestoreService";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { motion } from "motion/react";

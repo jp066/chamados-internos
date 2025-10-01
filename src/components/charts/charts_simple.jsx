@@ -12,6 +12,8 @@ import {
   dataRoom,
 } from "../../utils/mocks";
 
+const { innerWidth } = window; // Obtém a largura da janela
+
 export function ChartSimple() {
   const nameGraph = [
     "Categoria",
@@ -29,27 +31,18 @@ export function ChartSimple() {
     dataStatus,
     dataRoom,
   ];
-  // mudança: um useRef não pode ser usado em um callback, então usamos um objeto para armazenar múltiplas refs
-  //  const apiRefs = useRef({});
-  //  const handleExportPNG = (index) => {
-  //    apiRefs.current[index]?.current?.exportAsImage({ // na lista de refs, pegamos a ref correta pelo índice
-  //      format: "image/png",
-  //      quality: 1, // apenas para jpeg/webp
-  //      copyStyles: true, // copia estilos CSS para exportação
-  //    });
-  //    console.log("Exportando gráfico como PNG...", index);
-  //  };
   const navigate = useNavigate();
   const legendSxGlobal = {
     fontSize: 14,
-    color: "#ffffff", // Texto da legenda
+    color: "#ffffff",
+    wordBreak: innerWidth > 768 ? "normal" : "break-word", // Ajusta a posição da legenda com base na largura da janela
   };
 
   return (
     <div
       className={`
         min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1
-        dark:via-brightbeeDark-13 dark:to-brightbeeDark-1 transition-colors duration-500 p-4`}
+        dark:via-brightbeeDark-13 dark:to-brightbeeDark-1 transition-colors duration-500 p-4 sm:block md:block lg:block xl:block`}
     >
       <h1 className="text-center font-sans font-bold text-2xl mt-5 text-brightbeeDark-900 dark:text-white">
         Relatorio Simples
@@ -65,20 +58,16 @@ export function ChartSimple() {
           Voltar para Home
         </button>
       </div>
-
       <div
-        className="flex items-stretch grid mt-[50px] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1
+        className="flex items-stretch grid mt-[50px] grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1
         dark:via-brightbeeDark-13 dark:to-brightbeeDark-1 transition-colors duration-500 p-4"
       >
         {dataArray.map((data, index) => (
           <div
-            className="chart-container border rounded-3xl border-brightbeeDark-200 p-4 bg-brightbeeDark-8 transition-transform duration-300 bg-brightbeeDark-8 transition-transform duration-300 hover:scale-[1.02] shadow-lg hover:shadow-xl"
-                id={`grafico-${index}`}
+            className="md:chart-container border rounded-3xl border-brightbeeDark-200 p-4 bg-brightbeeDark-8 transition-transform duration-300 
+            bg-brightbeeDark-8 transition-transform duration-300 hover:scale-[1.02] shadow-lg hover:shadow-xl"
             key={index}
           >
-            <h1 className="text-center mr-[90px] mb-4 font-sans font-bold text-xl mt-4 text-brightbeeDark-900 dark:text-white">
-              {nameGraph[index]}
-            </h1>
             <button
               className="bg-brightbeeDark-15 hover:bg-brightbeeDark-13 text-white font-bold w-8 h-8 rounded-full transition-colors duration-300"
               onClick={() => {
@@ -89,25 +78,27 @@ export function ChartSimple() {
                 <MdFileDownloadDone className="inline-block" />
               </div>
             </button>
-              <div
-                className="flex justify-center mt-4 mb-10"
-              >
-                <PieChart
-                  className="ml-[10px]"
-                  series={[
-                    {
-                      data: data,
-                      arcLabel: "value",
-                      arcLabelMinAngle: 10,
-                    },
-                  ]}
-                  width={200}
-                  height={200}
-                  slotProps={{
-                    legend: { sx: legendSxGlobal, position: "bottom" },
-                  }}
-                />
+            <div id={`grafico-${index}`} className="md:w-full h-full">
+              <h1 className="text-center ml-[70px] md:text-center mr-[90px] mb-4 font-sans font-bold text-xl mt-4 text-brightbeeDark-900 dark:text-white">
+                {nameGraph[index]}
+              </h1>
+              <div className="flex justify-center mt-4 mb-10">
+                  <PieChart
+                    series={[
+                      {
+                        data: data,
+                        arcLabel: "value",
+                        arcLabelMinAngle: 10,
+                      },
+                    ]}
+                    width={innerWidth > 768 ? 200 : 150} 
+                    height={innerWidth > 768 ? 200 : 150}
+                    slotProps={{
+                      legend: { sx: legendSxGlobal, position: "bottom" },
+                    }}
+                  />
               </div>
+            </div>
           </div>
         ))}
       </div>
