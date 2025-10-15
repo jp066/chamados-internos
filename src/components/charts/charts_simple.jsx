@@ -14,6 +14,7 @@ export function ChartSimple() {
   const [chartData, setChartData] = useState(null);
 
   const [buttonDownloadHidden, setButtonDownloadHidden] = useState(false);
+  console.log("buttonDownloadHidden:", buttonDownloadHidden); // 
   useEffect(() => {
     async function fetchData() {
       const data = await loadData();

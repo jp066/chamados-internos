@@ -1,4 +1,3 @@
-import Autenticacao from "../googleappscriptComponents/autenticacao";
 import Chamados from "./chamados";
 import Respostas from "./respostas";
 import AutenticacaoFirebase from "./autenticacao";
