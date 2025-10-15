@@ -15,13 +15,13 @@ export default function Home() {
   const isTeamMember =
     usuario &&
     usuario.email &&
-    (usuario.email === process.env.REACT_APP_EMAIL1 ||
-      usuario.email === process.env.REACT_APP_EMAIL2 ||
-      usuario.email === process.env.REACT_APP_EMAIL3 ||
-      usuario.email === process.env.REACT_APP_EMAIL4 ||
-      usuario.email === process.env.REACT_APP_EMAIL5 ||
-      usuario.email === process.env.REACT_APP_EMAIL6);
-      console.log("Usuário logado:", process.env.REACT_APP_EMAIL1);
+    (usuario.email === "vitorianascimento@brightbee.com.br" ||
+      usuario.email === "rafaeloliveira@brightbee.com.br" ||
+      usuario.email === "alexandremarques@brightbee.com.br" ||
+      usuario.email === "joaomatos@brightbee.com.br" ||
+      usuario.email === "sistemas@brightbee.com.br" ||
+      usuario.email === "flaviaalves@brightbee.com.br");
+      
   return (
     <div className="min-h-screen bg-gradient-to-r from-brightbee-50 via-brightbee-50 to-yellow-50 dark:from-brightbeeDark-1 dark:via-brightbeeDark-13 dark:to-brightbeeDark-1 transition-colors duration-500">
       <Header
