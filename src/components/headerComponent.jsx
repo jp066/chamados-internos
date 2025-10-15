@@ -13,17 +13,14 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import { LoginContext } from "../context/LoginContext";
 import { ModalRelatorio } from "./modalRelatorio";
 import { HeaderMobile } from "./mobile/headerMobile";
-import { contadorDeChamadas } from "../services/firestoreService";
 
 export function Header() {
   const { dark, setDark, darkModeHandler } = useContext(DarkModeContext);
   const [openHamburger, setOpenHamburger] = useState(false);
   const { usuario, setUsuario, loginGoogle, logoutGoogle } =
     useContext(LoginContext);
-  const [limiteAlcancado, setLimiteAlcancado] = useState(false);
   const [showModal, setShowModal] = useState(false);
   console.log(setDark);
-  console.log(setLimiteAlcancado);
   let navigate = useNavigate();
   return (
     <motion.header
@@ -72,31 +69,15 @@ export function Header() {
                     cancelButton: "cancel-button",
                   },
                   title: "Você deseja gerar um relatório com os dados atuais?",
-                  text: "Só pode ser gerado no maximo 3 relatórios por mês por questão de custo ao Banco de Dados.",
-                  showDenyButton: true, // isso permite o botão de negação
-                  showCancelButton: true, // isso permite o botão de cancelamento
+                  showDenyButton: true,
+                  showCancelButton: true,
                   confirmButtonText: "KPI rápido  📄",
                   denyButtonText: "KPI detalhado  🔎",
                   cancelButtonText: "Cancelar",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    contadorDeChamadas(limiteAlcancado, setLimiteAlcancado);
-                    console.log("Limite alcançado:", limiteAlcancado);
                     navigate("/relatorio");
-                    if (limiteAlcancado) {
-                      Swal.fire({
-                        customClass: {
-                          popup: "custom-modal-small",
-                          title: "custom-title-small",
-                          text: "custom-text-small",
-                          confirmButton: "confirm-button-small",
-                        },
-                        icon: "error",
-                        title: "Limite de relatórios mensais atingido",
-                        text: "Você atingiu o limite de  relatórios mensais. Por favor, entre em contato com o suporte para mais informações.",
-                        confirmButtonText: "Ok",
-                      });
-                    }
+                    //                    window.open("/relatorio", "_blank");
                   } else if (result.isDenied) {
                     setShowModal(true);
                   }
@@ -115,7 +96,7 @@ export function Header() {
               opacity: 1,
             }}
             className="dark:hover:bg-gray-700 hover:bg-brightbee-150 text-white flex items-center font-semibold py-2 px-4 rounded-full shadow-md"
-            onClick={() => navigate("/documentacao")}
+            onClick={() => navigate("/docs")}
           >
             <IoDocumentTextOutline size={25} color="white" />
             &nbsp; Documentação

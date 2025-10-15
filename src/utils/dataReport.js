@@ -9,7 +9,6 @@ export async function loadData() {
   const dataProblem = counterFields(chamados, "problema");
   const dataStatus = counterFields(chamados, "status");
   const dataRoom = counterFields(chamados, "sala");
-
   return {
     dataCategory,
     dataModule,

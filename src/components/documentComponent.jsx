@@ -4,6 +4,7 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import SidebarComponent from "../elements/sidebarComponent";
 import IntroSection from "./documentacaoComponents/introSection";
 import GoogleIntegration from "./documentacaoComponents/googleIntegration";
+import Firebase from "./documentacaoComponents/firebaseComponents/configuracao.jsx";
 import { LoginContext } from "../context/LoginContext";
 import loginGoogle from "./appComponent";
 import { DocumentMobile } from "./mobile/documentMobile";
@@ -84,24 +85,11 @@ export default function DocumentComponent() {
             <GoogleIntegration />
           </section>
           <section
-            id="telegram-section"
-            className="mb-8"
-            style={{ scrollMarginTop: "80px" }}
-          >
-            <h2 className="text-xl font-bold mb-2">TelegramBot</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Esta seção cobre a integração com o TelegramBot.
-            </p>
-          </section>
-          <section
             id="firebase-section"
             className="mb-8"
             style={{ scrollMarginTop: "80px" }}
           >
-            <h2 className="text-xl font-bold mb-2">Firebase</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Esta seção cobre a integração com o Firebase.
-            </p>
+            <Firebase />
           </section>
           <section
             id="react-section"

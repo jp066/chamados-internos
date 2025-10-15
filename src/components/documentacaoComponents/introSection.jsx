@@ -2,11 +2,98 @@ import { FaReact } from "react-icons/fa";
 import { IoLogoFirebase } from "react-icons/io5";
 import { RiTailwindCssFill } from "react-icons/ri";
 import { SiGoogleappsscript } from "react-icons/si";
-import { SiCloudinary } from "react-icons/si";
 import { HiOutlineComputerDesktop } from "react-icons/hi2";
 import { GrPersonalComputer } from "react-icons/gr";
 
 export default function IntroSection() {
+  const funcionalidades = [
+    {
+      title: "Monitoramento de Chamados",
+      label:
+        "Acompanhamento em tempo real do status dos chamados com integração ao Firebase Firestore.",
+    },
+    {
+      title: "Autenticação Segura",
+      label:
+        "Login via Google OAuth com controle de acesso restrito aos membros da equipe.",
+    },
+    {
+      title: "Dashboard Interativo",
+      label:
+        "Visualização em tempo real com gráficos e estatísticas dos chamados",
+    },
+    {
+      title: "Notificações Telegram",
+      label:
+        "Notificações automáticas via bot do Telegram para atualizações importantes",
+    },
+  ];
+  const iconsStack = [
+    { name: "React 19+", icon: <FaReact /> },
+    { name: "Firebase", icon: <IoLogoFirebase /> },
+    { name: "TailwindCSS", icon: <RiTailwindCssFill /> },
+    { name: "Google Apps Script", icon: <SiGoogleappsscript /> },
+    {
+      name: "MUI X Charts",
+      icon: (
+        <img
+          src="https://mui.com/static/branding/product-advanced-dark.svg"
+          alt="MUI X Charts"
+          className="w-5 h-5"
+        />
+      ),
+    },
+  ];
+  const documentationStructure = [
+    {
+      title: "Formulário e Google Apps Script:",
+      content: "Configuração do formulário de entrada e automações",
+    },
+    {
+      title: "TelegramBot:",
+      content: "Configuração e implementação do bot de notificações",
+    },
+    {
+      title: "Firebase:",
+      content: "Configuração do banco de dados e autenticação",
+    },
+    {
+      title: "Aplicação React:",
+      content: "Estrutura, componentes e funcionalidades",
+    },
+    {
+      title: "Relatórios:",
+      content: "Implementação de gráficos e dashboards com MUI e Chart.js",
+    },
+  ];
+  const fluxoSistema = [
+    {
+      step: "1",
+      title: "Google Formulário",
+      desc: "Preenchimento pelo usuário",
+    },
+    {
+      step: "2",
+      title: "Google Planilhas",
+      desc: "Armazenamento inicial",
+    },
+    {
+      step: "3",
+      title: "Apps Script",
+      desc: "Processamento automático e envio para Firebase.",
+    },
+    {
+      step: "4",
+      title: "Firebase",
+      desc: "Sincronização de dados",
+    },
+    {
+      step: "5",
+      title: "Dashboard",
+      desc: "Visualização de dados",
+    },
+  ];
+
   return (
     <>
       <div>
@@ -69,8 +156,8 @@ export default function IntroSection() {
         </h1>
         {/* Visão Geral */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-            Problema
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200 hover:underline transition-all duration-200 ease-in-out underline-offset-4 decoration-brightbee-400 dark:decoration-brightbeeDark-3">
+            # Problema
           </h2>
           <p className="text-base mb-4 leading-relaxed text-gray-700 dark:text-gray-300">
             O problema resolvido por este sistema é a necessidade de uma
@@ -84,8 +171,8 @@ export default function IntroSection() {
           </p>
         </div>
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-            Visão Geral
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200 hover:underline transition-all duration-200 ease-in-out underline-offset-4 decoration-brightbee-400 dark:decoration-brightbeeDark-3">
+            # Visão Geral
           </h2>
           <p className="text-base mb-4 leading-relaxed text-gray-700 dark:text-gray-300">
             O <strong>Sistema de Chamados Internos BrightBee</strong> é uma
@@ -104,78 +191,28 @@ export default function IntroSection() {
         </div>
         {/* Principais Funcionalidades */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-            Principais Funcionalidades
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200 hover:underline transition-all duration-200 ease-in-out underline-offset-4 decoration-brightbee-400 dark:decoration-brightbeeDark-3">
+            # Principais Funcionalidades
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-brightbee-50 dark:bg-brightbeeDark-8 p-4 rounded-full smooth hover:rounded-lg">
-              <h3 className="font-semibold text-brightbee-600 dark:text-brightbeeDark-3 mb-2">
-                Monitoramento de Chamados
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Acompanhamento em tempo real do status dos chamados com
-                integração ao Firebase Firestore.
-              </p>
-            </div>
-            <div className="bg-brightbee-50 dark:bg-brightbeeDark-8 p-4 rounded-full smooth hover:rounded-lg">
-              <h3 className="font-semibold text-brightbee-600 dark:text-brightbeeDark-3 mb-2">
-                Autenticação Segura
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Login via Google OAuth com controle de acesso restrito aos
-                membros da equipe
-              </p>
-            </div>
-            <div className="bg-brightbee-50 dark:bg-brightbeeDark-8 p-4 rounded-full smooth hover:rounded-lg">
-              <h3 className="font-semibold text-brightbee-600 dark:text-brightbeeDark-3 mb-2">
-                Dashboard Interativo
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Visualização em tempo real com gráficos e estatísticas dos
-                chamados
-              </p>
-            </div>
-            <div className="bg-brightbee-50 dark:bg-brightbeeDark-8 p-4 rounded-full smooth hover:rounded-lg">
-              <h3 className="font-semibold text-brightbee-600 dark:text-brightbeeDark-3 mb-2">
-                Notificações Telegram
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Notificações automáticas via bot do Telegram para atualizações
-                importantes
-              </p>
-            </div>
-            <div className="bg-brightbee-50 dark:bg-brightbeeDark-8 p-4 rounded-full smooth hover:rounded-lg">
-              <h3 className="font-semibold text-brightbee-600 dark:text-brightbeeDark-3 mb-2">
-                Armazenamento na Nuvem
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Upload e gerenciamento de arquivos via Cloudinary
-              </p>
-            </div>
+            {funcionalidades.map((func, index) => (
+              <div className="bg-brightbee-50 dark:bg-brightbeeDark-8 p-4 rounded-full smooth">
+                <h3 className="font-semibold text-brightbee-600 dark:text-brightbeeDark-3 mb-2 flex justify-center">
+                  {func.title}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
+                  {func.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-            Stack Tecnológica
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200 hover:underline transition-all duration-200 ease-in-out underline-offset-4 decoration-brightbee-400 dark:decoration-brightbeeDark-3">
+            # Stack Tecnológica
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-            {[
-              { name: "React 19+", icon: <FaReact /> },
-              { name: "Firebase", icon: <IoLogoFirebase /> },
-              { name: "TailwindCSS", icon: <RiTailwindCssFill /> },
-              { name: "Google Apps Script", icon: <SiGoogleappsscript /> },
-              { name: "Cloudinary", icon: <SiCloudinary /> },
-              {
-                name: "MUI X Charts",
-                icon: (
-                  <img
-                    src="https://mui.com/static/branding/product-advanced-dark.svg"
-                    alt="MUI X Charts"
-                    className="w-5 h-5"
-                  />
-                ),
-              },
-            ].map((tech, index) => (
+            {iconsStack.map((tech, index) => (
               <div
                 key={index}
                 className="flex items-center gap-2 bg-white dark:bg-brightbeeDark-7 p-3 rounded-full shadow-sm hover:bg-brightbee-100 dark:hover:bg-brightbeeDark-6 transition-colors duration-200 hover:scale-105 transform"
@@ -189,38 +226,12 @@ export default function IntroSection() {
           </div>
         </div>
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-            Fluxo do Sistema
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200 hover:underline transition-all duration-200 ease-in-out underline-offset-4 decoration-brightbee-400 dark:decoration-brightbeeDark-3">
+            # Fluxo do Sistema
           </h2>
           <div className="bg-gradient-to-r from-brightbee-50 to-brightbee-25 dark:from-brightbeeDark-8 dark:to-brightbeeDark-7 p-6 rounded-xl">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              {[
-                {
-                  step: "1",
-                  title: "Google Formulário",
-                  desc: "Preenchimento pelo usuário",
-                },
-                {
-                  step: "2",
-                  title: "Google Planilhas",
-                  desc: "Armazenamento inicial",
-                },
-                {
-                  step: "3",
-                  title: "Apps Script",
-                  desc: "Processamento automático e envio para Firebase.",
-                },
-                {
-                  step: "4",
-                  title: "Firebase",
-                  desc: "Sincronização de dados",
-                },
-                {
-                  step: "5",
-                  title: "Dashboard",
-                  desc: "Visualização de dados",
-                },
-              ].map((item, index) => (
+              {fluxoSistema.map((item, index) => (
                 <div
                   key={index}
                   className="flex flex-col items-center text-center"
@@ -251,68 +262,24 @@ export default function IntroSection() {
         </div>
         {/* Estrutura da Documentação */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-            Estrutura da Documentação
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200 hover:underline transition-all duration-200 ease-in-out underline-offset-4 decoration-brightbee-400 dark:decoration-brightbeeDark-3">
+            # Estrutura da Documentação
           </h2>
           <p className="text-base mb-4 leading-relaxed text-gray-700 dark:text-gray-300">
             Esta documentação está organizada em seções específicas que cobrem
             cada componente do sistema:
           </p>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-            <li className="flex items-start gap-2">
-              <span className="text-brightbee-400 dark:text-brightbeeDark-3">
-                •
-              </span>
-              <span>
-                <strong>Formulário e Google Apps Script:</strong> Configuração
-                do formulário de entrada e automações
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-brightbee-400 dark:text-brightbeeDark-3">
-                •
-              </span>
-              <span>
-                <strong>TelegramBot:</strong> Configuração e implementação do
-                bot de notificações
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-brightbee-400 dark:text-brightbeeDark-3">
-                •
-              </span>
-              <span>
-                <strong>Firebase:</strong> Configuração do banco de dados e
-                autenticação
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-brightbee-400 dark:text-brightbeeDark-3">
-                •
-              </span>
-              <span>
-                <strong>Aplicação React:</strong> Estrutura, componentes e
-                funcionalidades
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-brightbee-400 dark:text-brightbeeDark-3">
-                •
-              </span>
-              <span>
-                <strong>Cloudinary:</strong> Gerenciamento de upload e
-                armazenamento de arquivos
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-brightbee-400 dark:text-brightbeeDark-3">
-                •
-              </span>
-              <span>
-                <strong>Relatórios:</strong> Implementação de gráficos e
-                dashboards com MUI e Chart.js
-              </span>
-            </li>
+            {documentationStructure.map((item, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <span className="text-brightbee-400 dark:text-brightbeeDark-3">
+                  •
+                </span>
+                <span>
+                  <strong>{item.title}</strong> {item.content}
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

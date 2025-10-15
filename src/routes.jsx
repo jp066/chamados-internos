@@ -12,7 +12,7 @@ const AppRoutes = () => (
       <LoginProvider>
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/documentacao" element={<DocumentComponent />} />
+          <Route path="/docs" element={<DocumentComponent />} />
           <Route path="/relatorio" element={<ChartSimple />} />
         </Routes>
       </LoginProvider>

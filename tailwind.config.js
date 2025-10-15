@@ -37,7 +37,7 @@ module.exports = {
           12: "#5A5A5A",
           13: "#404041",
           14: "#ffc20e",
-          15: "#68686aff"
+          15: "#68686aff",
         },
         headerDark: {
           1: "#121212",
@@ -52,8 +52,17 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Dm Sans", "sans-serif"],
+        mono: ["Fira Code", "monospace"],
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            "--custom-heading":
+              "text-xl font-semibold text-gray-800 dark:text-gray-200 hover:underline transition-all duration-200 ease-in-out underline-offset-4 decoration-brightbee-400 dark:decoration-brightbeeDark-3",
+          },
+        },
       },
     },
+    plugins: [],
   },
-  plugins: [],
 };

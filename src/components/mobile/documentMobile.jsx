@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { scrollToSection } from "../../utils/scrollToSection.js";
 import { RxPinTop } from "react-icons/rx";
-import { IntroSectionMobile } from "../documentacaoComponents/mobileDocuments/introSectionMobile.jsx";
-import GoogleIntegrationMobile from "../documentacaoComponents/mobileDocuments/googleIntegrationMobile.jsx";
+import { IntroSectionMobile } from "../mobileDocuments/introSectionMobile.jsx";
+import GoogleIntegrationMobile from "../mobileDocuments/googleIntegrationMobile.jsx";
 
 export function DocumentMobile() {
   const { dark } = useContext(DarkModeContext);
