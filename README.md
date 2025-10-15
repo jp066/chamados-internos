@@ -161,4 +161,4 @@ npm test
 
 ## 10. Licença
 
-Projeto privado e de uso interno BrightBee.
+Projeto privado e de uso interno BrightBee School.
