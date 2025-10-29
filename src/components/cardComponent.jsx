@@ -13,10 +13,14 @@ import {
 } from "../services/firestoreService.js";
 import { InputFile } from "../elements/inputFileComponent.jsx";
 import Swal from "sweetalert2";
+import { useContext } from "react";
+import { LoginContext } from "../context/LoginContext";
+
 
 export function CardComponent(props) {
   const [respostas, setRespostas] = useState({});
   const [files, setFiles] = useState({}); // Novo estado para arquivos por card
+  const { usuario, setUsuario, loginGoogle, logoutGoogle } = useContext(LoginContext);
   console.log("Respostas:", setRespostas);
   const { chamadosFilter, busca, setBusca, onStatusChange } = props;
   const { dark, setDark, darkModeHandler } = props;
@@ -97,7 +101,8 @@ export function CardComponent(props) {
                   className="p-2 rounded-full hover:bg-brightbee-100" //transition-200 é uma transição suave
                   style={{ transitionDuration: "400ms" }} // Define a duração da transição para 400ms
                   onClick={async () => {
-                    await updateStatus({ id: c.id, status: "em andamento" });
+                    const usuarioAtual = usuario ?  usuario.email || usuario.displayName : "Desconhecido";
+                    await updateStatus({ id: c.id, status: "em andamento", usuario: { email: usuarioAtual } });
                     setLoading(true);
                     setError(null);
                     try {
@@ -123,14 +128,11 @@ export function CardComponent(props) {
                   />
                 </button>
                 <span className="font-sans ml-2">
-                  Observado por: {c["Atendente que está observando"] || "Ninguém"}
+                  Em atendimento por: {c["ObservadoPor"]?.email || c["ObservadoPor"] || "Ninguém"}
                 </span>
                 </div>
               )}
             </div>
-            {/*
-              Usuario logado que fechou o chamado
-            */}
             <p className="text-lg font-sans max-w-full break-words">
               <strong>Email: </strong>
               <a

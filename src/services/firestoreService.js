@@ -59,11 +59,11 @@ export async function setTotalChamadosF() {
   }
 }
 
-export async function updateStatus({ id, status }) {
+export async function updateStatus({ id, status, usuario }) {
   try {
     const chamadosCollection = collection(db, "chamados");
     const docRef = doc(chamadosCollection, id);
-    await updateDoc(docRef, { status });
+    await updateDoc(docRef, { status, "ObservadoPor": usuario });
     console.log(`Status atualizado para ${status}!`);
   } catch (error) {
     console.error("Erro ao atualizar status:", error);
