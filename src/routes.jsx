@@ -5,6 +5,7 @@ import DocumentComponent from "./components/documentComponent.jsx";
 import { LoginProvider } from "./context/LoginContext.jsx";
 import { DarkModeProvider } from "./context/DarkModeContext.jsx";
 import { ChartSimple } from "./components/charts/charts_simple.jsx";
+import ChartFiltered from "./components/charts/filtered.jsx";
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -14,6 +15,7 @@ const AppRoutes = () => (
           <Route index element={<Home />} />
           <Route path="/docs" element={<DocumentComponent />} />
           <Route path="/relatorio" element={<ChartSimple />} />
+          <Route path="/relatorio-filtrado" element={<ChartFiltered />} />
         </Routes>
       </LoginProvider>
     </DarkModeProvider>

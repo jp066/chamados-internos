@@ -8,6 +8,7 @@ import Firebase from "./documentacaoComponents/firebaseComponents/configuracao.j
 import { LoginContext } from "../context/LoginContext";
 import loginGoogle from "./appComponent";
 import { DocumentMobile } from "./mobile/documentMobile";
+import ReactDocs from "./documentacaoComponents/reactDocs/introDocs.jsx";
 
 export default function DocumentComponent() {
   const { dark, setDark, darkModeHandler } = useContext(DarkModeContext);
@@ -96,10 +97,7 @@ export default function DocumentComponent() {
             className="mb-8"
             style={{ scrollMarginTop: "80px" }}
           >
-            <h2 className="text-xl font-bold mb-2">Aplicação React</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Esta seção cobre a construção da aplicação em React.
-            </p>
+            <ReactDocs />
           </section>
           <section
             id="cloudinary-section"

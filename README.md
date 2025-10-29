@@ -1,164 +1,58 @@
+# GEMINI.md - Projeto: Chamados Internos BrightBee
 
-# Documentação Técnica - Chamados Internos BrightBee
+## Visão Geral do Projeto
 
----
+Este projeto é um sistema de gerenciamento de chamados internos chamado "Chamados Internos BrightBee". É uma aplicação web de página única (SPA) construída com **React**. O objetivo principal da aplicação é permitir que funcionários autorizados visualizem, gerenciem e resolvam chamados de suporte interno.
 
-## 1. Visão Geral
+**Principais Tecnologias:**
 
-O sistema **Chamados Internos BrightBee** é uma aplicação web desenvolvida em React para gestão de chamados internos da equipe de Sistemas. O sistema permite autenticação via Google, controle de acesso restrito, visualização, filtro, atualização e resposta de chamados, com persistência no Firebase Firestore.
+*   **Frontend:** React 19, `react-router-dom` para roteamento.
+*   **Backend & Banco de Dados:** Google Firebase, especificamente **Firestore** para o banco de dados e **Firebase Authentication** para login de usuários via Google.
+*   **Estilização:** **Tailwind CSS** é o principal framework de estilização, com um tema customizado definido em `tailwind.config.js`. Também utiliza bibliotecas como `flowbite-react` e `@material-tailwind/react`.
+*   **Deploy:** A aplicação está configurada for para deploy contínuo no **Firebase Hosting** através do GitHub Actions.
 
----
+**Arquitetura:**
 
-## 2. Arquitetura do Projeto
+A aplicação segue uma arquitetura baseada em componentes. O estado global, como a autenticação do usuário e o modo escuro, é gerenciado através da Context API do React (`LoginContext.jsx`, `DarkModeContext.jsx`). Todas as interações com o banco de dados Firestore são encapsuladas no módulo `src/services/firestoreService.js`, que atua como uma camada de serviço. O ponto de entrada principal da aplicação é o `src/App.jsx`, que configura o roteamento definido em `src/routes.jsx`.
 
-### 2.1 Estrutura de Pastas
+## Compilando e Executando
 
-```
-chamados-internos/
-│
-├── public/                # Arquivos estáticos e manifestos
-├── src/                   # Código-fonte principal
-│   ├── App.jsx            # Componente raiz
-│   ├── firebase.js        # Configuração Firebase
-│   ├── global.jsx         # Estilos globais
-│   ├── theme.jsx          # Temas claro/escuro
-│   ├── components/        # Componentes reutilizáveis
-│   ├── services/          # Serviços de integração (ex: Firestore)
-│   └── imgs/              # Imagens
-├── .env                   # Variáveis de ambiente (NÃO versionar)
-├── package.json           # Dependências e scripts
-└── tailwind.config.js     # Configuração Tailwind
-```
+O projeto utiliza o `npm` como gerenciador de pacotes. Os comandos principais estão definidos no `package.json`.
 
-### 2.2 Tecnologias Utilizadas
+*   **Instalar Dependências:**
+    ```bash
+    npm install
+    ```
+    *(Nota: O fluxo de CI/CD utiliza `npm ci` para instalações mais limpas em um ambiente de integração contínua.)*
 
-- React 19+
-- Firebase (Auth & Firestore)
-- TailwindCSS, Material Tailwind, Flowbite React
-- Styled Components
-- React Icons
-- Jest + React Testing Library
+*   **Executar Servidor de Desenvolvimento:**
+    ```bash
+    npm start
+    ```
+    Isso iniciará a aplicação em `http://localhost:3000`.
 
----
+*   **Compilar para Produção:**
+    ```bash
+    npm run build
+    ```
+    Este comando cria uma build de produção no diretório `build/`.
 
-## 3. Fluxo de Funcionamento
+*   **Executar Testes:**
+    ```bash
+    npm test
+    ```
+    Isso executa a suíte de testes usando Jest e React Testing Library.
 
-1. **Login:**
-	- Autenticação via Google.
-	- Apenas membros autorizados (e-mails específicos) podem acessar o dashboard.
-2. **Dashboard:**
-	- Visualização de estatísticas (total, abertos, concluídos).
-	- Filtros dinâmicos por status.
-3. **Chamados:**
-	- Listagem detalhada, busca, atualização de status e respostas.
-4. **Logout:**
-	- Encerrar sessão com segurança.
+*   **Deploy:**
+    O deploy é automatizado. Um push para a branch `main` aciona uma GitHub Action que compila e implanta a aplicação no Firebase Hosting. O deploy manual pode ser feito com `firebase deploy`.
 
----
+## Convenções de Desenvolvimento
 
-## 4. Componentes Principais
-
-### 4.1 App.jsx
-Componente raiz, gerencia autenticação, controle de acesso e renderização condicional do dashboard.
-
-### 4.2 HeaderComponent
-Exibe informações do usuário logado e botões de login/logout.
-
-### 4.3 HeroComponent
-Banner superior com título e descrição do dashboard.
-
-### 4.4 DashboardComponent
-Mostra estatísticas dos chamados (total, abertos, concluídos) e permite filtrar por status.
-
-### 4.5 CardComponent
-Exibe detalhes de cada chamado, com busca, expansão de descrição e interação de status.
-
-### 4.6 firestoreService.js
-Funções para buscar, atualizar e manipular dados dos chamados no Firestore, além de utilitários de formatação de data e envio de respostas.
-
----
-
-## 5. Configuração e Execução
-
-### 5.1 Pré-requisitos
-- Node.js >= 18.x
-- Conta Firebase configurada
-- Variáveis de ambiente `.env` preenchidas:
-
-```
-REACT_APP_FIREBASE_API_KEY=...
-REACT_APP_FIREBASE_AUTH_DOMAIN=...
-REACT_APP_FIREBASE_PROJECT_ID=...
-REACT_APP_FIREBASE_STORAGE_BUCKET=...
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=...
-REACT_APP_FIREBASE_APP_ID=...
-REACT_APP_MEASUREMENT_ID=...
-```
-
-### 5.2 Instalação
-```bash
-npm install
-```
-
-### 5.3 Execução em Desenvolvimento
-```bash
-npm start
-# Acesse http://localhost:3000
-```
-
-### 5.4 Build para Produção
-```bash
-npm run build
-```
-
-### 5.5 Deploy Firebase Hosting
-```bash
-firebase deploy
-```
-
----
-
-## 6. Scripts Disponíveis
-
-- `npm start` — Inicia o servidor de desenvolvimento.
-- `npm run build` — Gera build de produção.
-- `npm test` — Executa testes automatizados.
-- `npm run eject` — Eject do Create React App (irreversível).
-
----
-
-## 7. Testes
-
-- Utiliza React Testing Library e Jest.
-- Testes localizados em `src/App.test.js` e outros arquivos `*.test.js`.
-
-Para rodar os testes:
-```bash
-npm test
-```
-
----
-
-## 8. Boas Práticas e Observações
-
-- **Segurança:** Nunca versionar `.env` ou arquivos de credenciais.
-- **Componentização:** Componentes bem separados e reutilizáveis.
-- **Estilização:** Preferência por TailwindCSS, com suporte a styled-components para temas.
-- **Acessibilidade:** Utilizar sempre que possível atributos e práticas acessíveis.
-- **Comentários:** O código contém comentários explicativos nos pontos principais.
-
----
-
-## 9. Contribuição
-
-1. Fork o repositório
-2. Crie uma branch (`git checkout -b feature/nome-da-feature`)
-3. Commit suas alterações (`git commit -am 'feat: nova feature'`)
-4. Push para a branch (`git push origin feature/nome-da-feature`)
-5. Abra um Pull Request
-
----
-
-## 10. Licença
-
-Projeto privado e de uso interno BrightBee School.
+*   **Baseado em Componentes:** A interface é construída a partir de um conjunto de componentes reutilizáveis localizados em `src/components/` e `src/elements/`.
+*   **Componentes Funcionais e Hooks:** O código utiliza exclusivamente componentes funcionais modernos do React com hooks (`useState`, `useEffect`, `useContext`).
+*   **Estilização:** O padrão é CSS "utility-first" com Tailwind. Cores e fontes personalizadas são definidas no `tailwind.config.js`.
+*   **Gerenciamento de Estado:**
+    *   O estado local dos componentes é gerenciado com `useState`.
+    *   O estado global (como o usuário logado) é gerenciado com o React Context. O `LoginContext` fornece as informações do usuário para toda a aplicação.
+*   **Busca de Dados:** Operações assíncronas e a comunicação com o Firestore são tratadas no arquivo `src/services/firestoreService.js`. Isso mantém a lógica de dados separada dos componentes da interface.
+*   **Variáveis de Ambiente:** As chaves de configuração do Firebase devem estar em um arquivo `.env`, prefixadas com `REACT_APP_`. Elas são injetadas durante o processo de build.

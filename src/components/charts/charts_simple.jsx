@@ -1,4 +1,4 @@
-import { handleExportPng } from "../../utils/exportPng";
+import { handleExportPng, handleExportAllPng } from "../../utils/exportPng";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { GrGallery } from "react-icons/gr";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -83,19 +83,20 @@ export function ChartSimple() {
           </button>
         </div>
       </div>
-      <div className="mt-[50px] justify-center items-center">
+      <div className="mt-[50px] justify-center items-center" id="todos-graficos">
         <div>
           <button
             className={`bg-brightbeeDark-15 hover:bg-brightbeeDark-13 text-white font-bold w-[265px] h-[60px] rounded-2xl transition-colors duration-300 ml-4 mb-2`}
             onClick={() => {
-              setButtonDownloadHidden(true);
+              setButtonDownloadHidden(true); // essa linha oculta o botão antes de iniciar o download
+              handleExportAllPng( 'todos-graficos' );
             }}
           >
             <div className="position-relative grid grid-cols-2 rows-2 float-left ml-3">
               <GrGallery className="inline-block mr-2" />
               <FaDownload className="inline-block" />
             </div>
-            <span className="">Baixar todos os gráficos</span>
+            <span >Baixar todos os gráficos</span>
           </button>
         </div>
         <div

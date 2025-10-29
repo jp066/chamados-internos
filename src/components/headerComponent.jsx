@@ -11,7 +11,7 @@ import { motion } from "motion/react";
 import { useContext } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { LoginContext } from "../context/LoginContext";
-import { ModalRelatorio } from "./modalRelatorio";
+import { ChartsFilter } from "./charts/charts_filter";
 import { HeaderMobile } from "./mobile/headerMobile";
 
 export function Header() {
@@ -53,7 +53,6 @@ export function Header() {
               initial={{ opacity: 0.6, scale: 1 }}
               style={{ originX: 0, originY: 0 }}
               whileHover={{
-                scale: 1.05,
                 transition: { duration: 0.2 },
                 opacity: 1,
               }}
@@ -77,7 +76,6 @@ export function Header() {
                 }).then((result) => {
                   if (result.isConfirmed) {
                     navigate("/relatorio");
-                    //                    window.open("/relatorio", "_blank");
                   } else if (result.isDenied) {
                     setShowModal(true);
                   }
@@ -91,7 +89,6 @@ export function Header() {
             initial={{ opacity: 0.6, scale: 1 }}
             style={{ originX: 0, originY: 0 }}
             whileHover={{
-              scale: 1.05,
               transition: { duration: 0.2 },
               opacity: 1,
             }}
@@ -105,7 +102,6 @@ export function Header() {
             initial={{ opacity: 0.6, scale: 1 }}
             style={{ originX: 0, originY: 0 }}
             whileHover={{
-              scale: 1.05,
               transition: { duration: 0.2 },
               opacity: 1,
             }}
@@ -121,7 +117,6 @@ export function Header() {
               initial={{ opacity: 0.6, scale: 1 }}
               style={{ originX: 0, originY: 0 }}
               whileHover={{
-                scale: 1.05,
                 transition: { duration: 0.2 },
                 opacity: 1,
               }}
@@ -138,7 +133,6 @@ export function Header() {
                   initial={{ opacity: 0.6, scale: 1 }}
                   style={{ originX: 0, originY: 0 }}
                   whileHover={{
-                    scale: 1.2,
                     transition: { duration: 0.2 },
                     opacity: 1,
                   }}
@@ -147,7 +141,7 @@ export function Header() {
                   className="h-8 w-8 rounded-full"
                 />
               )}
-              {usuario.displayName || usuario.email || "Usuário logado"}
+              {usuario.email || usuario.displayName}
               &nbsp;
               <IoMdLogOut
                 size={24}
@@ -173,7 +167,7 @@ export function Header() {
                     }
                   });
                 }}
-                className="cursor-pointer"
+                className="cursor-pointer opacity-60 hover:opacity-100 transition-opacity"
               />
             </span>
           )}
@@ -185,7 +179,7 @@ export function Header() {
         setOpenHamburger={setOpenHamburger}
       />
       {showModal && (
-        <ModalRelatorio
+        <ChartsFilter
           onClose={() => setShowModal(false)}
           style={{ zIndex: 1000 }}
         />

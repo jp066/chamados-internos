@@ -5,12 +5,19 @@ import {
   collection,
   getDocs,
   addDoc,
+  query,
 } from "firebase/firestore";
 import { db } from "../firebase.js";
 
+const databaseCollections = {
+  chamadosCollection: collection(db, "chamados"),
+  respostasCollection: collection(db, "respostas"),
+  relatoriosCollection: collection(db, "relatorios"),
+};
+
 export async function getChamados() {
   try {
-    const chamadosCollection = collection(db, "chamados");
+    const chamadosCollection = databaseCollections.chamadosCollection;
     const snapshot = await getDocs(chamadosCollection);
     const chamados = snapshot.docs.map((doc) => ({
       id: doc.id,
@@ -122,28 +129,8 @@ export async function handlerEnviarResposta(
   }
 }
 
-// As duas funções para maior persistência, serão implementadas em algum lugar como redis ou banco de dados.
-let contadorChamadas = [];
-export async function contadorDeChamadas(limiteAlcancado, setLimiteAlcancado) {
-  if (limiteAlcancado) return;
-  let chamadas = contadorChamadas.length;
-  if (chamadas === 2) {
-    setLimiteAlcancado(true);
-    console.log("Limite de relatórios mensais atingido.");
-    return chamadas;
-  }
-  contadorChamadas.push(1);
-  console.log("Contador de chamadas de relatório:", contadorChamadas);
-  return contadorChamadas;
-}
-
-export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
+export async function reportSimple() {
   try {
-    //    await contadorDeChamadas(limiteAlcancado, setLimiteAlcancado);
-    if (limiteAlcancado) {
-      console.log("Limite de relatórios mensais atingido.");
-      return;
-    }
     const chamados = await getChamados();
     const reportData = chamados.map((chamado) => ({
       id: chamado.id,
@@ -175,24 +162,120 @@ export async function reportSimple(limiteAlcancado, setLimiteAlcancado) {
     throw new Error("Erro ao gerar relatório simples.");
   }
 }
+/*
+export async function postFilter(
+  valoresJuntos,
+  dataInicial,
+  dataFinal,
+  status,
+  modulo,
+  categoria
+) {
+  if (
+    !(dataInicial instanceof Timestamp) &&
+    !(dataFinal instanceof Timestamp)
+  ) {
+    const dataInicialDate = new Date(dataInicial);
+    const dataFinalDate = new Date(dataFinal);
+  }
 
+  try {
+    const relatoriosCollection = collection(db, "relatorios");
+    const data = {
+      dataInicial: dataInicial,
+      dataFinal: dataFinal,
+      status: status,
+      modulo: modulo,
+      categoria: categoria,
+    };
+    if (valoresJuntos === "valores juntos") {
+      const res = await queryRelatoriosJuntos(
+        valoresJuntos,
+        dataInicial,
+        dataFinal,
+        status,
+        modulo,
+        categoria
+      );
+      console.log("Resposta enviada com sucesso:", data);
+      return res;
+    }
+    const res = await addDoc(relatoriosCollection, data);
+    console.log("Resposta enviada com sucesso:", data);
+    return res;
+  } catch (error) {
+    console.error("Erro ao enviar resposta:", error);
+    return "Erro ao enviar resposta.";
+  }
+}*/
 
-export function reportMockFilter() {
-  return [
-    {
-      categoria: "Totvs",
-      modulo: "Educacional",
-      solicitante: "teste@brightbee.com.br",
-      problema: "Erro no sistema",
-      status: "Aberto",
-      sala: "Secretaria",
-    },
-    {
-      id: "2",
-      usuario: "Maria Oliveira",
-      problema: "Dúvida sobre funcionalidade",
-      status: "Em andamento",
-      data: "02/10/2023 - 11:00",
-    },
-  ];
+export async function queryRelatoriosJuntos(
+  valoresJuntos,
+  dataInicial,
+  dataFinal,
+  status,
+  mod,
+  cat,
+  busca
+) {
+  try {
+    const chamados = databaseCollections.chamadosCollection;
+    const relatoriosDocs = await getDocs(chamados);
+    
+    const dataInicialTimestamp = dataInicial
+      ? Timestamp.fromDate(new Date(dataInicial + "T00:00:00"))
+      : null;
+    const dataFinalTimestamp = dataFinal
+      ? Timestamp.fromDate(new Date(dataFinal + "T23:59:59"))
+      : null;
+    
+    console.log("Data Inicial:", dataInicialTimestamp?.toDate());
+    console.log("Data Final:", dataFinalTimestamp?.toDate());
+    console.log("Status:", status);
+    console.log("Módulo:", mod);
+    console.log("Categoria:", cat);
+    
+    const filteredDocs = relatoriosDocs.docs.filter((doc) => {
+      const data = doc.data();
+      const dataHora = data["Carimbo de data/hora"];
+      const statusChamado = data.status;
+      const moduloChamado = data["A solicitação é referente a qual modulo?"];
+      const categoriaChamado = data.Categoria;
+      const buscaUsuario = data["Endereço de e-mail"] || "";
+      
+      // Converter para milissegundos para comparação
+      const dataHoraMs = dataHora.toMillis();
+      const dataInicialMs = dataInicialTimestamp?.toMillis();
+      const dataFinalMs = dataFinalTimestamp?.toMillis();
+      
+      const matchDataInicial = !dataInicialMs || dataHoraMs >= dataInicialMs; 
+      const matchDataFinal = !dataFinalMs || dataHoraMs <= dataFinalMs;
+      const matchStatus = !status || statusChamado === status;
+      const matchModulo = !mod || moduloChamado === mod;
+      const matchCategoria = !cat || categoriaChamado === cat;
+      const matchBusca = !busca || buscaUsuario.toLowerCase().includes(busca.toLowerCase()); // compara o valor recebido com o e-mail do usuário
+      
+      console.log("Documento:", doc.id, {
+        dataHora: dataHora.toDate(),
+        statusChamado,
+        moduloChamado,
+        categoriaChamado,
+        matchDataInicial,
+        matchDataFinal,
+        matchStatus,
+        matchModulo,
+        matchCategoria
+      });
+      
+      return matchDataInicial && matchDataFinal && matchStatus && matchModulo && matchCategoria;
+    });
+    
+    console.log("Total de documentos filtrados:", filteredDocs.length);
+    const resultado = filteredDocs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    console.log("Chamados filtrados:", resultado);
+    return resultado;
+  } catch (error) {
+    console.error("Erro ao consultar relatórios juntos:", error);
+    throw error;
+  }
 }

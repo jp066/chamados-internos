@@ -91,6 +91,7 @@ export function CardComponent(props) {
               {c["status"] === "concluído" ? (
                 c["status"] === "concluído"
               ) : (
+                <div>
                 <button // Botão para alterar status para "em andamento"
                   color="gray"
                   className="p-2 rounded-full hover:bg-brightbee-100" //transition-200 é uma transição suave
@@ -121,6 +122,10 @@ export function CardComponent(props) {
                     }
                   />
                 </button>
+                <span className="font-sans ml-2">
+                  Observado por: {c["Atendente que está observando"] || "Ninguém"}
+                </span>
+                </div>
               )}
             </div>
             {/*
