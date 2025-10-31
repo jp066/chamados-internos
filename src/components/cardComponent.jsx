@@ -16,11 +16,11 @@ import Swal from "sweetalert2";
 import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 
-
 export function CardComponent(props) {
   const [respostas, setRespostas] = useState({});
   const [files, setFiles] = useState({}); // Novo estado para arquivos por card
-  const { usuario, setUsuario, loginGoogle, logoutGoogle } = useContext(LoginContext);
+  const { usuario, setUsuario, loginGoogle, logoutGoogle } =
+    useContext(LoginContext);
   console.log("Respostas:", setRespostas);
   const { chamadosFilter, busca, setBusca, onStatusChange } = props;
   const { dark, setDark, darkModeHandler } = props;
@@ -96,43 +96,50 @@ export function CardComponent(props) {
                 c["status"] === "concluído"
               ) : (
                 <div>
-                <button // Botão para alterar status para "em andamento"
-                  color="gray"
-                  className="p-2 rounded-full hover:bg-brightbee-100" //transition-200 é uma transição suave
-                  style={{ transitionDuration: "400ms" }} // Define a duração da transição para 400ms
-                  onClick={async () => {
-                    const usuarioAtual = usuario ?  usuario.email || usuario.displayName : "Desconhecido";
-                    await updateStatus({ id: c.id, status: "em andamento", usuario: { email: usuarioAtual } });
-                    setLoading(true);
-                    setError(null);
-                    try {
-                      const data = await getChamados();
-                      setchamados(data || []);
-                      const total = await setTotalChamadosF();
-                      setTotalChamados(total);
-                      onStatusChange();
-                    } catch (err) {
-                      setError("Erro ao buscar chamados: " + err.message);
-                    } finally {
-                      setLoading(false);
-                    }
-                  }}
-                  disabled={c["status"] === "em andamento"}
-                >
-                  <FaClock
-                    className={
-                      c["status"] === "em andamento"
-                        ? "text-brightbee-400"
-                        : "text-gray-400"
-                    }
-                  />
-                </button>
-                <span className="font-sans ml-2">
-                  Em atendimento por: {c["ObservadoPor"]?.email || c["ObservadoPor"] || "Ninguém"}
-                </span>
+                  <button // Botão para alterar status para "em andamento"
+                    color="gray"
+                    className="p-2 rounded-full hover:bg-brightbee-100" //transition-200 é uma transição suave
+                    style={{ transitionDuration: "400ms" }} // Define a duração da transição para 400ms
+                    onClick={async () => {
+                      const usuarioAtual = usuario
+                        ? usuario.email || usuario.displayName
+                        : "Desconhecido";
+                      await updateStatus({
+                        id: c.id,
+                        status: "em andamento",
+                        usuario: { email: usuarioAtual },
+                      });
+                      setLoading(true);
+                      setError(null);
+                      try {
+                        const data = await getChamados();
+                        setchamados(data || []);
+                        const total = await setTotalChamadosF();
+                        setTotalChamados(total);
+                        onStatusChange();
+                      } catch (err) {
+                        setError("Erro ao buscar chamados: " + err.message);
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                    disabled={c["status"] === "em andamento"}
+                  >
+                    <FaClock
+                      className={
+                        c["status"] === "em andamento"
+                          ? "text-brightbee-400"
+                          : "text-gray-400"
+                      }
+                    />
+                  </button>
                 </div>
               )}
             </div>
+            <span className="font-sans text-lg ">
+              Analista do chamado:{" "}
+              {c["ObservadoPor"]?.email || c["ObservadoPor"] || "Ainda não atendido"}
+            </span>
             <p className="text-lg font-sans max-w-full break-words">
               <strong>Email: </strong>
               <a
@@ -239,7 +246,8 @@ export function CardComponent(props) {
             <br />
             <button
               onClick={async () => {
-                await updateStatus({ id: c.id, status: "em aberto" });
+                const usuarioAtual = usuario ?  usuario.email || usuario.displayName : "Desconhecido";
+                await updateStatus({ id: c.id, status: "em aberto", usuario: { email: usuarioAtual } });
                 setLoading(true);
                 setError(null);
                 try {
@@ -261,7 +269,15 @@ export function CardComponent(props) {
             </button>
             <button
               onClick={async () => {
-                await updateStatus({ id: c.id, status: "concluído" });
+                console.log("Atendendo chamado ID:", c.id);
+                const usuarioAtual = usuario
+                  ? usuario.email || usuario.displayName
+                  : "Desconhecido";
+                await updateStatus({
+                  id: c.id,
+                  status: "concluído",
+                  usuario: { email: usuarioAtual },
+                });
                 await handlerEnviarResposta(
                   c["Endereço de e-mail"],
                   c.id,
