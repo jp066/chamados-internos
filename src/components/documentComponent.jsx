@@ -8,11 +8,13 @@ import Firebase from "./documentacaoComponents/firebaseComponents/configuracao.j
 import { LoginContext } from "../context/LoginContext";
 import loginGoogle from "./appComponent";
 import { DocumentMobile } from "./mobile/documentMobile";
-import ReactDocs from "./documentacaoComponents/reactDocs/introDocs.jsx";
+import { MdOutlineMenuOpen } from "react-icons/md";
+
 
 export default function DocumentComponent() {
   const { dark, setDark, darkModeHandler } = useContext(DarkModeContext);
   const { usuario, setUsuario } = useContext(LoginContext);
+  const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("intro-section");
 
   const handleSectionClick = (sectionId) => {
@@ -54,9 +56,7 @@ export default function DocumentComponent() {
       </div>
 
       {/* Container principal */}
-      <div
-        className="hidden md:flex flex min-h-screen pt-16"
-      >
+      <div className={"hidden md:flex flex min-h-screen pt-16"}>
         {/* Sidebar */}
         <SidebarComponent
           activeSection={activeSection}
@@ -65,9 +65,10 @@ export default function DocumentComponent() {
           darkModeHandler={darkModeHandler}
           setDark={setDark}
         />
+        
 
         {/* Conteúdo principal */}
-        <main className="flex-1 p-6 md:p-10">
+        <main className={`flex-1 p-6 md:p-10`}>
           <section
             id="intro-section"
             className="max-w-5xl mb-8"
@@ -96,9 +97,7 @@ export default function DocumentComponent() {
             id="react-section"
             className="mb-8"
             style={{ scrollMarginTop: "80px" }}
-          >
-            <ReactDocs />
-          </section>
+          ></section>
           <section
             id="cloudinary-section"
             className="mb-8"
