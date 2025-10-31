@@ -92,7 +92,7 @@ Os seguintes scripts estão disponíveis no `package.json`:
 -   `npm eject`: Ejeta a configuração do Create React App (ação irreversível).
 
 ## 6. Funcionalidades Principais
-439657
+
 -   **Autenticação:** Login de usuários integrado com o Firebase Authentication.
 -   **Dashboard de Chamados:** Painel principal para visualização e gerenciamento de tickets.
 -   **Relatórios:** Geração de gráficos simples e filtrados para análise de dados dos chamados.
